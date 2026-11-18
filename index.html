@@ -1,39 +1,47 @@
 <title>Сауле: новогодние игры</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik+Bubbles&family=Rubik:wght@700;800;900&family=Nunito:wght@400;600;700;800&display=swap&subset=cyrillic">
 <style>
-/* Layout: one column, tabs on top, each tab is a playable screen with a short "как это работает" note under it */
+/* Palette taken from the Funky Pop box: cream lid, Saule red sides, fir green bubbles, gold stars */
 :root{
-  --bg:#F3F5FA; --card:#FFFFFF; --ink:#1B2236; --muted:#5D6680; --line:#DCE1EC;
-  --berry:#C8325B; --pine:#1F6B5C; --gold:#E3A12F; --ice:#DCEBFA; --soft:#FBEFF3;
-  --pixel:"Press Start 2P", ui-monospace, monospace;
-  --body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bg:#F6ECDD; --card:#FFFAF2; --ink:#3A1A16; --muted:#7A5B50; --line:#EAD8C0;
+  --berry:#C8202A; --pine:#1E6B3A; --gold:#F2B33D; --ice:#FBF1E2; --soft:#FCE6E1;
+  --red-deep:#9E1A20; --stage-a:#FFF7EA; --stage-b:#F3E0C4;
+  --display:"Rubik Bubbles", "Rubik", system-ui, sans-serif;
+  --pixel:"Rubik", system-ui, sans-serif;
+  --body:"Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#0F1524; --card:#182036; --ink:#EEF1F8; --muted:#A3ACC4; --line:#2A3452;
-  --berry:#EF5C84; --pine:#4FB59A; --gold:#F0B84E; --ice:#1D2C48; --soft:#2A1E2C; color-scheme:dark}}
+  --bg:#10241A; --card:#173324; --ink:#FFF4E6; --muted:#C9B9A6; --line:#2A4A37;
+  --berry:#E8414A; --pine:#3E9B60; --gold:#F4BE52; --ice:#1B3A29; --soft:#3A1E1E;
+  --red-deep:#7E1016; --stage-a:#1E3F2D; --stage-b:#16301F; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#0F1524; --card:#182036; --ink:#EEF1F8; --muted:#A3ACC4; --line:#2A3452;
-  --berry:#EF5C84; --pine:#4FB59A; --gold:#F0B84E; --ice:#1D2C48; --soft:#2A1E2C; color-scheme:dark}
+  --bg:#10241A; --card:#173324; --ink:#FFF4E6; --muted:#C9B9A6; --line:#2A4A37;
+  --berry:#E8414A; --pine:#3E9B60; --gold:#F4BE52; --ice:#1B3A29; --soft:#3A1E1E;
+  --red-deep:#7E1016; --stage-a:#1E3F2D; --stage-b:#16301F; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+body{background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg fill='%23F2B33D' opacity='.28'%3E%3Cpath d='M30 18l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z'/%3E%3Cpath d='M120 96l2 5 5 1-4 3 1 5-4-2-4 2 1-5-4-3 5-1z'/%3E%3C/g%3E%3Cg stroke='%231E6B3A' stroke-width='2' stroke-linecap='round' opacity='.18'%3E%3Cpath d='M110 20v20M100 30h20M103 23l14 14M117 23l-14 14'/%3E%3Cpath d='M40 110v16M32 118h16M34 112l12 12M46 112l-12 12'/%3E%3C/g%3E%3C/svg%3E");color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
 .wrap{max-width:760px;margin:0 auto;padding-block:20px 48px;
   padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
-.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
-h1{font-family:var(--pixel);font-size:clamp(18px,4.6vw,28px);line-height:1.45;margin:8px 0 6px;text-wrap:balance;color:var(--berry)}
-h2{font-family:var(--pixel);font-size:clamp(14px,3.4vw,18px);line-height:1.5;margin:0 0 6px;text-wrap:balance}
-h3{font-size:16px;margin:0 0 4px}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#FFE7B8;font-weight:800}
+.top{background:linear-gradient(160deg,var(--berry),var(--red-deep));border-radius:26px;padding:20px 20px 22px;position:relative;overflow:hidden;box-shadow:0 6px 0 rgba(0,0,0,.12)}
+.top .lead{color:#FFF1E4}
+.top .badge{display:inline-block;background:#fff;color:var(--berry);font:900 15px var(--pixel);padding:4px 12px;border-radius:10px;margin-right:6px;letter-spacing:0;text-transform:none}
+.top .stars{position:absolute;right:14px;top:10px;font-size:22px;letter-spacing:6px;opacity:.9}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,8vw,48px);line-height:1.1;margin:6px 0 8px;text-wrap:balance;color:#fff;text-shadow:0 3px 0 var(--red-deep)}
+h2{font-family:var(--pixel);font-weight:900;font-size:clamp(20px,5vw,26px);line-height:1.2;margin:0 0 6px;text-wrap:balance;color:var(--berry)}
+h3{font-family:var(--pixel);font-weight:800;font-size:17px;margin:0 0 4px;color:var(--pine)}
 p{margin:0}
 .lead{color:var(--muted);max-width:62ch}
-.note{background:var(--soft);border-radius:12px;padding:10px 14px;font-size:13px;color:var(--ink);margin-top:12px}
+.note{background:var(--soft);border-radius:16px;padding:10px 14px;font-size:13px;color:var(--ink);margin-top:12px}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 14px}
-.tab{font:700 14px var(--body);border:2px solid var(--line);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:999px;cursor:pointer;text-decoration:none}
-.tab[aria-current="true"]{border-color:var(--berry);background:var(--berry);color:#fff}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.tab{font:800 14px var(--body);border:2px solid var(--line);background:var(--card);color:var(--ink);padding:9px 15px;border-radius:999px;cursor:pointer;text-decoration:none}
+.tab[aria-current="true"]{border-color:var(--pine);background:var(--pine);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 6px 0 rgba(158,26,32,.08);display:flex;flex-direction:column;gap:14px}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.btn{font:700 15px var(--body);border:0;border-radius:12px;padding:12px 16px;cursor:pointer;background:var(--pine);color:#fff}
-.btn.alt{background:var(--ice);color:var(--ink)}
+.btn{font:800 15px var(--body);border:0;border-radius:999px;padding:12px 18px;cursor:pointer;background:var(--pine);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.btn.alt{background:var(--ice);color:var(--ink);border:2px solid var(--line);box-shadow:none}
 .btn.hot{background:var(--berry)}
 .btn:disabled{opacity:.45;cursor:default}
 .btn:focus-visible,.tab:focus-visible,input:focus-visible,.hero-pick:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
@@ -48,13 +56,13 @@ input[type=text]{font:600 16px var(--body);padding:11px 12px;border-radius:12px;
 .status.ok{color:var(--pine)} .status.bad{color:var(--berry)}
 .advent{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
 .day{aspect-ratio:1;border-radius:8px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:700 12px var(--body);color:var(--muted);font-variant-numeric:tabular-nums;cursor:pointer}
-.day.open{background:var(--gold);color:#2b1a00;border-color:var(--gold)}
+.day.open{background:var(--berry);color:#fff;border-color:var(--berry)}
 .day.today{outline:2px solid var(--berry)}
 .map{width:100%;height:auto;max-width:100%;border-radius:16px;display:block}
 .codes{display:flex;gap:6px;flex-wrap:wrap}
 .code{font:700 12px ui-monospace,monospace;padding:4px 8px;border-radius:8px;background:var(--bg);border:1px dashed var(--line);cursor:pointer;color:var(--ink)}
 .code.used{text-decoration:line-through;opacity:.5}
-canvas.game{width:100%;max-width:100%;border-radius:16px;background:var(--ice);touch-action:none;display:block}
+canvas.game{width:100%;max-width:100%;border-radius:20px;background:linear-gradient(#1E6B3A,#154A2A);touch-action:none;display:block}
 .hud{display:flex;justify-content:space-between;font-weight:800;font-variant-numeric:tabular-nums}
 .how{display:grid;gap:8px;margin:0;padding-left:20px}
 .how li{min-width:0}
@@ -69,14 +77,10 @@ canvas.game{width:100%;max-width:100%;border-radius:16px;background:var(--ice);t
 @media (prefers-reduced-motion:reduce){.heart,.chew{animation:none}}
 .heroes.two{grid-template-columns:repeat(2,1fr);max-width:360px}
 .hero-pick img{width:72px;height:auto;display:block}
-.pet-stage{min-height:0;padding:44px 0 18px;background:linear-gradient(#cfe3f7,#eef5fc 70%,#fff);flex-direction:column}
-:root[data-theme="dark"] .pet-stage{background:linear-gradient(#1d2c48,#22365a 70%,#2c4470)}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pet-stage{background:linear-gradient(#1d2c48,#22365a 70%,#2c4470)}}
-.sat{position:absolute;top:12px;left:14px;right:14px;display:flex;gap:10px;align-items:center;font:800 12px var(--body);color:#1B2236}
-:root[data-theme="dark"] .sat{color:#EEF1F8}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sat{color:#EEF1F8}}
+.pet-stage{min-height:0;padding:44px 0 18px;background:radial-gradient(ellipse 60% 14% at 50% 94%,rgba(158,26,32,.14),transparent 70%),linear-gradient(var(--stage-a),var(--stage-b));flex-direction:column;border:2px solid var(--line);border-radius:22px}
+.sat{position:absolute;top:12px;left:14px;right:14px;display:flex;gap:10px;align-items:center;font:800 12px var(--body);color:var(--ink)}
 .bar{flex:1;height:12px;border-radius:99px;background:rgba(0,0,0,.12);overflow:hidden}
-.bar i{display:block;height:100%;width:50%;background:linear-gradient(90deg,var(--berry),var(--gold));border-radius:99px;transition:width .5s}
+.bar i{display:block;height:100%;width:50%;background:linear-gradient(90deg,var(--pine),#7CC243);border-radius:99px;transition:width .5s}
 .pet{width:min(260px,64vw);position:relative;animation:breath 3.2s ease-in-out infinite;transform-origin:50% 100%;cursor:pointer;touch-action:manipulation}
 @keyframes breath{0%,100%{transform:scale(1,1)}50%{transform:scale(1.012,.985)}}
 .pet-move{transform-origin:50% 100%}
@@ -96,9 +100,12 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
 </style>
 
 <div class="wrap">
-  <div class="eyebrow">SHŪ × Сауле · демо для обсуждения</div>
+  <header class="top">
+  <span class="stars" aria-hidden="true">⭐ ❄️</span>
+  <div class="eyebrow"><span class="badge">Saule</span>Funky Pop × SHŪ · демо</div>
   <h1>Новогодние игры</h1>
   <p class="lead">Три рабочих черновика по идеям Кати. Герои: красный и зелёный из серии Сауле (имена рабочие).</p>
+  </header>
 
   <nav class="tabs" aria-label="Варианты">
     <a class="tab" href="#drug" data-t="drug">1. Новогодний друг</a>
@@ -373,12 +380,12 @@ function drawMap(){
   const Q=QUESTS[qk];const h=heroById(qs.hero);
   const path=PTS.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ');
   let s=`<rect width="600" height="300" fill="var(--ice)"/>`;
-  for(let i=0;i<26;i++){const x=(i*97)%600,y=(i*53)%300;s+=`<circle cx="${x}" cy="${y}" r="2" fill="#fff" opacity=".8"/>`;}
+  for(let i=0;i<26;i++){const x=(i*97)%600,y=(i*53)%300;s+=`<circle cx="${x}" cy="${y}" r="2" fill="var(--gold)" opacity=".55"/>`;}
   [[30,90],[120,250],[250,70],[360,265],[470,60],[570,260]].forEach(([x,y])=>s+=`<path d="M${x} ${y-26} L${x-15} ${y} L${x+15} ${y} Z" fill="var(--pine)"/>`);
   s+=`<path d="${path}" stroke="var(--gold)" stroke-width="5" stroke-dasharray="10 9" fill="none" stroke-linecap="round"/>`;
   PTS.forEach((p,i)=>{const done=i<qs.done,cur=i===qs.done;
     s+=`<circle cx="${p[0]}" cy="${p[1]}" r="22" fill="${done?'var(--pine)':cur?'var(--berry)':'var(--card)'}" stroke="var(--ink)" stroke-width="2"/>
-    <text x="${p[0]}" y="${p[1]+6}" text-anchor="middle" font-size="17" font-weight="800" fill="${done||cur?'#fff':'var(--ink)'}" font-family="Manrope,sans-serif">${done?'✓':i+1}</text>`;});
+    <text x="${p[0]}" y="${p[1]+6}" text-anchor="middle" font-size="17" font-weight="800" fill="${done||cur?'#fff':'var(--ink)'}" font-family="Nunito,sans-serif">${done?'✓':i+1}</text>`;});
   const last=PTS[4];s+=`<text x="${last[0]+38}" y="${last[1]-26}" font-size="34" text-anchor="middle">${qs.done>=5?'🎉':Q.goal}</text>`;
   if(Q.villain&&qs.done<5)s+=`<text x="${last[0]+42}" y="${last[1]+44}" font-size="30" text-anchor="middle">🥶</text>`;
   const hp=PTS[Math.min(qs.done,4)];
@@ -426,8 +433,8 @@ function startGame(){
   function end(win){G.over=true;cancelAnimationFrame(raf);
     if(win){const sticker=Math.random()<0.35;if(sticker)qs.stickers++;qs.done++;qSave();
       setTimeout(()=>{renderQuest();qStatus(`Точка пройдена!${sticker?' Выпал редкий стикер Meet & Sketch ✨':''}`,'ok');},400);}
-    else{x.fillStyle='rgba(0,0,0,.55)';x.fillRect(0,0,600,380);x.fillStyle='#fff';x.font='800 26px Manrope,sans-serif';x.textAlign='center';
-      x.fillText('Почти! Попробуй ещё раз',300,180);x.font='600 17px Manrope,sans-serif';x.fillText('Нажми на поле',300,215);
+    else{x.fillStyle='rgba(0,0,0,.55)';x.fillRect(0,0,600,380);x.fillStyle='#fff';x.font='800 26px Nunito,sans-serif';x.textAlign='center';
+      x.fillText('Почти! Попробуй ещё раз',300,180);x.font='600 17px Nunito,sans-serif';x.fillText('Нажми на поле',300,215);
       cv.onpointerdown=()=>{cv.onpointerdown=null;startGame();};}}
   function frame(now){if(!G||G.over)return;const dt=Math.min(40,now-G.last);G.last=now;const el=now-G.t0;
     G.spawn-=dt;if(G.spawn<=0){G.spawn=520-level*40;const bad=Q.villain&&Math.random()<0.3+level*0.04;
@@ -451,15 +458,15 @@ function startGame(){
 function renderFinal(){
   const Q=QUESTS[qk];const h=heroById(qs.hero);
   const c=document.createElement('canvas');c.width=640;c.height=800;const x=c.getContext('2d');
-  const g=x.createLinearGradient(0,0,0,800);g.addColorStop(0,'#1F6B5C');g.addColorStop(1,'#0F1524');x.fillStyle=g;x.fillRect(0,0,640,800);
+  const g=x.createLinearGradient(0,0,0,800);g.addColorStop(0,'#C8202A');g.addColorStop(1,'#7E1016');x.fillStyle=g;x.fillRect(0,0,640,800);
   x.fillStyle='rgba(255,255,255,.8)';for(let i=0;i<60;i++){x.beginPath();x.arc((i*137)%640,(i*89)%800,2.5,0,7);x.fill();}
   const fin=$('q-final');
   fin.innerHTML=`<h2>${Q.finalT}</h2><p>Приз твой, и ты участвуешь в розыгрыше новогодних боксов.</p>
     ${qs.stickers?`<span class="sticker">✨ Стикеры Meet &amp; Sketch: ${qs.stickers}</span>`:''}
     <img id="card" alt="Картинка для сторис: ${Q.share}"><p style="font-size:13px;color:var(--muted)">Картинка для сторис</p>`;
   const img=new Image();img.onload=()=>{x.drawImage(img,200,215,240,240*h.H/h.W);
-    x.fillStyle='#fff';x.textAlign='center';x.font='800 46px Manrope,sans-serif';x.fillText(Q.share,320,150,580);
-    x.font='54px serif';x.fillText(Q.goal+' 🎄 🍬',320,660);x.font='600 24px Manrope,sans-serif';x.fillStyle='#F0B84E';x.fillText('Сауле · новогодняя игра',320,730);
+    x.fillStyle='#fff';x.textAlign='center';x.font='900 46px Rubik,sans-serif';x.fillText(Q.share,320,150,580);
+    x.font='54px serif';x.fillText(Q.goal+' 🎄 🍬',320,660);x.font='800 24px Nunito,sans-serif';x.fillStyle='#F0B84E';x.fillText('Сауле · новогодняя игра',320,730);
     $('card').src=c.toDataURL('image/png');};
   img.src=full(h);
 }
