@@ -61,7 +61,7 @@ input[type=text]{font:600 16px var(--body);padding:11px 12px;border-radius:12px;
 .day.open{background:var(--berry);color:#fff;border-color:var(--berry)}
 .day.today{outline:2px solid var(--berry)}
 .map2{position:relative;width:100%;max-width:420px;margin:0 auto;border-radius:20px;overflow:hidden;aspect-ratio:572/1024}
-.map2 img{width:100%;height:100%;display:block}
+.map2 #map-img{width:100%;height:100%;display:block}
 #map-over{position:absolute;inset:0}
 .mp{position:absolute;width:15%;aspect-ratio:1.2;transform:translate(-50%,-50%);background:url(assets/map_open.webp) no-repeat;border-radius:50%}
 .mp.cur::after{content:"";position:absolute;inset:-12%;border-radius:50%;border:4px solid var(--gold);animation:ring 1.2s ease-out infinite}
@@ -71,9 +71,9 @@ input[type=text]{font:600 16px var(--body);padding:11px 12px;border-radius:12px;
 @media (prefers-reduced-motion:reduce){.mp.cur::after{animation:none}}
 .santa{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:2%;padding:48px 10px 22px;border-radius:22px;border:2px solid var(--line);background:radial-gradient(ellipse 70% 12% at 50% 92%,rgba(158,26,32,.14),transparent 70%),linear-gradient(var(--stage-a),var(--stage-b));overflow:hidden}
 .santa-count{position:absolute;top:12px;left:0;right:0;text-align:center;font:900 15px var(--pixel);color:var(--berry)}
-.santa-man{width:48%;max-width:230px;transform-origin:50% 100%}
-.sack-wrap{position:relative;width:40%;max-width:190px;transform-origin:50% 100%;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
-.sack-wrap img{width:100%;display:block;position:relative;z-index:1}
+.santa-man{width:44%;max-width:220px;transform-origin:50% 100%}
+.sack-wrap{position:relative;width:52%;max-width:270px;display:flex;justify-content:center;align-items:flex-end}
+.sack-wrap img{display:block;transform-origin:50% 100%;max-width:100%}
 .gifts{position:absolute;left:12%;right:12%;bottom:62%;height:0;z-index:0}
 .gift{position:absolute;bottom:0;font-size:clamp(26px,8vw,40px);line-height:1;transform:translateX(-50%)}
 .gift.new{animation:drop .7s cubic-bezier(.3,1.4,.5,1)}
@@ -275,7 +275,7 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
     <div class="santa" id="santa" hidden>
       <div class="santa-count" id="santa-count"></div>
       <img class="santa-man" id="santa-man" src="assets/santa_sad.webp" alt="Дед Мороз">
-      <div class="sack-wrap" id="sack-wrap"><div class="gifts" id="gifts"></div><img src="assets/sack.webp" alt="Мешок"></div>
+      <div class="sack-wrap" id="sack-wrap"><img id="sack-img" src="assets/sack0.webp" alt="Мешок Деда Мороза"></div>
     </div>
     <svg class="map" id="map" viewBox="0 0 600 300" role="img" aria-label="Карта с пятью точками" hidden></svg>
     <div id="q-scan">
@@ -560,7 +560,7 @@ const QUESTS={
   ded:{title:'Спасите Деда Мороза!',lead:'Злодей украл подарки, и мешок Деда Мороза опустел. Каждый QR из коробки возвращает один подарок. Верни все 5, и праздник спасён.',
     finalT:'Праздник спасён!',share:'Я спас Новый год!',villain:true,goal:'🎁',item:'🎁',
     how:'Покупатель сканирует QR из коробки, герой продвигается по карте, и в мешок Деда Мороза возвращается подарок. После 5 сканов мешок полный, и Дед Мороз снова улыбается.',
-    incl:['Отрисовка: Дед Мороз (грустный и радостный), мешок в 5 состояниях, подарки, злодей.','Встреча по деталям: сюжет, кто злодей, какой приз в финале.','Карта с 5 точками, анимация возвращения подарка в мешок.','Логика QR: 5 разных кодов или свой код в каждой коробке.','Макеты QR для печати внутри коробки или на вкладыше.','Финал и картинка для сторис.','Проверка на iPhone и Android, два круга правок.']}
+    incl:['Отрисовка: Дед Мороз (грустный, удивлённый, радостный), мешок в 5 состояниях, подарки, злодей.','Встреча по деталям: сюжет, кто злодей, какой приз в финале.','Карта с 5 точками, анимация возвращения подарка в мешок.','Логика QR: 5 разных кодов или свой код в каждой коробке.','Макеты QR для печати внутри коробки или на вкладыше.','Финал и картинка для сторис.','Проверка на iPhone и Android, два круга правок.']}
 };
 const PTS=[[70,230],[180,160],[300,215],[410,120],[525,175]];
 let qk='karta',qs=null;
@@ -574,22 +574,26 @@ function drawMap2(){
       o+=`<div class="mp ${cur?'cur':''}" style="left:${x/MW*100}%;top:${y/MH*100}%;background-size:${MW/w*100}% auto;background-position:${(x-w/2)/(MW-w)*100}% ${(y-hh/2)/(MH-hh)*100}%;${cur?'background:none':''}"></div>`;}});
   const g=MP[4];o+=`<span class="mgoal" style="left:${(g[0]+95)/MW*100}%;top:${(g[1]-10)/MH*100}%">${qs.done>=5?'🎉':Q.goal}</span>`;
   if(Q.villain&&qs.done<5)o+=`<span class="mgoal" style="left:${(g[0]-110)/MW*100}%;top:${(g[1]-20)/MH*100}%">🥶</span>`;
-  const p=MP[Math.min(qs.done,4)];o+=`<img class="mhero" src="${full(h)}" alt="" style="left:${(p[0]-70)/MW*100}%;top:${(p[1]+10)/MH*100}%">`;
+  const p=MP[Math.min(qs.done,4)];o+=`<img class="mhero" src="${full(h)}" alt="" style="left:${(p[0]+72)/MW*100}%;top:${(p[1]+18)/MH*100}%">`;
   $('map-over').innerHTML=o;
 }
 let mapFailed=false;
 function mapFallback(){mapFailed=true;$('map2').hidden=true;$('map').removeAttribute('hidden');}
 $('map-img').addEventListener('error',mapFallback);
 if($('map-img').complete&&!$('map-img').naturalWidth)mapFallback();
-const GIFT_POS=[[30,0,-8],[70,0,10],[50,8,-2],[22,26,-14],[76,24,12]];
+// sack stage per scan: empty → toys beside → wrapping → gifts inside → (surprised Santa) → tied sack
+const SACK=[['sack0',255],['sack1',391],['sack2',260],['sack3',215],['sack3',215],['sack4',216]];
+const SACK_TXT=['Мешок пустой','Игрушки нашлись!','Упаковываем подарки','Подарки в мешке','Почти готово!','Мешок собран! 🎉'];
+['sack0','sack1','sack2','sack3','sack4','santa_wow','santa_joy'].forEach(n=>{const i=new Image();i.src=A+n+'.webp';});
 let lastGifts=-1;
 function drawSanta(){
-  const n=Math.min(qs.done,5);
-  $('santa-count').textContent=n>=5?'Мешок полный! 🎉':`Подарков в мешке: ${n} из 5`;
-  $('santa-man').src=n>=5?'assets/santa_happy.webp':'assets/santa_sad.webp';
-  $('sack-wrap').style.transform=`scale(${1+n*.05})`;
-  $('gifts').innerHTML=GIFT_POS.slice(0,n).map(([l,b,r],i)=>`<span class="gift ${i===n-1&&lastGifts>=0&&n>lastGifts?'new':''}" style="left:${l}%;bottom:${b}px;rotate:${r}deg">🎁</span>`).join('');
-  if(n>=5&&lastGifts>=0&&lastGifts<5&&!reduced)$('santa-man').animate([{transform:'translateY(0)'},{transform:'translateY(-30px) scale(1.03)'},{transform:'translateY(0)'}],{duration:600,iterations:2});
+  const n=Math.min(qs.done,5),[img,w]=SACK[n],sack=$('sack-img');
+  $('santa-count').textContent=`${SACK_TXT[n]} · ${n} из 5`;
+  $('santa-man').src=A+(n>=5?'santa_joy':n===4?'santa_wow':'santa_sad')+'.webp';
+  sack.src=A+img+'.webp';sack.style.width=Math.min(100,w/330*100)+'%';
+  if(lastGifts>=0&&n>lastGifts&&!reduced){
+    sack.animate([{transform:'scale(.6)',opacity:.2},{transform:'scale(1.12)',opacity:1,offset:.6},{transform:'scale(1)'}],{duration:550,easing:'ease-out'});
+    $('santa-man').animate([{transform:'translateY(0)'},{transform:'translateY(-26px) scale(1.03)'},{transform:'translateY(0)'}],{duration:550,iterations:n>=5?2:1});}
   lastGifts=n;
 }
 function drawMap(){
@@ -688,7 +692,7 @@ function renderFinal(){
     x.fillStyle='#fff';x.textAlign='center';x.font='900 46px Rubik,sans-serif';x.fillText(Q.share,320,150,580);
     x.font='54px serif';x.fillText(Q.goal+' 🎄 🍬',320,660);x.font='800 24px Nunito,sans-serif';x.fillStyle='#F0B84E';x.fillText('Saule · новогодняя игра',320,730);
     $('card').src=c.toDataURL('image/png');};
-  img.src=qk==='ded'?'assets/santa_happy.webp':full(h);
+  img.src=qk==='ded'?'assets/santa_joy.webp':full(h);
 }
 
 /* routing */
