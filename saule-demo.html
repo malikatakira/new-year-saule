@@ -163,6 +163,20 @@ canvas.game{width:100%;max-width:100%;border-radius:20px;background:linear-gradi
 .pr-term{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
 .pr-term b{font:900 22px var(--pixel)}
 .pr-term small{color:#FFE7B8;font-weight:700}
+.qrw .sub{font-size:11px;color:var(--muted);line-height:1.25}
+.bx em,.card em{position:absolute;right:-8px;top:-8px;width:22px;height:22px;border-radius:50%;font:900 13px/22px var(--body);font-style:normal;color:#fff;text-align:center}
+.no{background:#B3261E}.yes{background:var(--pine)}
+.bx.open{box-shadow:none;margin-top:14px}
+.bx.open::before{content:"";position:absolute;left:0;right:0;top:-16px;height:18px;background:#F6E3C6;border:2px solid var(--berry);border-radius:6px 6px 0 0;transform:skewX(-12deg)}
+.bx.open .qr.lid{top:-14px;width:14px;height:14px;z-index:1;background-size:6px 6px}
+.card{position:relative;width:66px;height:46px;background:#fff;border:2px solid var(--line);border-radius:8px;display:flex;align-items:center;gap:3px;padding:0 4px}
+.card .qr{position:static;transform:none;width:20px;height:20px;flex:none}
+.card b{font:800 8px ui-monospace,monospace;color:#222}
+.mini{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:12px}
+.mini .b5{width:26px;height:22px;border-radius:5px;background:var(--berry);color:#fff;font:900 12px/22px var(--pixel);text-align:center;box-shadow:inset 0 5px 0 #F6E3C6;padding-top:3px;box-sizing:content-box}
+.mini .cd{font:800 11px ui-monospace,monospace;background:#fff;color:#222;border:1px dashed #999;border-radius:5px;padding:2px 5px}
+.mini .pt{font-weight:800;background:var(--card);border:2px solid var(--line);border-radius:99px;padding:2px 8px}
+.mini b{color:var(--muted)}
 footer{margin-top:22px;font-size:12px;color:var(--muted)}
 </style>
 
@@ -246,14 +260,13 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
     </div>
     <div class="block">
       <h3>Что входит в работу</h3>
-      <ol class="list">
-        <li>Отрисовка героев для анимации: каждый герой в слоях (тело, глаза, формы рта, радость и грусть).</li>
-        <li>Встреча по деталям: какая еда (можно продукты Saule), будет ли герой повторять голос, имена героев.</li>
-        <li>Анимации: дыхание, моргание, жевание, радость, грусть. Звуки.</li>
+      <ul class="list">
+        <li>Готовая игра в стиле этого демо, доработанная и с героями Saule.</li>
+        <li>Отрисовка героев.</li>
         <li>Запуск по QR, проверка на iPhone и Android.</li>
-        <li>Макет QR для печати внутри коробки или на вкладыше.</li>
-        <li>Два круга правок.</li>
-      </ol>
+        <li>Макет QR для печати.</li>
+        <li>Один созвон по деталям и два круга правок.</li>
+      </ul>
     </div>
     <div class="price" data-k="drug"></div>
   </section>
@@ -300,8 +313,8 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
       <h3>Мини-игра на каждой точке</h3>
       <div class="flow"><span>Скан QR</span><b>→</b><span>Короткая мини-игра</span><b>→</b><span class="hot">Точка открыта</span></div>
       <div class="opts">
-        <div class="opt"><h4>Одна игра на все точки</h4><p>Например, «лови подарки и уворачивайся от снежков». С каждой точкой немного сложнее.</p><p class="cost">+150 000 ₸</p></div>
-        <div class="opt"><h4>Своя игра на каждой точке</h4><p>5 простых разных игр: поймай подарки, слепи снеговика, попади снежком в злодея, найди отличия, собери пазл.</p><p class="cost">+350 000 ₸</p></div>
+        <div class="opt"><h4>Одна игра на все точки</h4><p>Например, «лови подарки и уворачивайся от снежков». С каждой точкой немного сложнее.</p><p class="cost">+100 000 ₸</p></div>
+        <div class="opt"><h4>Своя игра на каждой точке</h4><p>5 простых разных игр: поймай подарки, слепи снеговика, попади снежком в злодея, найди отличия, собери пазл.</p><p class="cost">+150 000 – 350 000 ₸</p><p class="minus">Зависит от сложности игр.</p></div>
       </div>
       <ul class="list"><li><b>Зачем Saule:</b> покупатель проводит в игре больше времени, ему интереснее, и он охотнее делится результатом.</li></ul>
       <div class="row"><button class="btn" id="try-game" type="button">▶ Попробовать пример игры</button></div>
@@ -314,15 +327,22 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
     </div>
     <div class="block">
       <h3>Где будут QR</h3>
-      <p>Не на коробке снаружи: иначе их отсканируют прямо в магазине, не покупая. QR печатаем <b>внутри коробки</b> (на внутренней стороне крышки) или на <b>карточке-вкладыше</b>. Вместо QR или вместе с ним можно дать короткий код, его вводят вручную.</p>
+      <div class="scheme qrw">
+        <div class="sc-col"><div class="bx"><i class="qr"></i><em class="no">✕</em></div><small>Снаружи коробки</small><span class="sub">Отсканируют в магазине, не покупая</span></div>
+        <div class="sc-col"><div class="bx open"><i class="qr lid"></i><em class="yes">✓</em></div><small>Внутри крышки</small><span class="sub">Видно только после покупки</span></div>
+        <div class="sc-col"><div class="card"><i class="qr"></i><b>SL-4K7Q</b><em class="yes">✓</em></div><small>Карточка-вкладыш</small><span class="sub">Если внутри печатать нельзя</span></div>
+      </div>
+      <p>QR должен быть виден только после покупки. Рядом с QR можно напечатать короткий код: его вводят вручную, если камера не сработала.</p>
     </div>
     <div class="block">
       <h3>Как разложить коды по коробкам</h3>
       <div class="opts">
         <div class="opt"><span class="tag">Проще</span><h4>5 разных QR на всю партию</h4>
+          <div class="mini"><span class="b5">1</span><span class="b5">2</span><span class="b5">3</span><span class="b5">4</span><span class="b5">5</span><b>→</b><span class="pt">5 точек карты</span></div>
           <p>Печатаем 5 макетов, и каждая коробка получает один из них. Чтобы пройти всю карту, нужно найти все 5. Печать обычная, без отдельной базы кодов.</p>
           <p class="minus">Минус: коды можно переслать друзьям или выложить в интернет.</p></div>
         <div class="opt"><span class="tag">Защищённо</span><h4>Свой код в каждой коробке</h4>
+          <div class="mini"><span class="cd">A7K2</span><span class="cd">Q9M4</span><span class="cd">Z3P8</span><b>→</b><span class="pt">Проверка: новый ✓ · уже был ✕</span></div>
           <p>Каждый код уникальный и срабатывает один раз. Переслать нельзя: чужой код уже использован. Подойдёт, если в конце ценный приз.</p>
           <p class="minus">Минус: нужна печать с разными кодами на каждой коробке и сервер с базой кодов.</p></div>
       </div>
@@ -331,7 +351,7 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
       <h3>Что после 5 сканов</h3>
       <p>Варианты финала, можно сочетать:</p>
       <ul class="list">
-        <li>Сундук открывается: секретный герой или новогодний мультик и картинка для сторис.</li>
+        <li>Сундук открывается: секретный герой и картинка для сторис.</li>
         <li>Участие в розыгрыше призов от Saule. Для этого покупатель оставляет телефон.</li>
         <li>Промокод или скидка на следующую покупку.</li>
         <li>Подарок в магазине: показываешь экран финала и получаешь приз.</li>
@@ -339,14 +359,18 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
     </div>
     <div class="block">
       <h3>Что входит в работу</h3>
-      <ol class="list" id="q-incl"></ol>
+      <ul class="list" id="q-incl"></ul>
     </div>
     <div class="block">
       <h3>Что нужно узнать для расчёта</h3>
       <ul class="list">
-        <li>Сколько коробок в партии.</li>
-        <li>Можно ли печатать внутри коробки или вложить карточку.</li>
-        <li>Какой финал выбираете: от этого зависит, нужен ли сервер.</li>
+        <li>Тираж: сколько коробок в партии и будет ли несколько партий.</li>
+        <li>Сроки производства: когда печатаются коробки и успеваем ли добавить QR.</li>
+        <li>Где можно разместить QR: внутри крышки, на дне или на карточке-вкладыше.</li>
+        <li>Может ли типография напечатать свой код на каждой коробке (нужно для защищённого варианта).</li>
+        <li>Какой финал и приз: кто выдаёт приз, будет ли розыгрыш.</li>
+        <li>Сроки акции: с какого и по какое число игра должна работать.</li>
+        <li>Есть ли исходные файлы героев и логотипа.</li>
       </ul>
     </div>
     <div class="price" id="q-price"></div>
@@ -534,14 +558,14 @@ $('advent').onclick=e=>{const d=e.target.closest('.day');if(!d)return;const n=+d
 
 /* ---------- price & terms (fill in) ---------- */
 const PRICES={
-  drug:{rows:[['Новогодний друг',450000],['+ Разные герои в разных коробках',150000],['+ Адвент-календарь',250000]],
-    all:['Друг + обе идеи',750000],term:'1 неделя',termAll:'1,5 недели с дополнительными идеями'},
-  karta:{rows:[['Карта сокровищ, 5 разных QR на партию',500000],['+ Свой код в каждой коробке (защита)',250000],['+ Одна мини-игра на все точки',150000],['+ Своя мини-игра на каждой точке',350000]],
-    term:'1,5 недели',termAll:'2 недели с мини-играми',note:'Для защищённого варианта нужен сервер с базой кодов: от 15 000 ₸ в месяц на время акции.'},
-  ded:{rows:[['Спасите Деда Мороза, 5 разных QR на партию',550000],['+ Свой код в каждой коробке (защита)',250000],['+ Одна мини-игра на все точки',150000],['+ Своя мини-игра на каждой точке',350000]],
-    term:'1,5 недели',termAll:'2 недели с мини-играми',note:'Для защищённого варианта нужен сервер с базой кодов: от 15 000 ₸ в месяц на время акции.'}
+  drug:{rows:[['Новогодний друг',250000],['+ Разные герои в разных коробках',100000],['+ Адвент-календарь',150000]],
+    all:['Друг + обе идеи',500000],term:'1 неделя',termAll:'1,5 недели с дополнительными идеями или правками'},
+  karta:{rows:[['Карта сокровищ, 5 разных QR на партию',300000],['+ Свой код в каждой коробке (защита)',150000],['+ Одна мини-игра на все точки',100000],['+ Своя мини-игра на каждой точке','150–350 тыс. ₸']],
+    term:'1,5 недели',termAll:'2 недели с мини-играми',note:'Для защищённого варианта и розыгрыша нужен сервер, он оплачивается отдельно по факту.'},
+  ded:{rows:[['Спасите Деда Мороза, 5 разных QR на партию',300000],['+ Свой код в каждой коробке (защита)',150000],['+ Одна мини-игра на все точки',100000],['+ Своя мини-игра на каждой точке','150–350 тыс. ₸']],
+    term:'1,5 недели',termAll:'2 недели с мини-играми',note:'Для защищённого варианта и розыгрыша нужен сервер, он оплачивается отдельно по факту.'}
 };
-const money=n=>n.toLocaleString('ru-RU').replace(/,/g,' ')+' ₸';
+const money=n=>typeof n==='string'?n:n.toLocaleString('ru-RU').replace(/[,\u00a0\u202f]/g,' ')+' ₸';
 function drawPrice(el,k){const p=PRICES[k];
   el.innerHTML=`<div class="pr-rows">${p.rows.map(([n,v],i)=>`<div class="pr ${i?'':'main'}"><span>${n}</span><b>${money(v)}</b></div>`).join('')}
     ${p.all?`<div class="pr all"><span>${p.all[0]}</span><b>${money(p.all[1])}</b></div>`:''}</div>
@@ -556,11 +580,11 @@ const QUESTS={
   karta:{title:'Карта сокровищ',lead:'Пять точек на новогодней карте. Каждую открывает QR из новой коробки. Пройди все пять и найди клад.',
     finalT:'Клад найден!',share:'Я нашёл новогодний клад!',villain:false,goal:'🎁',
     how:'Покупатель сканирует QR из коробки, и на карте открывается следующая точка. 5 точек, 5 сканов, в конце сундук с призом.',
-    incl:['Отрисовка карты и героев.','Встреча по деталям: что происходит на каждой точке, какой приз в финале.','Логика QR: 5 разных кодов или свой код в каждой коробке.','Макеты QR для печати внутри коробки или на вкладыше.','Финал и картинка для сторис.','Проверка на iPhone и Android, два круга правок.']},
+    incl:['Готовая игра в стиле этого демо, доработанная и с героями Saule.','Отрисовка карты и героев.','Запуск по QR, проверка на iPhone и Android.','Макеты QR для печати.','Один созвон по деталям и два круга правок.']},
   ded:{title:'Спасите Деда Мороза!',lead:'Злодей украл подарки, и мешок Деда Мороза опустел. Каждый QR из коробки возвращает один подарок. Верни все 5, и праздник спасён.',
     finalT:'Праздник спасён!',share:'Я спас Новый год!',villain:true,goal:'🎁',item:'🎁',
     how:'Покупатель сканирует QR из коробки, герой продвигается по карте, и в мешок Деда Мороза возвращается подарок. После 5 сканов мешок полный, и Дед Мороз снова улыбается.',
-    incl:['Отрисовка: Дед Мороз (грустный, удивлённый, радостный), мешок в 5 состояниях, подарки, злодей.','Встреча по деталям: сюжет, кто злодей, какой приз в финале.','Карта с 5 точками, анимация возвращения подарка в мешок.','Логика QR: 5 разных кодов или свой код в каждой коробке.','Макеты QR для печати внутри коробки или на вкладыше.','Финал и картинка для сторис.','Проверка на iPhone и Android, два круга правок.']}
+    incl:['Готовая игра в стиле этого демо, доработанная и с героями Saule.','Отрисовка Деда Мороза, мешка, карты и героев.','Запуск по QR, проверка на iPhone и Android.','Макеты QR для печати.','Один созвон по деталям и два круга правок.']}
 };
 const PTS=[[70,230],[180,160],[300,215],[410,120],[525,175]];
 let qk='karta',qs=null;
