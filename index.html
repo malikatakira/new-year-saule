@@ -69,6 +69,16 @@ input[type=text]{font:600 16px var(--body);padding:11px 12px;border-radius:12px;
 .mhero{position:absolute;width:13%;transform:translate(-50%,-100%);transition:left .6s,top .6s;filter:drop-shadow(0 4px 3px rgba(0,0,0,.3))}
 .mgoal{position:absolute;font-size:clamp(28px,9vw,44px);transform:translate(-50%,-50%)}
 @media (prefers-reduced-motion:reduce){.mp.cur::after{animation:none}}
+.santa{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:2%;padding:48px 10px 22px;border-radius:22px;border:2px solid var(--line);background:radial-gradient(ellipse 70% 12% at 50% 92%,rgba(158,26,32,.14),transparent 70%),linear-gradient(var(--stage-a),var(--stage-b));overflow:hidden}
+.santa-count{position:absolute;top:12px;left:0;right:0;text-align:center;font:900 15px var(--pixel);color:var(--berry)}
+.santa-man{width:48%;max-width:230px;transform-origin:50% 100%}
+.sack-wrap{position:relative;width:40%;max-width:190px;transform-origin:50% 100%;transition:transform .5s cubic-bezier(.3,1.6,.5,1)}
+.sack-wrap img{width:100%;display:block;position:relative;z-index:1}
+.gifts{position:absolute;left:12%;right:12%;bottom:62%;height:0;z-index:0}
+.gift{position:absolute;bottom:0;font-size:clamp(26px,8vw,40px);line-height:1;transform:translateX(-50%)}
+.gift.new{animation:drop .7s cubic-bezier(.3,1.4,.5,1)}
+@keyframes drop{from{transform:translate(-50%,-160px) rotate(-30deg);opacity:0}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.gift.new{animation:none}}
 .map{width:100%;height:auto;max-width:100%;border-radius:16px;display:block}
 .codes{display:flex;gap:6px;flex-wrap:wrap}
 .code{font:700 12px ui-monospace,monospace;padding:4px 8px;border-radius:8px;background:var(--bg);border:1px dashed var(--line);cursor:pointer;color:var(--ink)}
@@ -196,6 +206,11 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
       <img id="map-img" src="assets/map_locked.webp" alt="">
       <div id="map-over"></div>
     </div>
+    <div class="santa" id="santa" hidden>
+      <div class="santa-count" id="santa-count"></div>
+      <img class="santa-man" id="santa-man" src="assets/santa_sad.webp" alt="Дед Мороз">
+      <div class="sack-wrap" id="sack-wrap"><div class="gifts" id="gifts"></div><img src="assets/sack.webp" alt="Мешок"></div>
+    </div>
     <svg class="map" id="map" viewBox="0 0 600 300" role="img" aria-label="Карта с пятью точками" hidden></svg>
     <div id="q-scan">
       <h3 id="q-step"></h3>
@@ -211,7 +226,7 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
     <div id="q-game" hidden>
       <div class="hud"><span id="g-score">🍬 0 / 8</span><span id="g-lives"></span><span id="g-time">15</span></div>
       <canvas class="game" id="cv" width="600" height="380"></canvas>
-      <p style="font-size:13px;color:var(--muted);margin-top:6px">Води пальцем или мышкой, лови конфеты<span id="g-avoid"></span>.</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:6px">Води пальцем или мышкой, лови <span id="g-what">конфеты</span><span id="g-avoid"></span>.</p>
     </div>
     <div id="q-final" class="final" hidden></div>
     <div class="row"><button class="btn alt" id="reset" type="button">Начать заново</button></div>
@@ -451,9 +466,9 @@ const QUESTS={
   karta:{title:'Карта сокровищ',lead:'Пять точек на новогодней карте. Каждую открывает QR из новой коробки. Пройди все пять и найди клад.',
     finalT:'Клад найден!',share:'Я нашёл новогодний клад!',villain:false,goal:'🎁',
     how:'Покупатель сканирует QR из коробки, и на карте открывается следующая точка с короткой мини-игрой. 5 точек, 5 сканов, в конце сундук с призом.'},
-  ded:{title:'Спасите Деда Мороза!',lead:'Злодей Сосулькин украл Деда Мороза. Пять точек, пять QR, в каждой уровень со снежками.',
-    finalT:'Дед Мороз спасён!',share:'Я спас Деда Мороза!',villain:true,goal:'🎅',
-    how:'Как у карты сокровищ: каждый QR из коробки открывает следующую точку. В каждой точке уровень, где злодей кидает снежки. После 5 точек Дед Мороз свободен.'}
+  ded:{title:'Спасите Деда Мороза!',lead:'Злодей украл подарки, и мешок Деда Мороза опустел. Каждый QR из коробки возвращает один подарок. Верни все 5, и праздник спасён.',
+    finalT:'Праздник спасён!',share:'Я спас Новый год!',villain:true,goal:'🎁',item:'🎁',
+    how:'Покупатель сканирует QR из коробки и проходит короткий уровень: ловит подарки и уворачивается от снежков злодея. Подарок летит в мешок. После 5 сканов мешок полный, и Дед Мороз снова улыбается.'}
 };
 const PTS=[[70,230],[180,160],[300,215],[410,120],[525,175]];
 let qk='karta',qs=null;
@@ -470,10 +485,26 @@ function drawMap2(){
   const p=MP[Math.min(qs.done,4)];o+=`<img class="mhero" src="${full(h)}" alt="" style="left:${(p[0]-70)/MW*100}%;top:${(p[1]+10)/MH*100}%">`;
   $('map-over').innerHTML=o;
 }
-function mapFallback(){$('map2').hidden=true;$('map').removeAttribute('hidden');}
+let mapFailed=false;
+function mapFallback(){mapFailed=true;if(qk!=='ded'){$('map2').hidden=true;$('map').removeAttribute('hidden');}}
 $('map-img').addEventListener('error',mapFallback);
 if($('map-img').complete&&!$('map-img').naturalWidth)mapFallback();
-function drawMap(){drawMap2();
+const GIFT_POS=[[30,0,-8],[70,0,10],[50,8,-2],[22,26,-14],[76,24,12]];
+let lastGifts=-1;
+function drawSanta(){
+  const n=Math.min(qs.done,5);
+  $('santa-count').textContent=n>=5?'Мешок полный! 🎉':`Подарков в мешке: ${n} из 5`;
+  $('santa-man').src=n>=5?'assets/santa_happy.webp':'assets/santa_sad.webp';
+  $('sack-wrap').style.transform=`scale(${1+n*.05})`;
+  $('gifts').innerHTML=GIFT_POS.slice(0,n).map(([l,b,r],i)=>`<span class="gift ${i===n-1&&lastGifts>=0&&n>lastGifts?'new':''}" style="left:${l}%;bottom:${b}px;rotate:${r}deg">🎁</span>`).join('');
+  if(n>=5&&lastGifts>=0&&lastGifts<5&&!reduced)$('santa-man').animate([{transform:'translateY(0)'},{transform:'translateY(-30px) scale(1.03)'},{transform:'translateY(0)'}],{duration:600,iterations:2});
+  lastGifts=n;
+}
+function drawMap(){
+  const isDed=qk==='ded';$('santa').hidden=!isDed;
+  if(isDed){$('map2').hidden=true;$('map').setAttribute('hidden','');drawSanta();return;}
+  lastGifts=-1;$('map2').hidden=mapFailed;if(mapFailed)$('map').removeAttribute('hidden');
+  drawMap2();
   const Q=QUESTS[qk];const h=heroById(qs.hero);
   const path=PTS.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ');
   let s=`<rect width="600" height="300" fill="var(--ice)"/>`;
@@ -520,7 +551,7 @@ let raf=0,G=null;
 function stopGame(){cancelAnimationFrame(raf);G=null;}
 function startGame(){
   const Q=QUESTS[qk];$('q-scan').hidden=true;$('q-game').hidden=false;
-  $('g-avoid').textContent=Q.villain?' и уворачивайся от снежков злодея':'';
+  $('g-avoid').textContent=Q.villain?' и уворачивайся от снежков злодея':'';$('g-what').textContent=Q.item?'подарки':'конфеты';
   const cv=$('cv'),x=cv.getContext('2d');const h=heroById(qs.hero);
   const img=new Image();img.src=full(h);
   const level=qs.done;
@@ -528,8 +559,8 @@ function startGame(){
   const move=e=>{const r=cv.getBoundingClientRect();G&&(G.px=Math.max(40,Math.min(560,(e.clientX-r.left)/r.width*600)));};
   cv.onpointermove=move;cv.onpointerdown=move;
   function end(win){G.over=true;cancelAnimationFrame(raf);
-    if(win){const sticker=Math.random()<0.35;if(sticker)qs.stickers++;qs.done++;qSave();
-      setTimeout(()=>{renderQuest();qStatus(`Точка пройдена!${sticker?' Выпал редкий стикер Meet & Sketch ✨':''}`,'ok');},400);}
+    if(win){qs.done++;qSave();
+      setTimeout(()=>{renderQuest();qStatus(Q.item?'Подарок вернулся в мешок! 🎁':'Точка пройдена!','ok');},400);}
     else{x.fillStyle='rgba(0,0,0,.55)';x.fillRect(0,0,600,380);x.fillStyle='#fff';x.font='800 26px Nunito,sans-serif';x.textAlign='center';
       x.fillText('Почти! Попробуй ещё раз',300,180);x.font='600 17px Nunito,sans-serif';x.fillText('Нажми на поле',300,215);
       cv.onpointerdown=()=>{cv.onpointerdown=null;startGame();};}}
@@ -539,11 +570,11 @@ function startGame(){
     x.clearRect(0,0,600,380);
     for(let i=0;i<30;i++){x.fillStyle='rgba(255,255,255,.7)';x.beginPath();x.arc((i*131)%600,((i*71)+el*.03)%380,2,0,7);x.fill();}
     x.font='30px serif';x.textAlign='center';x.textBaseline='middle';
-    for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':'🍬',it.x,it.y);
+    for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':(Q.item||'🍬'),it.x,it.y);
       if(!it.hit&&it.y>300&&it.y<350&&Math.abs(it.x-G.px)<46){it.hit=true;if(it.bad)G.lives--;else G.score++;}}
     G.items=G.items.filter(it=>!it.hit&&it.y<400);
     if(img.complete)x.drawImage(img,G.px-35,286,70,70*h.H/h.W);
-    $('g-score').textContent=`🍬 ${G.score} / 8`;$('g-lives').textContent=Q.villain?'❤️'.repeat(Math.max(0,G.lives)):'';
+    $('g-score').textContent=`${Q.item||'🍬'} ${G.score} / 8`;$('g-lives').textContent=Q.villain?'❤️'.repeat(Math.max(0,G.lives)):'';
     $('g-time').textContent='⏱ '+Math.max(0,Math.ceil((G.dur-el)/1000));
     if(G.score>=8)return end(true);
     if(G.lives<=0||el>=G.dur)return end(false);
@@ -559,13 +590,12 @@ function renderFinal(){
   x.fillStyle='rgba(255,255,255,.8)';for(let i=0;i<60;i++){x.beginPath();x.arc((i*137)%640,(i*89)%800,2.5,0,7);x.fill();}
   const fin=$('q-final');
   fin.innerHTML=`<h2>${Q.finalT}</h2><p>Приз твой, и ты участвуешь в розыгрыше новогодних боксов.</p>
-    ${qs.stickers?`<span class="sticker">✨ Стикеры Meet &amp; Sketch: ${qs.stickers}</span>`:''}
     <img id="card" alt="Картинка для сторис: ${Q.share}"><p style="font-size:13px;color:var(--muted)">Картинка для сторис</p>`;
-  const img=new Image();img.onload=()=>{x.drawImage(img,200,215,240,240*h.H/h.W);
+  const img=new Image();img.onload=()=>{x.drawImage(img,200,215,240,240*img.naturalHeight/img.naturalWidth);
     x.fillStyle='#fff';x.textAlign='center';x.font='900 46px Rubik,sans-serif';x.fillText(Q.share,320,150,580);
     x.font='54px serif';x.fillText(Q.goal+' 🎄 🍬',320,660);x.font='800 24px Nunito,sans-serif';x.fillStyle='#F0B84E';x.fillText('Saule · новогодняя игра',320,730);
     $('card').src=c.toDataURL('image/png');};
-  img.src=full(h);
+  img.src=qk==='ded'?'assets/santa_happy.webp':full(h);
 }
 
 /* routing */
