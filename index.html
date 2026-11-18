@@ -124,11 +124,45 @@ canvas.game{width:100%;max-width:100%;border-radius:20px;background:linear-gradi
 .opt{background:var(--ice);border:2px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
 .opt h4{margin:0;font:800 16px var(--body)}
 .minus{font-size:13px;color:var(--muted)}
+.cost{font:900 18px var(--pixel);color:var(--berry);margin-top:auto}
+.flow b{white-space:nowrap}
 .list{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
 .price{background:linear-gradient(160deg,var(--berry),var(--red-deep));color:#fff;border-radius:20px;padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}
 .price .pl{display:block;font:700 12px var(--body);text-transform:uppercase;letter-spacing:.06em;color:#FFE7B8}
 .price b{font:900 24px var(--pixel)}
 .price p{grid-column:1/-1;font-size:13px;color:#FFF1E4}
+.scheme{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;margin:4px 0}
+.sc-col{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.sc-col img{width:56px;height:auto}
+.sc-col small{font-weight:800;font-size:12px}
+.bx{width:62px;height:42px;background:var(--berry);border-radius:7px;position:relative;box-shadow:inset 0 9px 0 #F6E3C6}
+.qr{position:absolute;left:50%;top:15px;width:20px;height:20px;transform:translateX(-50%);background:#fff;border-radius:3px;
+  background-image:linear-gradient(90deg,#222 33%,transparent 33% 66%,#222 66%),linear-gradient(#222 33%,transparent 33% 66%,#222 66%);background-size:8px 8px;background-position:2px 2px;background-repeat:repeat}
+.arr{font-weight:900;color:var(--muted);line-height:1}
+.qm{width:56px;height:72px;border-radius:28px;border:3px dashed var(--muted);display:flex;align-items:center;justify-content:center;font:900 28px var(--pixel);color:var(--muted)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;font-weight:700}
+.flow span{background:var(--ice);border:2px solid var(--line);border-radius:99px;padding:4px 10px}
+.flow span.hot{background:var(--berry);border-color:var(--berry);color:#fff}
+.flow b{color:var(--muted)}
+.cal{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;text-align:center}
+.cal>div{background:var(--ice);border:2px solid var(--line);border-radius:12px;padding:6px 2px;display:flex;flex-direction:column;align-items:center;min-width:0}
+.cal b{font:900 15px var(--pixel);color:var(--berry)}
+.cal span{font-size:22px;line-height:1.2}
+.cal small{font-size:11px;font-weight:700;line-height:1.2}
+.cal .dots{justify-content:center;font:900 22px var(--pixel);color:var(--muted);background:none;border-style:dashed}
+.cal .big{background:var(--berry);border-color:var(--berry);color:#fff}
+.cal .big b{color:#FFE7B8}
+.try{font-size:13px;color:var(--muted);margin-top:4px}
+.price{grid-template-columns:1fr;gap:12px}
+.pr-rows{display:grid;gap:6px}
+.pr{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-size:14px;color:#FFF1E4}
+.pr b{font:800 16px var(--pixel);white-space:nowrap;color:#fff}
+.pr.main span{font-weight:800;color:#fff}.pr.main b{font-size:22px}
+.pr.all{border-top:1px dashed rgba(255,255,255,.4);padding-top:8px}
+.pr.all b{color:#FFE7B8}
+.pr-term{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.pr-term b{font:900 22px var(--pixel)}
+.pr-term small{color:#FFE7B8;font-weight:700}
 footer{margin-top:22px;font-size:12px;color:var(--muted)}
 </style>
 
@@ -178,16 +212,48 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
       <p>Внутри коробки QR-код. Покупатель сканирует его телефоном, и открывается новогодний друг. Ничего не нужно скачивать.</p>
     </div>
     <div class="extra">
-      <span class="tag">Дополнительно</span>
+      <span class="tag">Дополнительная идея</span>
       <h3>Разные герои в разных коробках</h3>
-      <p>Делаем 2–3 разных QR. В одних коробках открывается Ягодка, в других Кустик. Выбрать героя нельзя: кто попался, тот и твой. Чтобы поймать другого, нужна ещё одна коробка. Так дети захотят собрать всех.</p>
+      <div class="scheme">
+        <div class="sc-col"><div class="bx"><i class="qr"></i></div><span class="arr">↓</span><img src="assets/red_full.webp" alt="Ягодка"><small>Ягодка</small></div>
+        <div class="sc-col"><div class="bx"><i class="qr"></i></div><span class="arr">↓</span><img src="assets/green_full.webp" alt="Кустик"><small>Кустик</small></div>
+        <div class="sc-col"><div class="bx"><i class="qr"></i></div><span class="arr">↓</span><div class="qm">?</div><small>Редкий герой</small></div>
+      </div>
+      <div class="flow"><span>Купил коробку</span><b>→</b><span>Попался герой</span><b>→</b><span>Хочется остальных</span><b>→</b><span class="hot">Ещё коробка</span></div>
+      <ul class="list">
+        <li><b>Как работает:</b> делаем 2–3 разных QR, каждая коробка получает один. Выбрать героя нельзя: какой попался, тот и твой.</li>
+        <li><b>Зачем Saule:</b> чтобы собрать всех героев, нужно купить 2–3 коробки. Это повторные покупки, как у коллекционных брелоков.</li>
+      </ul>
     </div>
     <div class="extra">
-      <span class="tag">Дополнительно</span>
+      <span class="tag">Дополнительная идея</span>
       <h3>Адвент-календарь</h3>
-      <p>24 окошка в декабре. Каждый день открывается одно: новое угощение для друга, задание или подарок. Это повод заходить в игру каждый день. Нажми на первое окошко:</p>
+      <div class="cal">
+        <div><b>1</b><span>🍪</span><small>угощение</small></div>
+        <div><b>2</b><span>⭐</span><small>задание</small></div>
+        <div><b>3</b><span>🎩</span><small>наряд</small></div>
+        <div class="dots">…</div>
+        <div class="big"><b>24</b><span>🎁</span><small>большой подарок</small></div>
+      </div>
+      <div class="flow"><span>Каждый день новое окошко</span><b>→</b><span>Покупатель заходит в игру</span><b>→</b><span class="hot">24 встречи с брендом</span></div>
+      <ul class="list">
+        <li><b>Как работает:</b> в декабре каждый день открывается одно окошко: угощение для друга, задание или подарок. QR из новой коробки открывает бонусное окошко сразу.</li>
+        <li><b>Зачем Saule:</b> покупатель возвращается к бренду каждый день, а не один раз. Бонус за новую коробку подталкивает купить ещё.</li>
+      </ul>
+      <p class="try">Попробуй, нажми на первое окошко:</p>
       <div class="advent" id="advent"></div>
       <div class="status" id="advent-status" aria-live="polite"></div>
+    </div>
+    <div class="block">
+      <h3>Что входит в работу</h3>
+      <ol class="list">
+        <li>Отрисовка героев для анимации: каждый герой в слоях (тело, глаза, формы рта, радость и грусть).</li>
+        <li>Встреча по деталям: какая еда (можно продукты Saule), будет ли герой повторять голос, имена героев.</li>
+        <li>Анимации: дыхание, моргание, жевание, радость, грусть. Звуки.</li>
+        <li>Запуск по QR, проверка на iPhone и Android.</li>
+        <li>Макет QR для печати внутри коробки или на вкладыше.</li>
+        <li>Два круга правок.</li>
+      </ol>
     </div>
     <div class="price" data-k="drug"></div>
   </section>
@@ -223,16 +289,28 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
       <div class="codes" id="codes"></div>
       <div class="status" id="q-status" aria-live="polite"></div>
     </div>
-    <div id="q-game" hidden>
-      <div class="hud"><span id="g-score">🍬 0 / 8</span><span id="g-lives"></span><span id="g-time">15</span></div>
-      <canvas class="game" id="cv" width="600" height="380"></canvas>
-      <p style="font-size:13px;color:var(--muted);margin-top:6px">Води пальцем или мышкой, лови <span id="g-what">конфеты</span><span id="g-avoid"></span>.</p>
-    </div>
     <div id="q-final" class="final" hidden></div>
     <div class="row"><button class="btn alt" id="reset" type="button">Начать заново</button></div>
     <div class="block">
       <h3>Как это работает</h3>
       <p id="q-how"></p>
+    </div>
+    <div class="extra">
+      <span class="tag">Дополнительная идея</span>
+      <h3>Мини-игра на каждой точке</h3>
+      <div class="flow"><span>Скан QR</span><b>→</b><span>Короткая мини-игра</span><b>→</b><span class="hot">Точка открыта</span></div>
+      <div class="opts">
+        <div class="opt"><h4>Одна игра на все точки</h4><p>Например, «лови подарки и уворачивайся от снежков». С каждой точкой немного сложнее.</p><p class="cost">+150 000 ₸</p></div>
+        <div class="opt"><h4>Своя игра на каждой точке</h4><p>5 простых разных игр: поймай подарки, слепи снеговика, попади снежком в злодея, найди отличия, собери пазл.</p><p class="cost">+350 000 ₸</p></div>
+      </div>
+      <ul class="list"><li><b>Зачем Saule:</b> покупатель проводит в игре больше времени, ему интереснее, и он охотнее делится результатом.</li></ul>
+      <div class="row"><button class="btn" id="try-game" type="button">▶ Попробовать пример игры</button></div>
+    <div id="q-game" hidden>
+      <div class="hud"><span id="g-score">🍬 0 / 8</span><span id="g-lives"></span><span id="g-time">15</span></div>
+      <canvas class="game" id="cv" width="600" height="380"></canvas>
+      <p style="font-size:13px;color:var(--muted);margin-top:6px">Води пальцем или мышкой, лови <span id="g-what">конфеты</span><span id="g-avoid"></span>.</p>
+    </div>
+      <div class="status" id="g-status" aria-live="polite"></div>
     </div>
     <div class="block">
       <h3>Где будут QR</h3>
@@ -258,6 +336,10 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
         <li>Промокод или скидка на следующую покупку.</li>
         <li>Подарок в магазине: показываешь экран финала и получаешь приз.</li>
       </ul>
+    </div>
+    <div class="block">
+      <h3>Что входит в работу</h3>
+      <ol class="list" id="q-incl"></ol>
     </div>
     <div class="block">
       <h3>Что нужно узнать для расчёта</h3>
@@ -452,11 +534,19 @@ $('advent').onclick=e=>{const d=e.target.closest('.day');if(!d)return;const n=+d
 
 /* ---------- price & terms (fill in) ---------- */
 const PRICES={
-  drug:{name:'Новогодний друг',price:'—',term:'2–3 недели',extra:'Разные герои в коробках и адвент-календарь считаются отдельно.'},
-  karta:{name:'Карта сокровищ',price:'—',term:'3–4 недели',extra:'Сервер и база кодов для защищённого варианта считаются отдельно.'},
-  ded:{name:'Спасите Деда Мороза',price:'—',term:'4–5 недель',extra:'Сервер и база кодов для защищённого варианта считаются отдельно.'}
+  drug:{rows:[['Новогодний друг',450000],['+ Разные герои в разных коробках',150000],['+ Адвент-календарь',250000]],
+    all:['Друг + обе идеи',750000],term:'1 неделя',termAll:'1,5 недели с дополнительными идеями'},
+  karta:{rows:[['Карта сокровищ, 5 разных QR на партию',500000],['+ Свой код в каждой коробке (защита)',250000],['+ Одна мини-игра на все точки',150000],['+ Своя мини-игра на каждой точке',350000]],
+    term:'1,5 недели',termAll:'2 недели с мини-играми',note:'Для защищённого варианта нужен сервер с базой кодов: от 15 000 ₸ в месяц на время акции.'},
+  ded:{rows:[['Спасите Деда Мороза, 5 разных QR на партию',550000],['+ Свой код в каждой коробке (защита)',250000],['+ Одна мини-игра на все точки',150000],['+ Своя мини-игра на каждой точке',350000]],
+    term:'1,5 недели',termAll:'2 недели с мини-играми',note:'Для защищённого варианта нужен сервер с базой кодов: от 15 000 ₸ в месяц на время акции.'}
 };
-function drawPrice(el,k){const p=PRICES[k];el.innerHTML=`<div><span class="pl">Стоимость</span><b>${p.price}</b></div><div><span class="pl">Срок</span><b>${p.term}</b></div><p>${p.extra} Срок считается с момента, когда получим картинки героев.</p>`;}
+const money=n=>n.toLocaleString('ru-RU').replace(/,/g,' ')+' ₸';
+function drawPrice(el,k){const p=PRICES[k];
+  el.innerHTML=`<div class="pr-rows">${p.rows.map(([n,v],i)=>`<div class="pr ${i?'':'main'}"><span>${n}</span><b>${money(v)}</b></div>`).join('')}
+    ${p.all?`<div class="pr all"><span>${p.all[0]}</span><b>${money(p.all[1])}</b></div>`:''}</div>
+    <div class="pr-term"><span class="pl">Срок</span><b>${p.term}</b>${p.termAll?`<small>${p.termAll}</small>`:''}</div>
+    <p>Срок считается после согласования и оплаты.${p.note?' '+p.note:''}</p>`;}
 document.querySelectorAll('.price[data-k]').forEach(el=>drawPrice(el,el.dataset.k));
 
 /* ---------- 2/3. Quest ---------- */
@@ -465,10 +555,12 @@ const TAKEN='SL-1ZZZ';
 const QUESTS={
   karta:{title:'Карта сокровищ',lead:'Пять точек на новогодней карте. Каждую открывает QR из новой коробки. Пройди все пять и найди клад.',
     finalT:'Клад найден!',share:'Я нашёл новогодний клад!',villain:false,goal:'🎁',
-    how:'Покупатель сканирует QR из коробки, и на карте открывается следующая точка с короткой мини-игрой. 5 точек, 5 сканов, в конце сундук с призом.'},
+    how:'Покупатель сканирует QR из коробки, и на карте открывается следующая точка. 5 точек, 5 сканов, в конце сундук с призом.',
+    incl:['Отрисовка карты и героев.','Встреча по деталям: что происходит на каждой точке, какой приз в финале.','Логика QR: 5 разных кодов или свой код в каждой коробке.','Макеты QR для печати внутри коробки или на вкладыше.','Финал и картинка для сторис.','Проверка на iPhone и Android, два круга правок.']},
   ded:{title:'Спасите Деда Мороза!',lead:'Злодей украл подарки, и мешок Деда Мороза опустел. Каждый QR из коробки возвращает один подарок. Верни все 5, и праздник спасён.',
     finalT:'Праздник спасён!',share:'Я спас Новый год!',villain:true,goal:'🎁',item:'🎁',
-    how:'Покупатель сканирует QR из коробки и проходит короткий уровень: ловит подарки и уворачивается от снежков злодея. Подарок летит в мешок. После 5 сканов мешок полный, и Дед Мороз снова улыбается.'}
+    how:'Покупатель сканирует QR из коробки, герой продвигается по карте, и в мешок Деда Мороза возвращается подарок. После 5 сканов мешок полный, и Дед Мороз снова улыбается.',
+    incl:['Отрисовка: Дед Мороз (грустный и радостный), мешок в 5 состояниях, подарки, злодей.','Встреча по деталям: сюжет, кто злодей, какой приз в финале.','Карта с 5 точками, анимация возвращения подарка в мешок.','Логика QR: 5 разных кодов или свой код в каждой коробке.','Макеты QR для печати внутри коробки или на вкладыше.','Финал и картинка для сторис.','Проверка на iPhone и Android, два круга правок.']}
 };
 const PTS=[[70,230],[180,160],[300,215],[410,120],[525,175]];
 let qk='karta',qs=null;
@@ -486,7 +578,7 @@ function drawMap2(){
   $('map-over').innerHTML=o;
 }
 let mapFailed=false;
-function mapFallback(){mapFailed=true;if(qk!=='ded'){$('map2').hidden=true;$('map').removeAttribute('hidden');}}
+function mapFallback(){mapFailed=true;$('map2').hidden=true;$('map').removeAttribute('hidden');}
 $('map-img').addEventListener('error',mapFallback);
 if($('map-img').complete&&!$('map-img').naturalWidth)mapFallback();
 const GIFT_POS=[[30,0,-8],[70,0,10],[50,8,-2],[22,26,-14],[76,24,12]];
@@ -502,8 +594,8 @@ function drawSanta(){
 }
 function drawMap(){
   const isDed=qk==='ded';$('santa').hidden=!isDed;
-  if(isDed){$('map2').hidden=true;$('map').setAttribute('hidden','');drawSanta();return;}
-  lastGifts=-1;$('map2').hidden=mapFailed;if(mapFailed)$('map').removeAttribute('hidden');
+  if(isDed)drawSanta();else lastGifts=-1;
+  $('map2').hidden=mapFailed;if(mapFailed)$('map').removeAttribute('hidden');
   drawMap2();
   const Q=QUESTS[qk];const h=heroById(qs.hero);
   const path=PTS.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ');
@@ -522,12 +614,12 @@ function drawMap(){
 }
 function qStatus(t,c){const s=$('q-status');s.textContent=t;s.className='status '+(c||'');}
 function renderQuest(){
-  const Q=QUESTS[qk];$('q-title').textContent=Q.title;$('q-lead').textContent=Q.lead;$('q-how').innerHTML=Q.how;drawPrice($('q-price'),qk);
+  const Q=QUESTS[qk];$('q-title').textContent=Q.title;$('q-lead').textContent=Q.lead;$('q-how').innerHTML=Q.how;$('q-incl').innerHTML=Q.incl.map(t=>`<li>${t}</li>`).join('');drawPrice($('q-price'),qk);
   picker($('pick-quest'),qs.hero,id=>{qs.hero=id;qSave();drawMap();});
   $('q-pick-wrap').hidden=qs.done>0;
   $('codes').innerHTML=[...CODES,TAKEN].map(c=>`<button type="button" class="code ${qs.used.includes(c)||c===TAKEN?'used':''}" data-c="${c}">${c}</button>`).join('');
   $('q-step').textContent=qs.done<5?`Точка ${qs.done+1} из 5: отсканируй QR из коробки`:'';
-  $('q-scan').hidden=qs.done>=5;$('q-game').hidden=true;$('q-final').hidden=qs.done<5;
+  $('q-scan').hidden=qs.done>=5;$('q-game').hidden=true;$('try-game').hidden=false;$('g-status').textContent='';$('q-final').hidden=qs.done<5;
   if(qs.done>=5)renderFinal();
   qStatus('');drawMap();
 }
@@ -537,20 +629,21 @@ function tryCode(raw){
   if(c===TAKEN){qStatus('Этот код уже использовал другой покупатель. Один код работает один раз.','bad');return;}
   if(qs.used.includes(c)){qStatus('Ты уже использовал этот код. Нужен код из другой коробки.','bad');return;}
   if(!CODES.includes(c)){qStatus('Такого кода нет. Проверь буквы и цифры.','bad');return;}
-  qs.used.push(c);qSave();qStatus(`Код ${c} принят! Открываем точку ${qs.done+1}.`,'ok');
-  setTimeout(startGame,700);
+  qs.used.push(c);qs.done++;qSave();const Q=QUESTS[qk];renderQuest();
+  qStatus(qs.done>=5?'':Q.item?`Код ${c} принят! Подарок вернулся в мешок 🎁`:`Код ${c} принят! Точка ${qs.done} открыта.`,'ok');
 }
 $('scan').onclick=()=>{const free=CODES.find(c=>!qs.used.includes(c));if(!free){qStatus('Демо-коды закончились, нажми «Начать заново».','bad');return;}tryCode(free);};
 $('enter').onclick=()=>tryCode($('code').value);
 $('code').onkeydown=e=>{if(e.key==='Enter')tryCode(e.target.value);};
 $('codes').onclick=e=>{const b=e.target.closest('.code');if(b)$('code').value=b.dataset.c;};
+$('try-game').onclick=()=>{startGame();$('cv').scrollIntoView({block:'center',behavior:'smooth'});};
 $('reset').onclick=()=>{qs={hero:qs.hero,done:0,used:[],stickers:0};qSave();stopGame();renderQuest();};
 
 /* mini game */
 let raf=0,G=null;
 function stopGame(){cancelAnimationFrame(raf);G=null;}
 function startGame(){
-  const Q=QUESTS[qk];$('q-scan').hidden=true;$('q-game').hidden=false;
+  const Q=QUESTS[qk];$('q-game').hidden=false;$('g-status').textContent='';$('try-game').hidden=true;
   $('g-avoid').textContent=Q.villain?' и уворачивайся от снежков злодея':'';$('g-what').textContent=Q.item?'подарки':'конфеты';
   const cv=$('cv'),x=cv.getContext('2d');const h=heroById(qs.hero);
   const img=new Image();img.src=full(h);
@@ -559,8 +652,8 @@ function startGame(){
   const move=e=>{const r=cv.getBoundingClientRect();G&&(G.px=Math.max(40,Math.min(560,(e.clientX-r.left)/r.width*600)));};
   cv.onpointermove=move;cv.onpointerdown=move;
   function end(win){G.over=true;cancelAnimationFrame(raf);
-    if(win){qs.done++;qSave();
-      setTimeout(()=>{renderQuest();qStatus(Q.item?'Подарок вернулся в мешок! 🎁':'Точка пройдена!','ok');},400);}
+    if(win){setTimeout(()=>{$('q-game').hidden=true;$('try-game').hidden=false;const st=$('g-status');st.className='status ok';
+        st.textContent=Q.item?'Победа! В игре после этого подарок летит в мешок 🎁':'Победа! В игре после этого открывается точка.';},400);}
     else{x.fillStyle='rgba(0,0,0,.55)';x.fillRect(0,0,600,380);x.fillStyle='#fff';x.font='800 26px Nunito,sans-serif';x.textAlign='center';
       x.fillText('Почти! Попробуй ещё раз',300,180);x.font='600 17px Nunito,sans-serif';x.fillText('Нажми на поле',300,215);
       cv.onpointerdown=()=>{cv.onpointerdown=null;startGame();};}}
