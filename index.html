@@ -203,6 +203,14 @@ canvas.game{width:100%;max-width:100%;border-radius:20px;background:linear-gradi
 .ribbon{position:absolute;top:-11px;right:12px;background:var(--gold);color:#3A1A16;font:800 11px var(--body);padding:3px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:.05em}
 .pk-note{font-size:13px;color:var(--muted);margin-top:10px}
 .pk p{color:var(--ink)}.pk.best p{color:#FFF1E4}
+.wanted,.bonus{margin-top:16px;background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px}
+.wanted p{margin-top:6px}
+.bn{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:10px}
+.bn>div{background:var(--ice);border:2px solid var(--line);border-radius:18px;padding:12px 14px}
+.bn span{font-size:26px}
+.bn h3{margin:4px 0 2px}
+.bn p{font-size:14px}
+.ask{margin-top:12px;font-weight:800;color:var(--berry)}
 footer{margin-top:22px;font-size:12px;color:var(--muted)}
 </style>
 
@@ -213,6 +221,11 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
   <h1>Новогодние игры</h1>
   <p class="lead">3 концепта для Saule.</p>
   </header>
+
+  <section class="wanted">
+    <h2>Что вы хотели</h2>
+    <p>Новогодний промо-проект с героями Saule, в который покупатель играет по QR из коробки. Вы прислали три идеи: виртуальный друг, как «Говорящий Том»; карта сокровищ, где около 5 QR ведут к кладу; спасение Деда Мороза за 5 QR. Мы сделали демо каждой идеи, в них можно поиграть прямо здесь.</p>
+  </section>
 
   <div class="overview">
     <a class="ov" href="#drug" data-go="drug"><img src="assets/red_full.webp" alt=""><div><h3>Новогодний друг</h3><p>Герой из коробки ест, смеётся и повторяет голос</p><span>от 300 000 ₸ · 1 неделя</span></div></a>
@@ -347,8 +360,8 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
       <h3>Мини-игра на каждой точке</h3>
       <div class="flow"><span>Скан QR</span><b>→</b><span>Короткая мини-игра</span><b>→</b><span class="hot">Точка открыта</span></div>
       <div class="opts">
-        <div class="opt"><h4>Одна игра на все точки</h4><p>Например, «лови подарки и уворачивайся от снежинок». С каждой точкой немного сложнее.</p><p class="cost">+100 000 ₸</p></div>
-        <div class="opt"><h4>Своя игра на каждой точке</h4><p>5 простых разных игр: поймай подарки, слепи снеговика, попади снежком в цель, найди отличия, собери пазл.</p><p class="cost">+150 000 – 350 000 ₸</p><p class="minus">Цена зависит от того, какие игры выберете: простые (поймай, попади) дешевле, сложнее (пазл, найди отличия) дороже. Точную сумму считаем после выбора игр.</p></div>
+        <div class="opt"><h4>Одна игра на все точки</h4><p>Например, «лови подарки и уворачивайся от снежинок». С каждой точкой немного сложнее.</p><p class="cost">+ от 100 000 ₸</p></div>
+        <div class="opt"><h4>Своя игра на каждой точке</h4><p>5 простых разных игр: поймай подарки, слепи снеговика, попади снежком в цель, найди отличия, собери пазл.</p><p class="cost">+ от 150 000 ₸</p><p class="minus">Цена зависит от того, какие игры выберете: простые (поймай, попади) дешевле, сложнее (пазл, найди отличия) дороже. Точную сумму считаем после выбора игр.</p></div>
       </div>
       <ul class="list"><li><b>Зачем Saule:</b> покупатель проводит в игре больше времени, ему интереснее, и он охотнее делится результатом.</li></ul>
       <div class="row"><button class="btn" id="try-game" type="button">▶ Попробовать пример игры</button></div>
@@ -397,7 +410,7 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
     </div>
     <div class="block">
       <h3>Что обсудим на созвоне</h3>
-      <p>Это 30 минут разговора, можно ответить и письменно. Если чего-то пока нет, подскажем.</p>
+      <p>Это 10–15 минут разговора, можно ответить и письменно. Если чего-то пока нет, подскажем.</p>
       <ul class="list">
         <li>Тираж: сколько коробок в партии и будет ли несколько партий.</li>
         <li>Сроки производства: когда печатаются коробки и успеваем ли добавить QR.</li>
@@ -411,14 +424,24 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
     <div class="price" id="q-price"></div>
   </section>
 
+  <section class="bonus">
+    <h2>В каждой игре для бренда</h2>
+    <div class="bn">
+      <div><span>📣</span><h3>Вирусность</h3><p>Покупатель получает картинку «Я спас Новый год!» для сторис и делится героем. Проект интересен соцсетям и СМИ.</p></div>
+      <div><span>🎨</span><h3>Художники Казахстана</h3><p>Новые костюмы, наряды и персонажи для игры рисуют художники Казахстана.</p></div>
+      <div><span>💌</span><h3>Коллаб с Meet &amp; Sketch</h3><p>Новогодние открытки и стикеры. Редкие выпадают прямо в игре, их хочется собрать.</p></div>
+    </div>
+  </section>
+
   <section class="steps">
     <h2>Как начать</h2>
     <ol>
       <li><b>Выбираете игру и пакет.</b> Можно взять одну игру или несколько.</li>
-      <li><b>Созвон на 30 минут.</b> Обсуждаем героев, приз и где будут QR.</li>
+      <li><b>Созвон на 10–15 минут.</b> Обсуждаем героев, приз и где будут QR.</li>
       <li><b>Договор и оплата.</b> С этого дня считаем срок.</li>
       <li><b>Через 1–1,5 недели</b> готовая игра и макеты QR для печати.</li>
     </ol>
+    <p class="ask">Делаем такой вариант? Выберите игру, и договоримся о созвоне 🤍</p>
   </section>
 
   <footer>SHŪ для Saule · ноябрь 2026</footer>
@@ -609,13 +632,13 @@ const PRICES={
   drug:{pk:[{n:'Старт',d:'Новогодний друг',p:300000,t:'1 неделя'},
             {n:'Коллекция',d:'Друг + разные герои в разных коробках',p:400000,t:'1 неделя',best:1},
             {n:'Всё включено',d:'Друг + разные герои + адвент-календарь',p:550000,t:'1,5 недели'}],
-    note:'Адвент-календарь можно добавить к любому пакету: +150 000 ₸.'},
-  karta:{pk:QPK,note:'Своя мини-игра на каждой точке вместо одной: +150 000 – 350 000 ₸, зависит от сложности игр. Сервер для защищённого варианта и розыгрыша обсуждаем отдельно.'},
-  ded:{pk:QPK.map(x=>({...x,d:x.d.replace('Игра на карте','Спасение Деда Мороза')})),note:'Своя мини-игра на каждой точке вместо одной: +150 000 – 350 000 ₸, зависит от сложности игр. Сервер для защищённого варианта и розыгрыша обсуждаем отдельно.'}
+    note:'Адвент-календарь можно добавить к любому пакету: + от 150 000 ₸.'},
+  karta:{pk:QPK,note:'Своя мини-игра на каждой точке вместо одной: + от 150 000 ₸, цена зависит от сложности игр. Сервер в цену не входит, его обсуждаем отдельно.'},
+  ded:{pk:QPK.map(x=>({...x,d:x.d.replace('Игра на карте','Спасение Деда Мороза')})),note:'Своя мини-игра на каждой точке вместо одной: + от 150 000 ₸, цена зависит от сложности игр. Сервер в цену не входит, его обсуждаем отдельно.'}
 };
 const money=n=>n.toLocaleString('ru-RU').replace(/[,\u00a0\u202f]/g,' ')+' ₸';
 function drawPrice(el,k){const p=PRICES[k];
-  el.innerHTML=`<h3>Пакеты</h3><div class="pks">${p.pk.map(x=>`<div class="pk ${x.best?'best':''}">${x.best?'<span class="ribbon">Рекомендуем</span>':''}<h4>${x.n}</h4><p>${x.d}</p><b>${money(x.p)}</b><small>${x.t}</small></div>`).join('')}</div>
+  el.innerHTML=`<h3>Пакеты</h3><div class="pks">${p.pk.map(x=>`<div class="pk ${x.best?'best':''}">${x.best?'<span class="ribbon">Рекомендуем</span>':''}<h4>${x.n}</h4><p>${x.d}</p><b>от ${money(x.p)}</b><small>${x.t}</small></div>`).join('')}</div>
     <p class="pk-note">${p.note} Срок считается после согласования и оплаты. Правки сверх двух кругов могут сдвинуть срок.</p>`;}
 document.querySelectorAll('.price[data-k]').forEach(el=>drawPrice(el,el.dataset.k));
 
@@ -754,7 +777,7 @@ function renderFinal(){
   const g=x.createLinearGradient(0,0,0,800);g.addColorStop(0,'#C8202A');g.addColorStop(1,'#7E1016');x.fillStyle=g;x.fillRect(0,0,640,800);
   x.fillStyle='rgba(255,255,255,.8)';for(let i=0;i<60;i++){x.beginPath();x.arc((i*137)%640,(i*89)%800,2.5,0,7);x.fill();}
   const fin=$('q-final');
-  fin.innerHTML=`<h2>${Q.finalT}</h2><p>Приз твой! 🎉</p>
+  fin.innerHTML=`<h2>${Q.finalT}</h2><p>Приз твой! 🎉</p><span class="sticker">✨ Выпал редкий стикер Meet &amp; Sketch</span>
     <img id="card" alt="Картинка для сторис: ${Q.share}"><p style="font-size:13px;color:var(--muted)">Картинка для сторис</p>`;
   const img=new Image();img.onload=()=>{x.drawImage(img,200,215,240,240*img.naturalHeight/img.naturalWidth);
     x.fillStyle='#fff';x.textAlign='center';x.font='900 46px Rubik,sans-serif';x.fillText(Q.share,320,150,580);
