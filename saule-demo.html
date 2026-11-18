@@ -16,6 +16,7 @@
   --bg:#0F1524; --card:#182036; --ink:#EEF1F8; --muted:#A3ACC4; --line:#2A3452;
   --berry:#EF5C84; --pine:#4FB59A; --gold:#F0B84E; --ice:#1D2C48; --soft:#2A1E2C; color-scheme:dark}
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
 .wrap{max-width:760px;margin:0 auto;padding-block:20px 48px;
   padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
@@ -37,7 +38,7 @@ p{margin:0}
 .btn:disabled{opacity:.45;cursor:default}
 .btn:focus-visible,.tab:focus-visible,input:focus-visible,.hero-pick:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 input[type=text]{font:600 16px var(--body);padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);width:150px;text-transform:uppercase}
-.heroes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.heroes{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;max-width:360px}
 .hero-pick{border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:6px 4px 8px;cursor:pointer;color:var(--ink);font:700 12px var(--body);display:flex;flex-direction:column;align-items:center;gap:2px}
 .hero-pick[aria-pressed="true"]{border-color:var(--berry);background:var(--soft)}
 .hero-pick svg{width:56px;height:56px}
@@ -66,13 +67,38 @@ canvas.game{width:100%;max-width:100%;border-radius:16px;background:var(--ice);t
 @keyframes chew{0%,100%{transform:scale(1)}50%{transform:scale(1.06,.94)}}
 .chew{animation:chew .25s 4}
 @media (prefers-reduced-motion:reduce){.heart,.chew{animation:none}}
+.heroes.two{grid-template-columns:repeat(2,1fr);max-width:360px}
+.hero-pick img{width:72px;height:auto;display:block}
+.pet-stage{min-height:0;padding:44px 0 18px;background:linear-gradient(#cfe3f7,#eef5fc 70%,#fff);flex-direction:column}
+:root[data-theme="dark"] .pet-stage{background:linear-gradient(#1d2c48,#22365a 70%,#2c4470)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .pet-stage{background:linear-gradient(#1d2c48,#22365a 70%,#2c4470)}}
+.sat{position:absolute;top:12px;left:14px;right:14px;display:flex;gap:10px;align-items:center;font:800 12px var(--body);color:#1B2236}
+:root[data-theme="dark"] .sat{color:#EEF1F8}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sat{color:#EEF1F8}}
+.bar{flex:1;height:12px;border-radius:99px;background:rgba(0,0,0,.12);overflow:hidden}
+.bar i{display:block;height:100%;width:50%;background:linear-gradient(90deg,var(--berry),var(--gold));border-radius:99px;transition:width .5s}
+.pet{width:min(260px,64vw);position:relative;animation:breath 3.2s ease-in-out infinite;transform-origin:50% 100%;cursor:pointer;touch-action:manipulation}
+@keyframes breath{0%,100%{transform:scale(1,1)}50%{transform:scale(1.012,.985)}}
+.pet-move{transform-origin:50% 100%}
+.pet-body{position:relative;transform-origin:50% 90%;transition:transform .18s ease-out}
+.pet-body .lay{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;user-select:none}
+.pet-body #l-body{position:relative}
+#l-eyes{transition:transform .07s}
+#l-happy{opacity:0}
+.mouth{position:absolute;pointer-events:none;user-select:none}
+.tray{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.food{font-size:38px;line-height:1;width:66px;height:66px;border-radius:16px;border:2px solid var(--line);background:var(--bg);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;display:flex;align-items:center;justify-content:center}
+.food:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.drag{position:fixed;z-index:50;font-size:46px;pointer-events:none;transform:translate(-50%,-50%);transition:none}
+.crumb{position:absolute;width:7px;height:7px;border-radius:2px;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.pet{animation:none}}
 footer{margin-top:22px;font-size:12px;color:var(--muted)}
 </style>
 
 <div class="wrap">
   <div class="eyebrow">SHŪ × Сауле · демо для обсуждения</div>
   <h1>Новогодние игры</h1>
-  <p class="lead">Три рабочих черновика по идеям Кати. Герои пока временные: заменим на 4 героев с брелоков, когда получим фото коробки.</p>
+  <p class="lead">Три рабочих черновика по идеям Кати. Герои: красный и зелёный из серии Сауле (имена рабочие).</p>
 
   <nav class="tabs" aria-label="Варианты">
     <a class="tab" href="#drug" data-t="drug">1. Новогодний друг</a>
@@ -84,14 +110,22 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
   <section class="panel" id="v-drug" hidden>
     <div>
       <h2>Новогодний друг</h2>
-      <p class="lead">Скажи герою что-нибудь, он повторит смешным голосом. Можно покормить конфетой и нарядить.</p>
+      <p class="lead">Выбери героя. Перетащи угощение ему в рот, и он схрумкает его. Нажми на героя, и он засмеётся. Скажи что-нибудь, и он повторит смешным голосом.</p>
     </div>
-    <div class="heroes" id="pick-drug"></div>
-    <div class="stage" id="friend-stage"><div class="hearts" id="hearts"></div></div>
+    <div class="heroes two" id="pick-drug"></div>
+    <div class="stage pet-stage" id="friend-stage">
+      <div class="sat" aria-label="Сытость"><span>Сытость</span><div class="bar"><i id="sat-bar"></i></div></div>
+      <div class="pet" id="pet"><div class="pet-move" id="pet-move"><div class="pet-body" id="pet-body">
+        <img class="lay" id="l-body" alt="">
+        <img class="lay" id="l-eyes" alt="">
+        <svg class="lay" id="l-happy" aria-hidden="true"></svg>
+        <img class="mouth" id="l-mouth" alt="">
+      </div></div></div>
+      <div class="hearts" id="hearts"></div>
+    </div>
+    <div class="tray" id="tray" aria-label="Угощения"></div>
     <div class="row">
       <button class="btn hot" id="rec" type="button">🎤 Скажи что-нибудь</button>
-      <button class="btn" id="feed" type="button">🍬 Покормить</button>
-      <button class="btn alt" id="dress" type="button">🎩 Нарядить</button>
     </div>
     <div class="row" id="file-rec" hidden>
       <label class="btn alt" for="voice-file">🎙 Записать голос</label>
@@ -105,7 +139,7 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
       <div class="advent" id="advent"></div>
       <div class="status" id="advent-status" aria-live="polite"></div>
     </div>
-    <div class="note"><b>Как работает:</b> голос записывается и проигрывается прямо в телефоне, ускоренный и выше по тону. Записи никуда не отправляются, серверу не нужно обрабатывать звук.</div>
+    <div class="note"><b>Как работает:</b> герой собран из слоёв: тело, глаза и 4 формы рта. Код меняет рот и глаза и добавляет движение: дыхание, моргание, жевание, прыжок. Хруст генерируется в телефоне. Голос записывается и проигрывается тоже прямо в телефоне, никуда не отправляется. Сытость со временем падает, и герой грустнеет: это повод вернуться.</div>
   </section>
 
   <!-- 2 & 3. Quest engine -->
@@ -146,54 +180,155 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
 <script>
 (function(){
 const HEROES=[
-  {id:'h1',name:'Карамелька',c:'#E8893A',b:'#F7C99A'},
-  {id:'h2',name:'Мятик',c:'#3FA98C',b:'#B9E6D7'},
-  {id:'h3',name:'Ягодка',c:'#D9457A',b:'#F5BCD0'},
-  {id:'h4',name:'Какао',c:'#8A5A3C',b:'#E3C3A8'}
+  {id:'red',name:'Ягодка',W:440,H:580,nose:[232.8,264],eyeY:224,eyes:[[180,224.5],[281,223]],k:.6},
+  {id:'green',name:'Кустик',W:440,H:570,nose:[206.7,252],eyeY:213,eyes:[[164,213],[252.5,213]],k:.66}
 ];
-const ACC=['','hat','scarf','antlers'];
-function heroSVG(h,acc,cls){
-  let a='';
-  if(acc==='hat')a='<path d="M60 52 Q100 -6 140 52 Z" fill="#C8325B"/><rect x="52" y="46" width="96" height="16" rx="8" fill="#fff"/><circle cx="100" cy="10" r="11" fill="#fff"/>';
-  if(acc==='scarf')a='<path d="M48 142 Q100 166 152 142 L152 156 Q100 180 48 156 Z" fill="#1F6B5C"/><rect x="120" y="150" width="18" height="40" rx="6" fill="#1F6B5C"/>';
-  if(acc==='antlers')a='<path d="M70 60 L58 22 M58 22 L44 18 M60 36 L46 38 M130 60 L142 22 M142 22 L156 18 M140 36 L154 38" stroke="#7A4A33" stroke-width="7" stroke-linecap="round" fill="none"/>';
-  return `<svg class="${cls||''}" viewBox="0 0 200 200" aria-hidden="true">
-  <ellipse cx="100" cy="186" rx="60" ry="8" fill="rgba(0,0,0,.12)"/>
-  <ellipse cx="100" cy="112" rx="66" ry="72" fill="${h.c}"/>
-  <ellipse cx="100" cy="132" rx="40" ry="42" fill="${h.b}"/>
-  <circle cx="76" cy="92" r="13" fill="#fff"/><circle cx="124" cy="92" r="13" fill="#fff"/>
-  <circle cx="79" cy="94" r="6" fill="#1B2236"/><circle cx="121" cy="94" r="6" fill="#1B2236"/>
-  <circle cx="64" cy="114" r="7" fill="#fff" opacity=".35"/><circle cx="136" cy="114" r="7" fill="#fff" opacity=".35"/>
-  <ellipse class="mouth" cx="100" cy="120" rx="14" ry="4" fill="#5a1630"/>
-  ${a}</svg>`;
-}
+const MOUTHS={open:{w:144,h:78,ax:72.5},o:{w:58,h:76,ax:29.5},i:{w:185,h:45,ax:94.5},closed:{w:146,h:34,ax:73}};
+const A='assets/';
+const full=h=>A+h.id+'_full.webp';
+Object.keys(MOUTHS).forEach(k=>{const i=new Image();i.src=A+'mouth_'+k+'.webp';});
+HEROES.forEach(h=>['body','eyes','full'].forEach(p=>{const i=new Image();i.src=A+h.id+'_'+p+'.webp';}));
+const heroById=id=>HEROES.find(x=>x.id===id)||HEROES[0];
 function picker(el,sel,onPick){
-  el.innerHTML=HEROES.map(h=>`<button type="button" class="hero-pick" data-id="${h.id}" aria-pressed="${h.id===sel}">${heroSVG(h,'')}${h.name}</button>`).join('');
+  el.innerHTML=HEROES.map(h=>`<button type="button" class="hero-pick" data-id="${h.id}" aria-pressed="${h.id===sel}"><img src="${full(h)}" alt="">${h.name}</button>`).join('');
   el.onclick=e=>{const b=e.target.closest('.hero-pick');if(!b)return;
     el.querySelectorAll('.hero-pick').forEach(x=>x.setAttribute('aria-pressed',x===b));onPick(b.dataset.id);};
 }
 const store={get(k,d){try{const v=localStorage.getItem('saule_'+k);return v?JSON.parse(v):d}catch(e){return d}},
   set(k,v){try{localStorage.setItem('saule_'+k,JSON.stringify(v))}catch(e){}}};
 const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- 1. Friend ---------- */
-let fHero=store.get('fh','h1'),fAcc=0,ctx=null;
-function drawFriend(){const st=$('friend-stage');const h=HEROES.find(x=>x.id===fHero);
-  st.querySelector('svg')?.remove();st.insertAdjacentHTML('afterbegin',heroSVG(h,ACC[fAcc],'big'));}
-picker($('pick-drug'),fHero,id=>{fHero=id;store.set('fh',id);drawFriend();});
+let fHero=heroById(store.get('fh2','red')).id,ctx=null,busy=false,talking=false,lean=0,squash=[1,1];
+let sat=store.get('sat',{v:45,t:Date.now()});
+sat.v=Math.max(0,sat.v-(Date.now()-sat.t)/4000);           // demo: -1 per 4 s, also while closed
+const body=$('pet-body'),move=$('pet-move'),mouthEl=$('l-mouth'),eyesEl=$('l-eyes'),happyEl=$('l-happy');
+function audio(){if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();return ctx;}
+function setMouth(kind,frown){
+  const h=heroById(fHero),m=MOUTHS[kind];
+  mouthEl.src=A+'mouth_'+kind+'.webp';
+  mouthEl.style.width=(m.w*h.k/h.W*100)+'%';
+  mouthEl.style.left=((h.nose[0]-m.ax*h.k)/h.W*100)+'%';
+  mouthEl.style.top=((h.nose[1]+4+(frown?6:0))/h.H*100)+'%';
+  mouthEl.style.transform=frown?'scaleY(-1)':'';
+}
+function idleMouth(){setMouth('closed',sat.v<25);}
+function setEyes(mode){ // normal | blink | happy
+  eyesEl.style.transform=mode==='blink'?'scaleY(.08)':'';
+  eyesEl.style.opacity=mode==='happy'?0:1;happyEl.style.opacity=mode==='happy'?1:0;
+}
+function applyBody(){body.style.transform=`rotate(${lean}deg) scale(${squash[0]},${squash[1]})`;}
+function drawFriend(){
+  const h=heroById(fHero);
+  $('pet').style.aspectRatio=h.W+'/'+h.H;
+  $('l-body').src=A+h.id+'_body.webp';eyesEl.src=A+h.id+'_eyes.webp';
+  eyesEl.style.transformOrigin=`50% ${h.eyeY/h.H*100}%`;
+  happyEl.setAttribute('viewBox',`0 0 ${h.W} ${h.H}`);
+  happyEl.innerHTML=h.eyes.map(([x,y])=>`<path d="M${x-27} ${y+10} Q${x} ${y-24} ${x+27} ${y+10}" fill="none" stroke="#1a0c0e" stroke-width="9" stroke-linecap="round"/>`).join('');
+  idleMouth();setEyes('normal');
+}
+picker($('pick-drug'),fHero,id=>{fHero=id;store.set('fh2',id);drawFriend();
+  move.animate([{transform:'translateY(0)'},{transform:'translateY(-24px)'},{transform:'translateY(0)'}],{duration:420,easing:'ease-out'});});
 drawFriend();
 function say(t,cls){const s=$('friend-status');s.textContent=t;s.className='status '+(cls||'');}
-function audio(){if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();return ctx;}
-function mouth(){return document.querySelector('#friend-stage svg .mouth');}
+function satDraw(){$('sat-bar').style.width=Math.round(sat.v)+'%';store.set('sat',{v:sat.v,t:Date.now()});}
+satDraw();
+let wasHungry=sat.v<25;
+setInterval(()=>{sat.v=Math.max(0,sat.v-.25);satDraw();
+  const hungry=sat.v<25;if(hungry!==wasHungry){wasHungry=hungry;if(!busy&&!talking)idleMouth();if(hungry)say('Я проголодался… Покорми меня 🥺');}},1000);
+if(sat.v<25)say('Я проголодался… Покорми меня 🥺');
+
+// blinking
+(function blinkLoop(){setTimeout(async()=>{if(!busy&&eyesEl.style.opacity!=='0'){setEyes('blink');await sleep(110);if(eyesEl.style.opacity!=='0')setEyes('normal');}blinkLoop();},1800+Math.random()*3200);})();
+
+// sounds, generated on the phone: crunch = short filtered noise bursts, yum = rising blip
+function crunch(){const ac=audio(),t=ac.currentTime;
+  for(let j=0;j<3;j++){const n=ac.sampleRate*.05,b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
+    for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);
+    const s=ac.createBufferSource();s.buffer=b;const f=ac.createBiquadFilter();f.type='bandpass';f.frequency.value=1600+Math.random()*2600;f.Q.value=.9;
+    const g=ac.createGain();g.gain.value=.9;s.connect(f);f.connect(g);g.connect(ac.destination);s.start(t+j*.028+Math.random()*.01);}}
+function blip(f0,f1,dur){const ac=audio(),t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();
+  o.type='triangle';o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+dur);
+  g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.25,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+  o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+dur+.05);}
+
+function burst(chars,n){const hs=$('hearts');for(let i=0;i<n;i++){const d=document.createElement('span');d.className='heart';d.textContent=chars[i%chars.length];
+  d.style.left=(36+Math.random()*28)+'%';d.style.top='40%';d.style.animationDelay=(i*.12)+'s';hs.appendChild(d);setTimeout(()=>d.remove(),1600);}}
+function crumbs(color){const st=$('friend-stage'),r=st.getBoundingClientRect(),m=mouthEl.getBoundingClientRect();
+  for(let i=0;i<7;i++){const c=document.createElement('span');c.className='crumb';c.style.background=color;
+    c.style.left=(m.left-r.left+m.width/2)+'px';c.style.top=(m.top-r.top+m.height/2)+'px';st.appendChild(c);
+    const dx=(Math.random()-.5)*120,dy=30+Math.random()*70;
+    c.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:`translate(${dx}px,${dy}px) rotate(${dx*4}deg)`,opacity:0}],{duration:600+Math.random()*300,easing:'cubic-bezier(.2,.6,.4,1)'}).onfinish=()=>c.remove();}}
+
+async function happy(msg){setEyes('happy');setMouth('open');blip(420,880,.25);
+  if(!reduced)move.animate([{transform:'translateY(0) scale(1,1)'},{transform:'translateY(4px) scale(1.06,.92)',offset:.2},{transform:'translateY(-34px) scale(.96,1.05)',offset:.55},{transform:'translateY(0) scale(1,1)'}],{duration:620,easing:'ease-out'});
+  burst(['💖','✨','💖'],3);if(msg)say(msg,'ok');await sleep(900);setEyes('normal');idleMouth();}
+async function shakeNo(msg){setMouth('closed');lean=0;applyBody();
+  if(!reduced)move.animate([0,-9,9,-7,7,0].map(d=>({transform:`rotate(${d}deg)`})),{duration:600});
+  blip(300,200,.18);say(msg,'bad');await sleep(650);idleMouth();}
+
+// food
+const FOODS=[{e:'🍪',n:'печенье',v:20,c:'#C98A4B'},{e:'🍊',n:'мандарин',v:25,c:'#F28C1E'},{e:'🍬',n:'конфету',v:15,c:'#E2457A'},{e:'🍫',n:'шоколад',v:20,c:'#6B3B22'}];
+function drawTray(){$('tray').innerHTML=FOODS.map((f,i)=>`<button type="button" class="food" data-i="${i}" aria-label="Угостить: ${f.n}">${f.e}</button>`).join('');}
+drawTray();
+function mouthCenter(){const m=mouthEl.getBoundingClientRect();return[m.left+m.width/2,m.top+m.height/2];}
+async function eat(f,clone){
+  busy=true;lean=0;applyBody();
+  if(sat.v>=100){clone&&clone.remove();await shakeNo('Я наелся! Приходи позже 🙂');busy=false;return;}
+  if(clone){const[mx,my]=mouthCenter();clone.style.transition='left .14s ease-in, top .14s ease-in, transform .14s ease-in, opacity .14s';
+    clone.style.left=mx+'px';clone.style.top=my+'px';clone.style.transform='translate(-50%,-50%) scale(.25)';clone.style.opacity='.4';await sleep(140);clone.remove();}
+  const seq=['o','closed','i','closed'];
+  for(let r=0;r<3;r++)for(const k of seq){
+    setMouth(k);squash=k==='o'?[.97,1.04]:k==='i'?[1.04,.97]:[1.02,.98];applyBody();
+    if(k==='closed'){crunch();if(r<2)crumbs(f.c);}
+    await sleep(115);}
+  squash=[1,1];applyBody();
+  sat.v=Math.min(100,sat.v+f.v);satDraw();wasHungry=sat.v<25;
+  await happy(sat.v>=100?'Ммм, вкусно! Я наелся 🥰':`Ням! Вкусное ${f.n==='конфету'?'угощение':f.n}!`);
+  busy=false;
+}
+let drag=null;
+$('tray').addEventListener('pointerdown',e=>{
+  const b=e.target.closest('.food');if(!b||busy||talking)return;audio().resume?.();e.preventDefault();
+  b.setPointerCapture(e.pointerId);
+  const f=FOODS[+b.dataset.i],clone=document.createElement('div');clone.className='drag';clone.textContent=f.e;
+  clone.style.left=e.clientX+'px';clone.style.top=e.clientY+'px';document.body.appendChild(clone);
+  b.style.opacity=.3;drag={b,f,clone,x0:e.clientX,y0:e.clientY,near:false};
+});
+$('tray').addEventListener('pointermove',e=>{if(!drag)return;
+  drag.clone.style.left=e.clientX+'px';drag.clone.style.top=e.clientY+'px';
+  const[mx,my]=mouthCenter(),d=Math.hypot(e.clientX-mx,e.clientY-my),near=d<170;
+  if(near!==drag.near){drag.near=near;if(near&&sat.v<100){setMouth('open');setEyes('normal');}else idleMouth();}
+  lean=near?Math.max(-8,Math.min(8,(e.clientX-mx)/12)):0;applyBody();
+});
+function endDrag(e){if(!drag)return;const{b,f,clone,x0,y0}=drag;drag=null;b.style.opacity='';
+  const[mx,my]=mouthCenter(),d=Math.hypot(e.clientX-mx,e.clientY-my);
+  if(d<110){eat(f,clone);return;}
+  lean=0;applyBody();idleMouth();
+  if(Math.hypot(e.clientX-x0,e.clientY-y0)<8){clone.remove();say('Перетащи угощение герою прямо в рот 👄');return;}
+  const r=b.getBoundingClientRect();clone.style.transition='left .25s, top .25s';clone.style.left=(r.left+r.width/2)+'px';clone.style.top=(r.top+r.height/2)+'px';
+  setTimeout(()=>clone.remove(),260);}
+$('tray').addEventListener('pointerup',endDrag);
+$('tray').addEventListener('pointercancel',endDrag);
+$('tray').addEventListener('keydown',e=>{const b=e.target.closest('.food');if(b&&(e.key==='Enter'||e.key===' ')&&!busy&&!talking){e.preventDefault();audio().resume?.();eat(FOODS[+b.dataset.i],null);}});
+$('pet').onclick=async()=>{if(busy||talking)return;busy=true;audio().resume?.();
+  if(sat.v<25){await shakeNo('Сначала покорми меня 🥺');busy=false;return;}
+  await happy('Хи-хи, щекотно!');busy=false;};
+
+// voice: record, play back faster and higher, mouth follows loudness
 async function playBack(arrayBuf){
   const ac=audio();let buf;
   try{buf=await ac.decodeAudioData(arrayBuf);}catch(e){say('Не получилось прочитать запись, попробуй ещё раз.','bad');return;}
   const src=ac.createBufferSource();src.buffer=buf;src.playbackRate.value=1.6;
-  const an=ac.createAnalyser();an.fftSize=256;src.connect(an);an.connect(ac.destination);
-  const data=new Uint8Array(an.fftSize);let on=true;
-  (function loop(){if(!on)return;an.getByteTimeDomainData(data);let m=0;for(const v of data)m=Math.max(m,Math.abs(v-128));
-    const r=4+Math.min(18,m/3);const mo=mouth();if(mo)mo.setAttribute('ry',r);requestAnimationFrame(loop);})();
-  src.onended=()=>{on=false;const mo=mouth();if(mo)mo.setAttribute('ry',4);say('Скажи ещё что-нибудь!','ok');};
+  const an=ac.createAnalyser();an.fftSize=512;src.connect(an);an.connect(ac.destination);
+  const data=new Uint8Array(an.fftSize);let on=true,last='',lt=0;talking=true;
+  (function loop(now){if(!on)return;an.getByteTimeDomainData(data);let m=0;for(const v of data)m=Math.max(m,Math.abs(v-128));
+    const k=m<7?'closed':m<20?'i':m<38?'o':'open';
+    if(k!==last&&now-lt>70){last=k;lt=now;setMouth(k);squash=k==='open'?[1.02,1.02]:[1,1];applyBody();}
+    requestAnimationFrame(loop);})(0);
+  src.onended=()=>{on=false;talking=false;squash=[1,1];applyBody();idleMouth();say('Скажи ещё что-нибудь!','ok');};
   say('Герой повторяет…');src.start();
 }
 let rec=null,chunks=[],recTimer=null;
@@ -206,23 +341,17 @@ $('rec').onclick=async()=>{
     rec.ondataavailable=e=>chunks.push(e.data);
     rec.onstop=async()=>{clearTimeout(recTimer);stream.getTracks().forEach(t=>t.stop());$('rec').textContent='🎤 Скажи что-нибудь';
       const b=new Blob(chunks);playBack(await b.arrayBuffer());};
-    rec.start();$('rec').textContent='⏹ Стоп';say('Слушаю… (до 5 секунд)');
+    rec.start();$('rec').textContent='⏹ Стоп';say('Слушаю… (до 5 секунд)');setMouth('closed');setEyes('normal');
     recTimer=setTimeout(()=>rec.state==='recording'&&rec.stop(),5000);
   }catch(e){$('file-rec').hidden=false;say('Микрофон в этом окне недоступен, используй кнопку «Записать голос».','bad');}
 };
 $('voice-file').onchange=async e=>{const f=e.target.files[0];if(!f)return;audio().resume?.();playBack(await f.arrayBuffer());e.target.value='';};
-let fed=store.get('fed',0);
-$('feed').onclick=()=>{fed++;store.set('fed',fed);const svg=document.querySelector('#friend-stage svg');
-  svg.classList.remove('chew');void svg.getBoundingClientRect();svg.classList.add('chew');
-  const hs=$('hearts');for(let i=0;i<3;i++){const d=document.createElement('span');d.className='heart';d.textContent=i?'💖':'🍬';
-    d.style.left=(40+Math.random()*20)+'%';d.style.top='45%';d.style.animationDelay=(i*.15)+'s';hs.appendChild(d);setTimeout(()=>d.remove(),1500);}
-  say(`Ням! Съедено конфет: ${fed}`,'ok');};
-$('dress').onclick=()=>{fAcc=(fAcc+1)%ACC.length;drawFriend();
-  say(['Без наряда','Новогодняя шапка','Тёплый шарф','Рога оленя'][fAcc]);};
-const GIFTS=['Редкий костюм от художников Казахстана','Задание: сфоткай героя с ёлкой','Мини-игра: все 4 героя на поле'];
+
 $('advent').innerHTML=Array.from({length:24},(_,i)=>`<button type="button" class="day ${i===0?'open today':''}" data-d="${i+1}">${i+1}</button>`).join('');
 $('advent').onclick=e=>{const d=e.target.closest('.day');if(!d)return;const n=+d.dataset.d;const s=$('advent-status');
-  if(n===1){s.className='status ok';s.textContent='1 декабря: '+GIFTS[0]+' 🎁';fAcc=1;drawFriend();}
+  if(n===1){s.className='status ok';
+    if(!FOODS.some(f=>f.e==='🍰')){FOODS.push({e:'🍰',n:'торт',v:35,c:'#F4D9C6'});drawTray();}
+    s.textContent='1 декабря: новое угощение, праздничный торт 🍰 Он уже на тарелке.';}
   else{s.className='status';s.textContent=`${n} декабря откроется в этот день. QR с новой упаковки даёт бонус сразу.`;}};
 
 /* ---------- 2/3. Quest ---------- */
@@ -238,10 +367,10 @@ const QUESTS={
 };
 const PTS=[[70,230],[180,160],[300,215],[410,120],[525,175]];
 let qk='karta',qs=null;
-function qLoad(){qs=store.get('q_'+qk,{hero:'h1',done:0,used:[],stickers:0});}
+function qLoad(){qs=store.get('q_'+qk,{hero:'red',done:0,used:[],stickers:0});qs.hero=heroById(qs.hero).id;}
 function qSave(){store.set('q_'+qk,qs);}
 function drawMap(){
-  const Q=QUESTS[qk];const h=HEROES.find(x=>x.id===qs.hero);
+  const Q=QUESTS[qk];const h=heroById(qs.hero);
   const path=PTS.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ');
   let s=`<rect width="600" height="300" fill="var(--ice)"/>`;
   for(let i=0;i<26;i++){const x=(i*97)%600,y=(i*53)%300;s+=`<circle cx="${x}" cy="${y}" r="2" fill="#fff" opacity=".8"/>`;}
@@ -253,7 +382,7 @@ function drawMap(){
   const last=PTS[4];s+=`<text x="${last[0]+38}" y="${last[1]-26}" font-size="34" text-anchor="middle">${qs.done>=5?'🎉':Q.goal}</text>`;
   if(Q.villain&&qs.done<5)s+=`<text x="${last[0]+42}" y="${last[1]+44}" font-size="30" text-anchor="middle">🥶</text>`;
   const hp=PTS[Math.min(qs.done,4)];
-  s+=`<g transform="translate(${hp[0]-24},${hp[1]-74}) scale(.24)">${heroSVG(h,'').replace(/^<svg[^>]*>|<\/svg>$/g,'')}</g>`;
+  s+=`<image href="${full(h)}" x="${hp[0]-24}" y="${hp[1]-82}" width="48" height="${48*h.H/h.W}"/>`;
   $('map').innerHTML=s;
 }
 function qStatus(t,c){const s=$('q-status');s.textContent=t;s.className='status '+(c||'');}
@@ -288,8 +417,8 @@ function stopGame(){cancelAnimationFrame(raf);G=null;}
 function startGame(){
   const Q=QUESTS[qk];$('q-scan').hidden=true;$('q-game').hidden=false;
   $('g-avoid').textContent=Q.villain?' и уворачивайся от снежков злодея':'';
-  const cv=$('cv'),x=cv.getContext('2d');const h=HEROES.find(q=>q.id===qs.hero);
-  const img=new Image();img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(heroSVG(h,'').replace('<svg','<svg xmlns="http://www.w3.org/2000/svg"'));
+  const cv=$('cv'),x=cv.getContext('2d');const h=heroById(qs.hero);
+  const img=new Image();img.src=full(h);
   const level=qs.done;
   G={px:300,items:[],score:0,lives:3,t0:performance.now(),last:performance.now(),spawn:0,dur:15000,over:false};
   const move=e=>{const r=cv.getBoundingClientRect();G&&(G.px=Math.max(40,Math.min(560,(e.clientX-r.left)/r.width*600)));};
@@ -309,7 +438,7 @@ function startGame(){
     for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':'🍬',it.x,it.y);
       if(!it.hit&&it.y>300&&it.y<350&&Math.abs(it.x-G.px)<46){it.hit=true;if(it.bad)G.lives--;else G.score++;}}
     G.items=G.items.filter(it=>!it.hit&&it.y<400);
-    if(img.complete)x.drawImage(img,G.px-45,290,90,90);
+    if(img.complete)x.drawImage(img,G.px-35,286,70,70*h.H/h.W);
     $('g-score').textContent=`🍬 ${G.score} / 8`;$('g-lives').textContent=Q.villain?'❤️'.repeat(Math.max(0,G.lives)):'';
     $('g-time').textContent='⏱ '+Math.max(0,Math.ceil((G.dur-el)/1000));
     if(G.score>=8)return end(true);
@@ -320,7 +449,7 @@ function startGame(){
 
 /* final + share card */
 function renderFinal(){
-  const Q=QUESTS[qk];const h=HEROES.find(q=>q.id===qs.hero);
+  const Q=QUESTS[qk];const h=heroById(qs.hero);
   const c=document.createElement('canvas');c.width=640;c.height=800;const x=c.getContext('2d');
   const g=x.createLinearGradient(0,0,0,800);g.addColorStop(0,'#1F6B5C');g.addColorStop(1,'#0F1524');x.fillStyle=g;x.fillRect(0,0,640,800);
   x.fillStyle='rgba(255,255,255,.8)';for(let i=0;i<60;i++){x.beginPath();x.arc((i*137)%640,(i*89)%800,2.5,0,7);x.fill();}
@@ -328,11 +457,11 @@ function renderFinal(){
   fin.innerHTML=`<h2>${Q.finalT}</h2><p>Приз твой, и ты участвуешь в розыгрыше новогодних боксов.</p>
     ${qs.stickers?`<span class="sticker">✨ Стикеры Meet &amp; Sketch: ${qs.stickers}</span>`:''}
     <img id="card" alt="Картинка для сторис: ${Q.share}"><p style="font-size:13px;color:var(--muted)">Картинка для сторис</p>`;
-  const img=new Image();img.onload=()=>{x.drawImage(img,170,250,300,300);
+  const img=new Image();img.onload=()=>{x.drawImage(img,200,215,240,240*h.H/h.W);
     x.fillStyle='#fff';x.textAlign='center';x.font='800 46px Manrope,sans-serif';x.fillText(Q.share,320,150,580);
-    x.font='60px serif';x.fillText(Q.goal+' 🎄 🍬',320,640);x.font='600 24px Manrope,sans-serif';x.fillStyle='#F0B84E';x.fillText('Сауле · новогодняя игра',320,730);
+    x.font='54px serif';x.fillText(Q.goal+' 🎄 🍬',320,660);x.font='600 24px Manrope,sans-serif';x.fillStyle='#F0B84E';x.fillText('Сауле · новогодняя игра',320,730);
     $('card').src=c.toDataURL('image/png');};
-  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(heroSVG(h,'hat').replace('<svg','<svg xmlns="http://www.w3.org/2000/svg"'));
+  img.src=full(h);
 }
 
 /* routing */
