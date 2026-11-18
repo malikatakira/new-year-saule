@@ -1,0 +1,345 @@
+<title>Сауле: новогодние игры</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: one column, tabs on top, each tab is a playable screen with a short "как это работает" note under it */
+:root{
+  --bg:#F3F5FA; --card:#FFFFFF; --ink:#1B2236; --muted:#5D6680; --line:#DCE1EC;
+  --berry:#C8325B; --pine:#1F6B5C; --gold:#E3A12F; --ice:#DCEBFA; --soft:#FBEFF3;
+  --pixel:"Press Start 2P", ui-monospace, monospace;
+  --body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1524; --card:#182036; --ink:#EEF1F8; --muted:#A3ACC4; --line:#2A3452;
+  --berry:#EF5C84; --pine:#4FB59A; --gold:#F0B84E; --ice:#1D2C48; --soft:#2A1E2C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1524; --card:#182036; --ink:#EEF1F8; --muted:#A3ACC4; --line:#2A3452;
+  --berry:#EF5C84; --pine:#4FB59A; --gold:#F0B84E; --ice:#1D2C48; --soft:#2A1E2C; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding-block:20px 48px;
+  padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-family:var(--pixel);font-size:clamp(18px,4.6vw,28px);line-height:1.45;margin:8px 0 6px;text-wrap:balance;color:var(--berry)}
+h2{font-family:var(--pixel);font-size:clamp(14px,3.4vw,18px);line-height:1.5;margin:0 0 6px;text-wrap:balance}
+h3{font-size:16px;margin:0 0 4px}
+p{margin:0}
+.lead{color:var(--muted);max-width:62ch}
+.note{background:var(--soft);border-radius:12px;padding:10px 14px;font-size:13px;color:var(--ink);margin-top:12px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 14px}
+.tab{font:700 14px var(--body);border:2px solid var(--line);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:999px;cursor:pointer;text-decoration:none}
+.tab[aria-current="true"]{border-color:var(--berry);background:var(--berry);color:#fff}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{font:700 15px var(--body);border:0;border-radius:12px;padding:12px 16px;cursor:pointer;background:var(--pine);color:#fff}
+.btn.alt{background:var(--ice);color:var(--ink)}
+.btn.hot{background:var(--berry)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn:focus-visible,.tab:focus-visible,input:focus-visible,.hero-pick:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+input[type=text]{font:600 16px var(--body);padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);width:150px;text-transform:uppercase}
+.heroes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.hero-pick{border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:6px 4px 8px;cursor:pointer;color:var(--ink);font:700 12px var(--body);display:flex;flex-direction:column;align-items:center;gap:2px}
+.hero-pick[aria-pressed="true"]{border-color:var(--berry);background:var(--soft)}
+.hero-pick svg{width:56px;height:56px}
+.stage{display:flex;justify-content:center;align-items:center;background:var(--ice);border-radius:16px;min-height:260px;position:relative;overflow:hidden}
+.stage svg.big{width:210px;height:210px;transition:transform .2s}
+.status{font-weight:700;min-height:1.5em}
+.status.ok{color:var(--pine)} .status.bad{color:var(--berry)}
+.advent{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+.day{aspect-ratio:1;border-radius:8px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:700 12px var(--body);color:var(--muted);font-variant-numeric:tabular-nums;cursor:pointer}
+.day.open{background:var(--gold);color:#2b1a00;border-color:var(--gold)}
+.day.today{outline:2px solid var(--berry)}
+.map{width:100%;height:auto;max-width:100%;border-radius:16px;display:block}
+.codes{display:flex;gap:6px;flex-wrap:wrap}
+.code{font:700 12px ui-monospace,monospace;padding:4px 8px;border-radius:8px;background:var(--bg);border:1px dashed var(--line);cursor:pointer;color:var(--ink)}
+.code.used{text-decoration:line-through;opacity:.5}
+canvas.game{width:100%;max-width:100%;border-radius:16px;background:var(--ice);touch-action:none;display:block}
+.hud{display:flex;justify-content:space-between;font-weight:800;font-variant-numeric:tabular-nums}
+.how{display:grid;gap:8px;margin:0;padding-left:20px}
+.how li{min-width:0}
+.final{text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+.final img{border-radius:16px;max-width:320px;width:100%}
+.sticker{display:inline-flex;gap:6px;align-items:center;background:var(--gold);color:#2b1a00;border-radius:999px;padding:4px 12px;font-weight:800;font-size:13px}
+.hearts{position:absolute;inset:0;pointer-events:none}
+.heart{position:absolute;font-size:26px;animation:up 1.1s ease-out forwards}
+@keyframes up{from{transform:translateY(0);opacity:1}to{transform:translateY(-120px);opacity:0}}
+@keyframes chew{0%,100%{transform:scale(1)}50%{transform:scale(1.06,.94)}}
+.chew{animation:chew .25s 4}
+@media (prefers-reduced-motion:reduce){.heart,.chew{animation:none}}
+footer{margin-top:22px;font-size:12px;color:var(--muted)}
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">SHŪ × Сауле · демо для обсуждения</div>
+  <h1>Новогодние игры</h1>
+  <p class="lead">Три рабочих черновика по идеям Кати. Герои пока временные: заменим на 4 героев с брелоков, когда получим фото коробки.</p>
+
+  <nav class="tabs" aria-label="Варианты">
+    <a class="tab" href="#drug" data-t="drug">1. Новогодний друг</a>
+    <a class="tab" href="#karta" data-t="karta">2. Карта сокровищ</a>
+    <a class="tab" href="#ded" data-t="ded">3. Спасите Деда Мороза</a>
+  </nav>
+
+  <!-- 1. Virtual friend -->
+  <section class="panel" id="v-drug" hidden>
+    <div>
+      <h2>Новогодний друг</h2>
+      <p class="lead">Скажи герою что-нибудь, он повторит смешным голосом. Можно покормить конфетой и нарядить.</p>
+    </div>
+    <div class="heroes" id="pick-drug"></div>
+    <div class="stage" id="friend-stage"><div class="hearts" id="hearts"></div></div>
+    <div class="row">
+      <button class="btn hot" id="rec" type="button">🎤 Скажи что-нибудь</button>
+      <button class="btn" id="feed" type="button">🍬 Покормить</button>
+      <button class="btn alt" id="dress" type="button">🎩 Нарядить</button>
+    </div>
+    <div class="row" id="file-rec" hidden>
+      <label class="btn alt" for="voice-file">🎙 Записать голос</label>
+      <input id="voice-file" type="file" accept="audio/*" capture hidden>
+      <span style="font-size:13px;color:var(--muted)">В этом окне микрофон закрыт. На сайте игры запись идёт по кнопке выше, здесь запиши голос через этот вариант.</span>
+    </div>
+    <div class="status" id="friend-status" aria-live="polite"></div>
+    <div>
+      <h3>Адвент на 24 дня декабря</h3>
+      <p style="font-size:13px;color:var(--muted);margin-bottom:8px">Каждый день новое задание или подарок. В демо открыт первый день, нажми на него.</p>
+      <div class="advent" id="advent"></div>
+      <div class="status" id="advent-status" aria-live="polite"></div>
+    </div>
+    <div class="note"><b>Как работает:</b> голос записывается и проигрывается прямо в телефоне, ускоренный и выше по тону. Записи никуда не отправляются, серверу не нужно обрабатывать звук.</div>
+  </section>
+
+  <!-- 2 & 3. Quest engine -->
+  <section class="panel" id="v-quest" hidden>
+    <div>
+      <h2 id="q-title"></h2>
+      <p class="lead" id="q-lead"></p>
+    </div>
+    <div id="q-pick-wrap">
+      <h3>Выбери героя</h3>
+      <div class="heroes" id="pick-quest"></div>
+    </div>
+    <svg class="map" id="map" viewBox="0 0 600 300" role="img" aria-label="Карта с пятью точками"></svg>
+    <div id="q-scan">
+      <h3 id="q-step"></h3>
+      <div class="row">
+        <button class="btn hot" id="scan" type="button">📷 Сканировать QR (демо)</button>
+        <input type="text" id="code" maxlength="8" placeholder="SL-XXXX" aria-label="Код из коробки">
+        <button class="btn alt" id="enter" type="button">Ввести код</button>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin:8px 0 4px">Демо-партия кодов, как будто из разных коробок (нажми, чтобы подставить). Код SL-1ZZZ уже использовал другой покупатель.</p>
+      <div class="codes" id="codes"></div>
+      <div class="status" id="q-status" aria-live="polite"></div>
+    </div>
+    <div id="q-game" hidden>
+      <div class="hud"><span id="g-score">🍬 0 / 8</span><span id="g-lives"></span><span id="g-time">15</span></div>
+      <canvas class="game" id="cv" width="600" height="380"></canvas>
+      <p style="font-size:13px;color:var(--muted);margin-top:6px">Води пальцем или мышкой, лови конфеты<span id="g-avoid"></span>.</p>
+    </div>
+    <div id="q-final" class="final" hidden></div>
+    <div class="row"><button class="btn alt" id="reset" type="button">Начать заново</button></div>
+    <div class="note" id="q-how"></div>
+  </section>
+
+  <footer>Черновик SHŪ для Сауле, 18.11.2026. Не для отправки без согласования.</footer>
+</div>
+
+<script>
+(function(){
+const HEROES=[
+  {id:'h1',name:'Карамелька',c:'#E8893A',b:'#F7C99A'},
+  {id:'h2',name:'Мятик',c:'#3FA98C',b:'#B9E6D7'},
+  {id:'h3',name:'Ягодка',c:'#D9457A',b:'#F5BCD0'},
+  {id:'h4',name:'Какао',c:'#8A5A3C',b:'#E3C3A8'}
+];
+const ACC=['','hat','scarf','antlers'];
+function heroSVG(h,acc,cls){
+  let a='';
+  if(acc==='hat')a='<path d="M60 52 Q100 -6 140 52 Z" fill="#C8325B"/><rect x="52" y="46" width="96" height="16" rx="8" fill="#fff"/><circle cx="100" cy="10" r="11" fill="#fff"/>';
+  if(acc==='scarf')a='<path d="M48 142 Q100 166 152 142 L152 156 Q100 180 48 156 Z" fill="#1F6B5C"/><rect x="120" y="150" width="18" height="40" rx="6" fill="#1F6B5C"/>';
+  if(acc==='antlers')a='<path d="M70 60 L58 22 M58 22 L44 18 M60 36 L46 38 M130 60 L142 22 M142 22 L156 18 M140 36 L154 38" stroke="#7A4A33" stroke-width="7" stroke-linecap="round" fill="none"/>';
+  return `<svg class="${cls||''}" viewBox="0 0 200 200" aria-hidden="true">
+  <ellipse cx="100" cy="186" rx="60" ry="8" fill="rgba(0,0,0,.12)"/>
+  <ellipse cx="100" cy="112" rx="66" ry="72" fill="${h.c}"/>
+  <ellipse cx="100" cy="132" rx="40" ry="42" fill="${h.b}"/>
+  <circle cx="76" cy="92" r="13" fill="#fff"/><circle cx="124" cy="92" r="13" fill="#fff"/>
+  <circle cx="79" cy="94" r="6" fill="#1B2236"/><circle cx="121" cy="94" r="6" fill="#1B2236"/>
+  <circle cx="64" cy="114" r="7" fill="#fff" opacity=".35"/><circle cx="136" cy="114" r="7" fill="#fff" opacity=".35"/>
+  <ellipse class="mouth" cx="100" cy="120" rx="14" ry="4" fill="#5a1630"/>
+  ${a}</svg>`;
+}
+function picker(el,sel,onPick){
+  el.innerHTML=HEROES.map(h=>`<button type="button" class="hero-pick" data-id="${h.id}" aria-pressed="${h.id===sel}">${heroSVG(h,'')}${h.name}</button>`).join('');
+  el.onclick=e=>{const b=e.target.closest('.hero-pick');if(!b)return;
+    el.querySelectorAll('.hero-pick').forEach(x=>x.setAttribute('aria-pressed',x===b));onPick(b.dataset.id);};
+}
+const store={get(k,d){try{const v=localStorage.getItem('saule_'+k);return v?JSON.parse(v):d}catch(e){return d}},
+  set(k,v){try{localStorage.setItem('saule_'+k,JSON.stringify(v))}catch(e){}}};
+const $=id=>document.getElementById(id);
+
+/* ---------- 1. Friend ---------- */
+let fHero=store.get('fh','h1'),fAcc=0,ctx=null;
+function drawFriend(){const st=$('friend-stage');const h=HEROES.find(x=>x.id===fHero);
+  st.querySelector('svg')?.remove();st.insertAdjacentHTML('afterbegin',heroSVG(h,ACC[fAcc],'big'));}
+picker($('pick-drug'),fHero,id=>{fHero=id;store.set('fh',id);drawFriend();});
+drawFriend();
+function say(t,cls){const s=$('friend-status');s.textContent=t;s.className='status '+(cls||'');}
+function audio(){if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();return ctx;}
+function mouth(){return document.querySelector('#friend-stage svg .mouth');}
+async function playBack(arrayBuf){
+  const ac=audio();let buf;
+  try{buf=await ac.decodeAudioData(arrayBuf);}catch(e){say('Не получилось прочитать запись, попробуй ещё раз.','bad');return;}
+  const src=ac.createBufferSource();src.buffer=buf;src.playbackRate.value=1.6;
+  const an=ac.createAnalyser();an.fftSize=256;src.connect(an);an.connect(ac.destination);
+  const data=new Uint8Array(an.fftSize);let on=true;
+  (function loop(){if(!on)return;an.getByteTimeDomainData(data);let m=0;for(const v of data)m=Math.max(m,Math.abs(v-128));
+    const r=4+Math.min(18,m/3);const mo=mouth();if(mo)mo.setAttribute('ry',r);requestAnimationFrame(loop);})();
+  src.onended=()=>{on=false;const mo=mouth();if(mo)mo.setAttribute('ry',4);say('Скажи ещё что-нибудь!','ok');};
+  say('Герой повторяет…');src.start();
+}
+let rec=null,chunks=[],recTimer=null;
+$('rec').onclick=async()=>{
+  audio().resume?.();
+  if(rec&&rec.state==='recording'){rec.stop();return;}
+  try{
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    chunks=[];rec=new MediaRecorder(stream);
+    rec.ondataavailable=e=>chunks.push(e.data);
+    rec.onstop=async()=>{clearTimeout(recTimer);stream.getTracks().forEach(t=>t.stop());$('rec').textContent='🎤 Скажи что-нибудь';
+      const b=new Blob(chunks);playBack(await b.arrayBuffer());};
+    rec.start();$('rec').textContent='⏹ Стоп';say('Слушаю… (до 5 секунд)');
+    recTimer=setTimeout(()=>rec.state==='recording'&&rec.stop(),5000);
+  }catch(e){$('file-rec').hidden=false;say('Микрофон в этом окне недоступен, используй кнопку «Записать голос».','bad');}
+};
+$('voice-file').onchange=async e=>{const f=e.target.files[0];if(!f)return;audio().resume?.();playBack(await f.arrayBuffer());e.target.value='';};
+let fed=store.get('fed',0);
+$('feed').onclick=()=>{fed++;store.set('fed',fed);const svg=document.querySelector('#friend-stage svg');
+  svg.classList.remove('chew');void svg.getBoundingClientRect();svg.classList.add('chew');
+  const hs=$('hearts');for(let i=0;i<3;i++){const d=document.createElement('span');d.className='heart';d.textContent=i?'💖':'🍬';
+    d.style.left=(40+Math.random()*20)+'%';d.style.top='45%';d.style.animationDelay=(i*.15)+'s';hs.appendChild(d);setTimeout(()=>d.remove(),1500);}
+  say(`Ням! Съедено конфет: ${fed}`,'ok');};
+$('dress').onclick=()=>{fAcc=(fAcc+1)%ACC.length;drawFriend();
+  say(['Без наряда','Новогодняя шапка','Тёплый шарф','Рога оленя'][fAcc]);};
+const GIFTS=['Редкий костюм от художников Казахстана','Задание: сфоткай героя с ёлкой','Мини-игра: все 4 героя на поле'];
+$('advent').innerHTML=Array.from({length:24},(_,i)=>`<button type="button" class="day ${i===0?'open today':''}" data-d="${i+1}">${i+1}</button>`).join('');
+$('advent').onclick=e=>{const d=e.target.closest('.day');if(!d)return;const n=+d.dataset.d;const s=$('advent-status');
+  if(n===1){s.className='status ok';s.textContent='1 декабря: '+GIFTS[0]+' 🎁';fAcc=1;drawFriend();}
+  else{s.className='status';s.textContent=`${n} декабря откроется в этот день. QR с новой упаковки даёт бонус сразу.`;}};
+
+/* ---------- 2/3. Quest ---------- */
+const CODES=['SL-4K7Q','SL-9XM2','SL-2PWD','SL-7HTR','SL-5NBE','SL-8JCV','SL-3LYA'];
+const TAKEN='SL-1ZZZ';
+const QUESTS={
+  karta:{title:'Карта сокровищ',lead:'Пять точек на новогодней карте. Каждую открывает QR из новой коробки. Пройди все пять и найди клад.',
+    finalT:'Клад найден!',share:'Я нашёл новогодний клад!',villain:false,goal:'🎁',
+    how:'<b>Как работает:</b> снаружи на коробке один общий QR, он открывает игру. Внутри каждой коробки свой уникальный код, его видно только после покупки. Код срабатывает один раз и привязывается к покупателю. Подходят любые 5 разных кодов из партии.'},
+  ded:{title:'Спасите Деда Мороза!',lead:'Злодей Сосулькин (рабочее имя, нарисуют художники Казахстана) украл Деда Мороза. Пять точек, пять QR, в каждой уровень со снежками.',
+    finalT:'Дед Мороз спасён!',share:'Я спас Деда Мороза!',villain:true,goal:'🎅',
+    how:'<b>Как работает:</b> та же механика, что у карты: общий QR снаружи открывает игру, уникальный код внутри коробки открывает следующую точку. Код одноразовый, любой из партии. Отличие в сюжете и в злодее, который кидает снежки.'}
+};
+const PTS=[[70,230],[180,160],[300,215],[410,120],[525,175]];
+let qk='karta',qs=null;
+function qLoad(){qs=store.get('q_'+qk,{hero:'h1',done:0,used:[],stickers:0});}
+function qSave(){store.set('q_'+qk,qs);}
+function drawMap(){
+  const Q=QUESTS[qk];const h=HEROES.find(x=>x.id===qs.hero);
+  const path=PTS.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ');
+  let s=`<rect width="600" height="300" fill="var(--ice)"/>`;
+  for(let i=0;i<26;i++){const x=(i*97)%600,y=(i*53)%300;s+=`<circle cx="${x}" cy="${y}" r="2" fill="#fff" opacity=".8"/>`;}
+  [[30,90],[120,250],[250,70],[360,265],[470,60],[570,260]].forEach(([x,y])=>s+=`<path d="M${x} ${y-26} L${x-15} ${y} L${x+15} ${y} Z" fill="var(--pine)"/>`);
+  s+=`<path d="${path}" stroke="var(--gold)" stroke-width="5" stroke-dasharray="10 9" fill="none" stroke-linecap="round"/>`;
+  PTS.forEach((p,i)=>{const done=i<qs.done,cur=i===qs.done;
+    s+=`<circle cx="${p[0]}" cy="${p[1]}" r="22" fill="${done?'var(--pine)':cur?'var(--berry)':'var(--card)'}" stroke="var(--ink)" stroke-width="2"/>
+    <text x="${p[0]}" y="${p[1]+6}" text-anchor="middle" font-size="17" font-weight="800" fill="${done||cur?'#fff':'var(--ink)'}" font-family="Manrope,sans-serif">${done?'✓':i+1}</text>`;});
+  const last=PTS[4];s+=`<text x="${last[0]+38}" y="${last[1]-26}" font-size="34" text-anchor="middle">${qs.done>=5?'🎉':Q.goal}</text>`;
+  if(Q.villain&&qs.done<5)s+=`<text x="${last[0]+42}" y="${last[1]+44}" font-size="30" text-anchor="middle">🥶</text>`;
+  const hp=PTS[Math.min(qs.done,4)];
+  s+=`<g transform="translate(${hp[0]-24},${hp[1]-74}) scale(.24)">${heroSVG(h,'').replace(/^<svg[^>]*>|<\/svg>$/g,'')}</g>`;
+  $('map').innerHTML=s;
+}
+function qStatus(t,c){const s=$('q-status');s.textContent=t;s.className='status '+(c||'');}
+function renderQuest(){
+  const Q=QUESTS[qk];$('q-title').textContent=Q.title;$('q-lead').textContent=Q.lead;$('q-how').innerHTML=Q.how;
+  picker($('pick-quest'),qs.hero,id=>{qs.hero=id;qSave();drawMap();});
+  $('q-pick-wrap').hidden=qs.done>0;
+  $('codes').innerHTML=[...CODES,TAKEN].map(c=>`<button type="button" class="code ${qs.used.includes(c)||c===TAKEN?'used':''}" data-c="${c}">${c}</button>`).join('');
+  $('q-step').textContent=qs.done<5?`Точка ${qs.done+1} из 5: отсканируй QR из коробки`:'';
+  $('q-scan').hidden=qs.done>=5;$('q-game').hidden=true;$('q-final').hidden=qs.done<5;
+  if(qs.done>=5)renderFinal();
+  qStatus('');drawMap();
+}
+function tryCode(raw){
+  const c=(raw||'').trim().toUpperCase();
+  if(!c){qStatus('Введи код из коробки.','bad');return;}
+  if(c===TAKEN){qStatus('Этот код уже использовал другой покупатель. Один код работает один раз.','bad');return;}
+  if(qs.used.includes(c)){qStatus('Ты уже использовал этот код. Нужен код из другой коробки.','bad');return;}
+  if(!CODES.includes(c)){qStatus('Такого кода нет. Проверь буквы и цифры.','bad');return;}
+  qs.used.push(c);qSave();qStatus(`Код ${c} принят! Открываем точку ${qs.done+1}.`,'ok');
+  setTimeout(startGame,700);
+}
+$('scan').onclick=()=>{const free=CODES.find(c=>!qs.used.includes(c));if(!free){qStatus('Демо-коды закончились, нажми «Начать заново».','bad');return;}tryCode(free);};
+$('enter').onclick=()=>tryCode($('code').value);
+$('code').onkeydown=e=>{if(e.key==='Enter')tryCode(e.target.value);};
+$('codes').onclick=e=>{const b=e.target.closest('.code');if(b)$('code').value=b.dataset.c;};
+$('reset').onclick=()=>{qs={hero:qs.hero,done:0,used:[],stickers:0};qSave();stopGame();renderQuest();};
+
+/* mini game */
+let raf=0,G=null;
+function stopGame(){cancelAnimationFrame(raf);G=null;}
+function startGame(){
+  const Q=QUESTS[qk];$('q-scan').hidden=true;$('q-game').hidden=false;
+  $('g-avoid').textContent=Q.villain?' и уворачивайся от снежков злодея':'';
+  const cv=$('cv'),x=cv.getContext('2d');const h=HEROES.find(q=>q.id===qs.hero);
+  const img=new Image();img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(heroSVG(h,'').replace('<svg','<svg xmlns="http://www.w3.org/2000/svg"'));
+  const level=qs.done;
+  G={px:300,items:[],score:0,lives:3,t0:performance.now(),last:performance.now(),spawn:0,dur:15000,over:false};
+  const move=e=>{const r=cv.getBoundingClientRect();G&&(G.px=Math.max(40,Math.min(560,(e.clientX-r.left)/r.width*600)));};
+  cv.onpointermove=move;cv.onpointerdown=move;
+  function end(win){G.over=true;cancelAnimationFrame(raf);
+    if(win){const sticker=Math.random()<0.35;if(sticker)qs.stickers++;qs.done++;qSave();
+      setTimeout(()=>{renderQuest();qStatus(`Точка пройдена!${sticker?' Выпал редкий стикер Meet & Sketch ✨':''}`,'ok');},400);}
+    else{x.fillStyle='rgba(0,0,0,.55)';x.fillRect(0,0,600,380);x.fillStyle='#fff';x.font='800 26px Manrope,sans-serif';x.textAlign='center';
+      x.fillText('Почти! Попробуй ещё раз',300,180);x.font='600 17px Manrope,sans-serif';x.fillText('Нажми на поле',300,215);
+      cv.onpointerdown=()=>{cv.onpointerdown=null;startGame();};}}
+  function frame(now){if(!G||G.over)return;const dt=Math.min(40,now-G.last);G.last=now;const el=now-G.t0;
+    G.spawn-=dt;if(G.spawn<=0){G.spawn=520-level*40;const bad=Q.villain&&Math.random()<0.3+level*0.04;
+      G.items.push({x:30+Math.random()*540,y:-20,v:(.16+level*.025+Math.random()*.08),bad});}
+    x.clearRect(0,0,600,380);
+    for(let i=0;i<30;i++){x.fillStyle='rgba(255,255,255,.7)';x.beginPath();x.arc((i*131)%600,((i*71)+el*.03)%380,2,0,7);x.fill();}
+    x.font='30px serif';x.textAlign='center';x.textBaseline='middle';
+    for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':'🍬',it.x,it.y);
+      if(!it.hit&&it.y>300&&it.y<350&&Math.abs(it.x-G.px)<46){it.hit=true;if(it.bad)G.lives--;else G.score++;}}
+    G.items=G.items.filter(it=>!it.hit&&it.y<400);
+    if(img.complete)x.drawImage(img,G.px-45,290,90,90);
+    $('g-score').textContent=`🍬 ${G.score} / 8`;$('g-lives').textContent=Q.villain?'❤️'.repeat(Math.max(0,G.lives)):'';
+    $('g-time').textContent='⏱ '+Math.max(0,Math.ceil((G.dur-el)/1000));
+    if(G.score>=8)return end(true);
+    if(G.lives<=0||el>=G.dur)return end(false);
+    raf=requestAnimationFrame(frame);}
+  raf=requestAnimationFrame(frame);
+}
+
+/* final + share card */
+function renderFinal(){
+  const Q=QUESTS[qk];const h=HEROES.find(q=>q.id===qs.hero);
+  const c=document.createElement('canvas');c.width=640;c.height=800;const x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,0,800);g.addColorStop(0,'#1F6B5C');g.addColorStop(1,'#0F1524');x.fillStyle=g;x.fillRect(0,0,640,800);
+  x.fillStyle='rgba(255,255,255,.8)';for(let i=0;i<60;i++){x.beginPath();x.arc((i*137)%640,(i*89)%800,2.5,0,7);x.fill();}
+  const fin=$('q-final');
+  fin.innerHTML=`<h2>${Q.finalT}</h2><p>Приз твой, и ты участвуешь в розыгрыше новогодних боксов.</p>
+    ${qs.stickers?`<span class="sticker">✨ Стикеры Meet &amp; Sketch: ${qs.stickers}</span>`:''}
+    <img id="card" alt="Картинка для сторис: ${Q.share}"><p style="font-size:13px;color:var(--muted)">Картинка для сторис</p>`;
+  const img=new Image();img.onload=()=>{x.drawImage(img,170,250,300,300);
+    x.fillStyle='#fff';x.textAlign='center';x.font='800 46px Manrope,sans-serif';x.fillText(Q.share,320,150,580);
+    x.font='60px serif';x.fillText(Q.goal+' 🎄 🍬',320,640);x.font='600 24px Manrope,sans-serif';x.fillStyle='#F0B84E';x.fillText('Сауле · новогодняя игра',320,730);
+    $('card').src=c.toDataURL('image/png');};
+  img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(heroSVG(h,'hat').replace('<svg','<svg xmlns="http://www.w3.org/2000/svg"'));
+}
+
+/* routing */
+function route(){const t=(location.hash||'#drug').slice(1);const k=['drug','karta','ded'].includes(t)?t:'drug';
+  document.querySelectorAll('.tab').forEach(a=>a.setAttribute('aria-current',a.dataset.t===k));
+  stopGame();$('v-drug').hidden=k!=='drug';$('v-quest').hidden=k==='drug';
+  if(k!=='drug'){qk=k;qLoad();renderQuest();}}
+window.addEventListener('hashchange',route);route();
+})();
+</script>
