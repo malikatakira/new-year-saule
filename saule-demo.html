@@ -208,7 +208,8 @@ canvas.game{width:100%;max-width:100%;border-radius:20px;background:linear-gradi
 .wanted p{margin-top:6px}
 .bn{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:10px}
 .bn>div{background:var(--ice);border:2px solid var(--line);border-radius:18px;padding:12px 14px}
-.bn>div>span{font-size:26px}
+.bn>div>span:first-child{font-size:26px;display:block}
+.bn .tag{margin:2px 0 4px}
 .bn h3{margin:4px 0 2px}
 .bn p{font-size:14px}
 .ask{margin-top:12px;font-weight:800;color:var(--berry)}
@@ -437,11 +438,10 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
   </section>
 
   <section class="bonus">
-    <h2>В каждой игре для бренда</h2>
+    <h2>Выгода для бренда</h2>
     <div class="bn">
       <div><span>📣</span><h3>Вирусность</h3><p>Покупатель получает картинку <span id="share-txt">«Я спас Новый год!»</span> для сторис и делится героем. Проект интересен соцсетям и СМИ.</p></div>
-      <div><span>🎨</span><h3>Художники Казахстана</h3><p>Новые костюмы, наряды и персонажи для игры рисуют художники Казахстана.</p></div>
-      <div><span>💌</span><h3>Коллаб с Meet &amp; Sketch</h3><p>Новогодние открытки и стикеры. Редкие выпадают прямо в игре, их хочется собрать.</p></div>
+      <div class="opt-extra"><span>🎨</span><span class="tag">Дополнительно</span><h3>Художники Казахстана</h3><p>За дополнительную плату все рисунки для игры нарисуют художники Казахстана.</p></div>
     </div>
   </section>
 
@@ -805,7 +805,7 @@ function renderFinal(){
   const g=x.createLinearGradient(0,0,0,800);g.addColorStop(0,'#C8202A');g.addColorStop(1,'#7E1016');x.fillStyle=g;x.fillRect(0,0,640,800);
   x.fillStyle='rgba(255,255,255,.8)';for(let i=0;i<60;i++){x.beginPath();x.arc((i*137)%640,(i*89)%800,2.5,0,7);x.fill();}
   const fin=$('q-final');
-  fin.innerHTML=`<h2>${Q.finalT}</h2><p>Приз твой! 🎉</p><div class="ucode"><small>Твой уникальный код</small><b>${qs.code}</b><small>Покажи его на кассе или сохрани скриншот</small></div><span class="sticker">✨ Выпал редкий стикер Meet &amp; Sketch</span>
+  fin.innerHTML=`<h2>${Q.finalT}</h2><p>Приз твой! 🎉</p><div class="ucode"><small>Твой уникальный код</small><b>${qs.code}</b><small>Покажи его на кассе или сохрани скриншот</small></div>
     <img id="card" alt="Картинка для сторис: ${Q.share}"><p style="font-size:13px;color:var(--muted)">Картинка для сторис</p>`;
   const img=new Image();img.onload=()=>{x.drawImage(img,200,215,240,240*img.naturalHeight/img.naturalWidth);
     x.fillStyle='#fff';x.textAlign='center';x.font='900 46px Rubik,sans-serif';x.fillText(Q.share,320,150,580);
