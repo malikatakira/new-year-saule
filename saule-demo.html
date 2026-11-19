@@ -7,21 +7,14 @@
 <style>
 /* Palette taken from the Funky Pop box: cream lid, Saule red sides, fir green bubbles, gold stars */
 :root{
-  --bg:#F6ECDD; --card:#FFFAF2; --ink:#3A1A16; --muted:#7A5B50; --line:#EAD8C0;
-  --berry:#C8202A; --pine:#1E6B3A; --gold:#F2B33D; --ice:#FBF1E2; --soft:#FCE6E1;
+  --bg:#FBF7F0; --card:#FFFFFF; --ink:#3A1A16; --muted:#7A5B50; --line:#EAD8C0;
+  --berry:#C8202A; --pine:#1E6B3A; --gold:#F2B33D; --ice:#F7F2EA; --soft:#FCE6E1;
   --red-deep:#9E1A20; --stage-a:#FFF7EA; --stage-b:#F3E0C4;
   --display:"Rubik Bubbles", "Rubik", system-ui, sans-serif;
   --pixel:"Rubik", system-ui, sans-serif;
   --body:"Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#10241A; --card:#173324; --ink:#FFF4E6; --muted:#C9B9A6; --line:#2A4A37;
-  --berry:#E8414A; --pine:#3E9B60; --gold:#F4BE52; --ice:#1B3A29; --soft:#3A1E1E;
-  --red-deep:#7E1016; --stage-a:#1E3F2D; --stage-b:#16301F; color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#10241A; --card:#173324; --ink:#FFF4E6; --muted:#C9B9A6; --line:#2A4A37;
-  --berry:#E8414A; --pine:#3E9B60; --gold:#F4BE52; --ice:#1B3A29; --soft:#3A1E1E;
-  --red-deep:#7E1016; --stage-a:#1E3F2D; --stage-b:#16301F; color-scheme:dark}
+:root{color-scheme:light}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 body{background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg fill='%23F2B33D' opacity='.28'%3E%3Cpath d='M30 18l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z'/%3E%3Cpath d='M120 96l2 5 5 1-4 3 1 5-4-2-4 2 1-5-4-3 5-1z'/%3E%3C/g%3E%3Cg stroke='%231E6B3A' stroke-width='2' stroke-linecap='round' opacity='.18'%3E%3Cpath d='M110 20v20M100 30h20M103 23l14 14M117 23l-14 14'/%3E%3Cpath d='M40 110v16M32 118h16M34 112l12 12M46 112l-12 12'/%3E%3C/g%3E%3C/svg%3E");color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
@@ -411,7 +404,7 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
       <h3>Что после 5 сканов</h3>
       <p>Варианты финала, можно сочетать:</p>
       <ul class="list">
-        <li>Сундук открывается: секретный герой и картинка для сторис.</li>
+        <li>Сундук открывается: секретный герой или картинка для сторис.</li>
         <li>Участие в розыгрыше призов от Saule. Для этого покупатель оставляет телефон. Покупатель ставит галочку согласия на обработку номера. Правила розыгрыша, призы и их выдачу берёт на себя Saule.</li>
         <li>Промокод или скидка на следующую покупку.</li>
         <li>Подарок в магазине: на экране финала уникальный код, его проверяют на кассе (нужен сервер, подходит для ценных призов).</li>
@@ -440,8 +433,8 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
   <section class="bonus">
     <h2>Выгода для бренда</h2>
     <div class="bn">
-      <div><span>📣</span><h3>Вирусность</h3><p>Покупатель получает картинку <span id="share-txt">«Я спас Новый год!»</span> для сторис и делится героем. Проект интересен соцсетям и СМИ.</p></div>
-      <div class="opt-extra"><span>🎨</span><span class="tag">Дополнительно</span><h3>Художники Казахстана</h3><p>За дополнительную плату все рисунки для игры нарисуют художники Казахстана.</p></div>
+      <div><span>📣</span><h3>Вирусность</h3><p>Например, покупатель получает картинку <span id="share-txt">«Я спас Новый год!»</span>, чтобы опубликовать её в сторис.</p></div>
+      <div class="opt-extra"><span>🎨</span><span class="tag">Дополнительно</span><h3>Художник из Казахстана</h3><p>За дополнительную плату рисунки для игры может нарисовать художник из Казахстана.</p></div>
     </div>
   </section>
 
