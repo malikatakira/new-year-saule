@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Saule · Новогодняя карта</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@700;800;900&family=Nunito:wght@400;600;700;800&display=swap&subset=cyrillic">
+<style>
+:root{--bg:#FBF7F0;--card:#fff;--ink:#3A1A16;--muted:#7A5B50;--line:#EAD8C0;--red:#C8202A;--red2:#9E1A20;--green:#1E6B3A;--gold:#F2B33D;--ice:#F7F2EA;color-scheme:light}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Nunito,system-ui,sans-serif}
+.wrap{max-width:480px;margin:0 auto;padding:16px max(16px,env(safe-area-inset-left)) 40px}
+h1,h2,h3{font-family:Rubik,system-ui,sans-serif;margin:0}
+.top{background:linear-gradient(160deg,var(--red),var(--red2));color:#fff;border-radius:22px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.top h1{font-size:22px}.top .pts{font:900 20px Rubik,sans-serif;background:#fff;color:var(--red);border-radius:14px;padding:6px 12px;white-space:nowrap}
+.map{position:relative;width:100%;aspect-ratio:572/1024;border-radius:22px;overflow:hidden;margin-top:12px;box-shadow:0 6px 0 rgba(158,26,32,.08)}
+.map>img{width:100%;height:100%;display:block}
+.mp{position:absolute;width:15%;aspect-ratio:1.2;transform:translate(-50%,-50%);background:url(assets/map_open.webp) no-repeat;border-radius:50%}
+.mp.cur{background:none}.mp.cur::after{content:"";position:absolute;inset:-12%;border-radius:50%;border:4px solid var(--gold);animation:ring 1.2s ease-out infinite}
+@keyframes ring{from{transform:scale(.85);opacity:1}to{transform:scale(1.35);opacity:0}}
+.hero{position:absolute;width:14%;transform:translate(-50%,-100%);transition:left .8s,top .8s;filter:drop-shadow(0 4px 3px rgba(0,0,0,.3))}
+.goal{position:absolute;font-size:40px;transform:translate(-50%,-50%)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:14px 16px;margin-top:12px}
+.status{font-weight:800;min-height:1.4em}.ok{color:var(--green)}.bad{color:var(--red)}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{font:800 15px Nunito,sans-serif;border:0;border-radius:999px;padding:12px 18px;cursor:pointer;background:var(--green);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn.red{background:var(--red)}.btn.alt{background:var(--ice);color:var(--ink);border:2px solid var(--line)}
+input{font:700 16px ui-monospace,monospace;padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:var(--ice);color:var(--ink);flex:1 1 160px;min-width:0;text-transform:uppercase}
+.pcode b{font-family:ui-monospace,monospace;font-size:17px}
+.small{font-size:13px;color:var(--muted)}
+.ov{position:fixed;inset:0;z-index:50;background:rgba(58,26,22,.55);display:flex;align-items:center;justify-content:center;padding:12px}
+.ov-card{width:100%;max-width:440px;background:#fff;border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:10px;text-align:center;max-height:96vh;overflow:auto}
+.ov-card h2{color:var(--red);font-size:20px}
+canvas.mg{width:100%;border-radius:18px;background:linear-gradient(var(--green),#154A2A);touch-action:none;display:block}
+.hud{display:flex;justify-content:space-between;font-weight:900}
+.mem{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mem button{aspect-ratio:1;border-radius:14px;border:0;background:var(--red);font-size:30px;cursor:pointer;color:transparent;transition:transform .2s}
+.mem button.up,.mem button.done{background:var(--ice);color:inherit}.mem button.done{opacity:.5}
+.tap{position:relative;height:300px;border-radius:18px;background:linear-gradient(#1e3a6b,#2b5aa0);overflow:hidden;touch-action:manipulation}
+.tap button{position:absolute;width:60px;height:60px;border:0;background:none;font-size:42px;cursor:pointer;transform:translate(-50%,-50%);animation:pop .25s}
+@keyframes pop{from{transform:translate(-50%,-50%) scale(.3)}}
+.final{text-align:center}.final .em{font-size:64px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top"><div><h1>Новогодняя карта</h1><div class="small" style="color:#FFE7B8">Saule · Funky Pop</div></div><div class="pts" id="pts">0 / 5</div></header>
+
+  <div class="map" id="map"><img src="assets/map_locked.webp" alt="Карта с пятью точками"><div id="over"></div></div>
+
+  <section class="card">
+    <div class="status" id="status" aria-live="polite">Загружаем игру…</div>
+    <p class="small" id="hint">Откройте коробку, найдите QR-код и наведите на него камеру телефона.</p>
+    <div class="row"><input id="code" placeholder="SL-XXXX-XXXX" maxlength="14" aria-label="Код из коробки" autocomplete="off"><button class="btn red" id="enter" type="button">Ввести код</button></div>
+  </section>
+
+  <section class="card final" id="final" hidden></section>
+
+  <section class="card">
+    <h3>Ваш код игрока</h3>
+    <p class="pcode">Код: <b id="pcode">…</b></p>
+    <p class="small">Сохраните его, чтобы продолжить игру на другом телефоне. Отправьте ссылку себе:</p>
+    <div class="row"><a class="btn alt" id="wa" target="_blank" rel="noopener">WhatsApp</a><a class="btn alt" id="tg" target="_blank" rel="noopener">Telegram</a></div>
+    <details style="margin-top:10px"><summary class="small">У меня уже есть код игрока</summary>
+      <div class="row" style="margin-top:8px"><input id="restore" placeholder="ЁЛКА-1234-ABC" aria-label="Код игрока"><button class="btn alt" id="restore-btn" type="button">Продолжить</button></div></details>
+  </section>
+
+  <section class="card"><p class="small">Не работает код или пропал прогресс? <a id="support" target="_blank" rel="noopener">Напишите в поддержку</a>. Открывайте ссылку в Safari или Chrome, чтобы прогресс сохранялся.</p></section>
+</div>
+<div class="ov" id="ov" hidden><div class="ov-card" id="ov-card"></div></div>
+
+<script>
+(function(){
+'use strict';
+/* ---------- settings: change here ---------- */
+const CFG={
+  points:5,
+  support:'https://t.me/',                          // Telegram support bot link, set when the bot exists
+  prize:'Покажите этот экран на кассе: приз от Saule ждёт вас!',
+  heroes:['assets/red_full.webp','assets/green_full.webp'], // replace with Saule original characters
+  minigames:['catch','memory','tap','catch','memory'],      // one per point, in order
+};
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const store={get:k=>{try{return localStorage.getItem('saule_'+k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem('saule_'+k,v)}catch(e){}}};
+const MP=[[320,872],[355,657],[355,512],[215,458],[315,222]],MW=572,MH=1024;
+let me=null,hero=store.get('hero')||CFG.heroes[0];
+const say=(t,c)=>{const s=$('status');s.textContent=t;s.className='status '+(c||'');};
+
+async function call(path,opt){const r=await fetch(path,opt?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(opt)}:{});
+  if(r.status===429)throw new Error('slow');return r.json();}
+
+function draw(){
+  const n=me?me.points:0;$('pts').textContent=`${n} / ${CFG.points}`;
+  let o='';MP.forEach(([x,y],i)=>{if(i<n||i===n&&n<CFG.points){const w=MW*.15,h=w/1.2;
+    o+=`<div class="mp ${i===n?'cur':''}" style="left:${x/MW*100}%;top:${y/MH*100}%;background-size:${MW/w*100}% auto;background-position:${(x-w/2)/(MW-w)*100}% ${(y-h/2)/(MH-h)*100}%"></div>`;}});
+  const g=MP[4];o+=`<span class="goal" style="left:${(g[0]+95)/MW*100}%;top:${(g[1]-10)/MH*100}%">${n>=CFG.points?'🎉':'🎁'}</span>`;
+  const p=MP[Math.min(n,4)];o+=`<img class="hero" src="${hero}" alt="" style="left:${(p[0]+72)/MW*100}%;top:${(p[1]+18)/MH*100}%">`;
+  $('over').innerHTML=o;
+  $('pcode').textContent=me?me.pcode:'…';
+  if(me){const link=`${location.origin}${location.pathname}?p=${encodeURIComponent(me.pcode)}`,txt=`Моя новогодняя карта Saule: ${link}`;
+    $('wa').href='https://wa.me/?text='+encodeURIComponent(txt);$('tg').href='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent('Моя новогодняя карта Saule');}
+  $('final').hidden=n<CFG.points;
+  if(n>=CFG.points)$('final').innerHTML=`<div class="em">🎉</div><h2>Карта пройдена!</h2><p>${CFG.prize}</p><p class="small">Код игрока: <b>${me.pcode}</b></p>`;
+}
+
+async function ensurePlayer(){
+  const qs=new URLSearchParams(location.search);
+  if(qs.get('p')){try{const r=await call('/api/restore',{pcode:qs.get('p')});if(r.key){store.set('key',r.key);me=r;}}catch(e){}}
+  if(!me&&store.get('key')){try{const r=await call('/api/me?key='+encodeURIComponent(store.get('key')));if(r.key)me=r;}catch(e){}}
+  if(!me){const r=await call('/api/player',{});store.set('key',r.key);me=r;}
+}
+
+async function scan(code){
+  code=String(code||'').trim();if(!code){say('Введите код из коробки.','bad');return;}
+  say('Проверяем код…');
+  let r;try{r=await call('/api/scan',{key:me.key,code});}catch(e){say(e.message==='slow'?'Слишком много попыток. Попробуйте через час.':'Нет связи. Проверьте интернет и попробуйте ещё раз.','bad');return;}
+  me={...me,...r};draw();
+  const M={invalid:['Такого кода нет. Проверьте буквы и цифры.','bad'],taken:['Этот код уже использован другим игроком. Один код работает один раз.','bad'],
+    mine:['Этот код вы уже активировали.',''],full:['Карта уже пройдена! 🎉','ok']};
+  if(r.status!=='new'){say(...(M[r.status]||['Что-то пошло не так. Попробуйте ещё раз.','bad']));return;}
+  say(`Код принят! Открыта точка ${r.point}.`,'ok');
+  await playMini(r.point);
+}
+
+/* ---------- mini-games ---------- */
+function overlay(html){$('ov-card').innerHTML=html;$('ov').hidden=false;}
+const closeOv=()=>{$('ov').hidden=true;};
+async function playMini(point){
+  const kind=CFG.minigames[point-1]||'catch',hard=point>3;
+  const done=await new Promise(res=>MG[kind](res,hard,point));
+  overlay(`<div style="font-size:56px">${done?'⭐':'❄️'}</div><h2>${done?'Точка '+point+' пройдена!':'Почти получилось!'}</h2><p>${done?'Герой идёт дальше по карте.':'Точка уже ваша. Можно сыграть ещё раз.'}</p>
+    <div class="row" style="justify-content:center">${done?'':'<button class="btn alt" id="again" type="button">Ещё раз</button>'}<button class="btn" id="ok" type="button">Дальше</button></div>`);
+  if(!done)$('again').onclick=()=>playMini(point);$('ok').onclick=closeOv;
+}
+const MG={
+  catch(res,hard,point){overlay(`<h2>Точка ${point}: лови подарки</h2><div class="hud"><span id="sc">🎁 0 / 5</span><span id="lv">❤️❤️❤️</span><span id="tm">15</span></div><canvas class="mg" id="cv" width="600" height="420"></canvas><p class="small">Водите пальцем, ловите подарки, уворачивайтесь от снежинок.</p>`);
+    const cv=$('cv'),x=cv.getContext('2d'),img=new Image();img.src=hero;let G={px:300,items:[],score:0,lives:3,t0:performance.now(),last:performance.now(),spawn:0},raf;
+    const mv=e=>{const r=cv.getBoundingClientRect();G.px=Math.max(40,Math.min(560,(e.clientX-r.left)/r.width*600));};cv.onpointermove=mv;cv.onpointerdown=mv;
+    const end=w=>{cancelAnimationFrame(raf);res(w);};
+    function fr(t){if(!cv.isConnected)return;const dt=Math.min(40,t-G.last);G.last=t;const el=t-G.t0;G.spawn-=dt;
+      if(G.spawn<=0){G.spawn=hard?420:520;G.items.push({x:30+Math.random()*540,y:-20,v:(hard?.22:.17)+Math.random()*.08,bad:Math.random()<(hard?.35:.28)});}
+      x.clearRect(0,0,600,420);x.font='30px serif';x.textAlign='center';x.textBaseline='middle';
+      for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':'🎁',it.x,it.y);if(!it.hit&&it.y>330&&it.y<390&&Math.abs(it.x-G.px)<46){it.hit=true;it.bad?G.lives--:G.score++;}}
+      G.items=G.items.filter(i=>!i.hit&&i.y<440);if(img.complete)x.drawImage(img,G.px-35,320,70,70*img.naturalHeight/(img.naturalWidth||1));
+      $('sc').textContent=`🎁 ${G.score} / 5`;$('lv').textContent='❤️'.repeat(Math.max(0,G.lives));$('tm').textContent='⏱ '+Math.max(0,Math.ceil((15000-el)/1000));
+      if(G.score>=5)return end(true);if(G.lives<=0||el>=15000)return end(false);raf=requestAnimationFrame(fr);}
+    raf=requestAnimationFrame(fr);},
+  memory(res,hard,point){const E=['🎄','⛄','🎁','⭐','🍬','🔔'].slice(0,hard?6:4);const deck=[...E,...E].sort(()=>Math.random()-.5);let open=[],found=0,moves=0,lock=false;const LIM=hard?14:10;
+    overlay(`<h2>Точка ${point}: найди пары</h2><p class="small">Открывайте по две карточки. Ходов: <b id="mv">0</b> из ${LIM}</p><div class="mem" id="mem">${deck.map((e,i)=>`<button type="button" data-i="${i}" aria-label="Карточка">${e}</button>`).join('')}</div>`);
+    $('mem').onclick=async e=>{const b=e.target.closest('button');if(!b||lock||b.classList.contains('up')||b.classList.contains('done'))return;b.classList.add('up');open.push(b);
+      if(open.length<2)return;lock=true;moves++;$('mv').textContent=moves;const[a,c]=open;
+      if(a.textContent===c.textContent){a.classList.add('done');c.classList.add('done');found++;}else{await sleep(600);a.classList.remove('up');c.classList.remove('up');}
+      open=[];lock=false;if(found===E.length)return res(true);if(moves>=LIM)return res(false);};},
+  tap(res,hard,point){const GOAL=hard?12:10;let n=0,miss=0,live=true;
+    overlay(`<h2>Точка ${point}: собери снежинки</h2><div class="hud"><span id="tn">❄️ 0 / ${GOAL}</span><span id="tt">15</span></div><div class="tap" id="tp"></div><p class="small">Нажимайте на снежинки, пока они не растаяли.</p>`);
+    const tp=$('tp'),t0=performance.now();
+    const spawn=()=>{if(!live||!tp.isConnected){live=false;return;}const b=document.createElement('button');b.type='button';b.textContent=Math.random()<.2?'🎁':'❄️';b.style.left=(10+Math.random()*80)+'%';b.style.top=(12+Math.random()*76)+'%';
+      b.onclick=()=>{b.remove();n+=b.textContent==='🎁'?2:1;$('tn').textContent=`❄️ ${Math.min(n,GOAL)} / ${GOAL}`;if(n>=GOAL){live=false;res(true);}};tp.appendChild(b);setTimeout(()=>b.remove(),hard?900:1200);setTimeout(spawn,hard?450:550);};
+    spawn();const iv=setInterval(()=>{const left=Math.max(0,Math.ceil((15000-(performance.now()-t0))/1000));const tt=$('tt');if(tt)tt.textContent='⏱ '+left;if(!tp.isConnected){live=false;clearInterval(iv);return;}if(left<=0){clearInterval(iv);if(live){live=false;res(false);}}if(!live)clearInterval(iv);},250);}
+};
+
+/* ---------- start ---------- */
+$('enter').onclick=()=>scan($('code').value);
+$('code').onkeydown=e=>{if(e.key==='Enter')scan(e.target.value);};
+$('restore-btn').onclick=async()=>{try{const r=await call('/api/restore',{pcode:$('restore').value});if(!r.key){say('Такой код игрока не найден.','bad');return;}store.set('key',r.key);me=r;draw();say('Прогресс восстановлен!','ok');}catch(e){say('Не получилось. Попробуйте позже.','bad');}};
+$('support').href=CFG.support;
+(async()=>{
+  try{await ensurePlayer();}catch(e){say('Нет связи с игрой. Проверьте интернет и обновите страницу.','bad');return;}
+  draw();say(me.points?`Вы прошли ${me.points} из ${CFG.points} точек.`:'Найдите QR-код в коробке, чтобы открыть первую точку.');
+  const qs=new URLSearchParams(location.search),c=qs.get('c');
+  if(qs.get('c')||qs.get('p'))history.replaceState(null,'',location.pathname);
+  if(c)await scan(c);
+})();
+})();
+</script>
+</body>
+</html>

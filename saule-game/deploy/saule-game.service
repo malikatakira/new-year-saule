@@ -1,0 +1,17 @@
+# systemd unit: /etc/systemd/system/saule-game.service
+[Unit]
+Description=Saule New Year game
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/saule-game
+EnvironmentFile=/opt/saule-game/.env
+ExecStart=/usr/bin/node server/server.js
+Restart=always
+RestartSec=3
+User=www-data
+# the database lives in /opt/saule-game/data, backups in /opt/saule-game/backups
+ReadWritePaths=/opt/saule-game/data /opt/saule-game/backups
+
+[Install]
+WantedBy=multi-user.target

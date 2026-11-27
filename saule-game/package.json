@@ -1,0 +1,14 @@
+{
+  "name": "saule-game",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Saule New Year QR game: map with 5 points and mini-games, unique codes, admin dashboard",
+  "scripts": {
+    "start": "node server/server.js",
+    "codes": "node tools/gen-codes.js",
+    "backup": "node tools/backup.js",
+    "test": "node test/smoke.js"
+  },
+  "engines": { "node": ">=22.5" },
+  "dependencies": { "qrcode": "1.5.4" }
+}

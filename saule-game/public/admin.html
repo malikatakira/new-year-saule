@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Saule · дашборд игры</title>
+<style>
+:root{--bg:#FBF7F0;--card:#fff;--ink:#3A1A16;--muted:#7A5B50;--line:#EAD8C0;--red:#C8202A;--green:#1E6B3A;color-scheme:light}
+*{box-sizing:border-box}[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:0 0 12px}h2{font-size:17px;margin:0 0 8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;margin-bottom:12px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.kpi b{display:block;font-size:26px;font-variant-numeric:tabular-nums}.kpi span{color:var(--muted);font-size:13px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+input{font:15px system-ui;padding:9px 10px;border:1px solid var(--line);border-radius:10px;flex:1 1 200px;min-width:0}
+button{font:700 14px system-ui;border:0;border-radius:10px;padding:10px 14px;background:var(--green);color:#fff;cursor:pointer}
+button.alt{background:#f1e8dc;color:var(--ink)}
+pre{white-space:pre-wrap;word-break:break-word;background:#f7f2ea;border-radius:10px;padding:10px;font-size:13px;margin:8px 0 0}
+.bars{display:flex;align-items:flex-end;gap:4px;height:120px;margin-top:8px}
+.bars i{flex:1;background:var(--red);border-radius:4px 4px 0 0;min-height:2px;position:relative}
+.bars i span{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--muted);white-space:nowrap}
+.msg{font-weight:700;min-height:1.4em}.ok{color:var(--green)}.bad{color:var(--red)}
+.small{font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Saule · новогодняя игра</h1>
+  <section class="card" id="login"><h2>Вход</h2><div class="row"><input id="tok" type="password" placeholder="Ключ доступа" autocomplete="current-password"><button id="go" type="button">Войти</button></div><p class="msg" id="lmsg"></p></section>
+
+  <div id="app" hidden>
+    <div class="kpis" id="kpis"></div>
+    <section class="card"><h2>Активации кодов по дням</h2><div class="bars" id="bars"></div><div style="height:16px"></div></section>
+
+    <section class="card"><h2>Найти код из коробки</h2>
+      <div class="row"><input id="c" placeholder="SL-XXXX-XXXX"><button id="cfind" type="button">Найти</button></div><pre id="cout" hidden></pre></section>
+
+    <section class="card"><h2>Найти игрока</h2>
+      <p class="small">По коду игрока (например ЁЛКА-1234-ABC), который покупатель видит у себя в игре.</p>
+      <div class="row"><input id="p" placeholder="Код игрока"><button id="pfind" type="button">Найти</button></div><pre id="pout" hidden></pre>
+      <div id="pact" hidden>
+        <h2 style="margin-top:12px">Открыть точку вручную</h2>
+        <p class="small">Только если покупатель подтвердил покупку. Укажите причину, она сохранится в журнале.</p>
+        <div class="row"><input id="note" placeholder="Причина: чек №…, потерял карточку"><input id="by" placeholder="Кто открывает (имя)" style="flex:0 1 180px"><button id="grant" type="button">Открыть точку</button></div>
+        <h2 style="margin-top:12px">Объединить с другим игроком</h2>
+        <p class="small">Если покупатель играл на двух телефонах. Прогресс второго игрока перейдёт к этому.</p>
+        <div class="row"><input id="merge" placeholder="Код игрока, которого присоединить"><button id="mergeb" class="alt" type="button">Объединить</button></div>
+      </div>
+      <p class="msg" id="pmsg"></p></section>
+
+    <section class="card"><h2>Журнал действий</h2><pre id="log"></pre></section>
+  </div>
+</div>
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+let tok='';try{tok=sessionStorage.getItem('saule_admin')||'';}catch(e){}
+let cur=null;
+async function api(path,body){const r=await fetch(path,{method:body?'POST':'GET',headers:{authorization:'Bearer '+tok,'content-type':'application/json'},body:body?JSON.stringify(body):undefined});
+  const j=await r.json().catch(()=>({}));if(r.status===401)throw new Error('auth');return j;}
+async function load(){
+  const s=await api('/api/admin/stats');
+  $('kpis').innerHTML=[[s.codes,'кодов в базе'],[s.used,'кодов активировано'],[s.players,'игроков'],[s.finished,'прошли всю карту']].map(([v,l])=>`<div class="kpi"><b>${v}</b><span>${l}</span></div>`).join('');
+  const max=Math.max(1,...s.byDay.map(d=>d.n));
+  $('bars').innerHTML=s.byDay.slice(-31).map(d=>`<i style="height:${d.n/max*100}%" title="${d.day}: ${d.n}"><span>${d.day.slice(8)}.${d.day.slice(5,7)}</span></i>`).join('')||'<span class="small">Пока нет активаций</span>';
+  const log=await api('/api/admin/log');$('log').textContent=log.map(l=>`${l.at.slice(0,16).replace('T',' ')}  ${l.action}  ${l.detail}`).join('\n')||'Пусто';
+}
+async function enter(){try{await load();$('login').hidden=true;$('app').hidden=false;try{sessionStorage.setItem('saule_admin',tok);}catch(e){}}catch(e){$('lmsg').textContent='Неверный ключ';$('lmsg').className='msg bad';}}
+$('go').onclick=()=>{tok=$('tok').value.trim();enter();};
+$('cfind').onclick=async()=>{const r=await api('/api/admin/code?c='+encodeURIComponent($('c').value));const o=$('cout');o.hidden=false;
+  o.textContent=r.error?'Код не найден':`Код: ${r.code}\n${r.used_at?`Активирован: ${r.used_at.slice(0,16).replace('T',' ')}\nИгрок: ${r.owner.pcode} (точек: ${r.owner.points})`:'Ещё не активирован'}`;};
+function showPlayer(r){const o=$('pout');o.hidden=false;if(r.error){o.textContent='Игрок не найден';$('pact').hidden=true;cur=null;return;}cur=r;$('pact').hidden=false;
+  o.textContent=`Игрок: ${r.pcode}\nТочек: ${r.points} из ${r.total}\nКоды: ${r.owned.map(c=>c.code+' ('+c.used_at.slice(0,16).replace('T',' ')+')').join(', ')||'нет'}\nОткрыто вручную: ${r.grants.map(g=>g.note).join('; ')||'нет'}`;}
+$('pfind').onclick=async()=>showPlayer(await api('/api/admin/player?q='+encodeURIComponent($('p').value)));
+const msg=(t,c)=>{$('pmsg').textContent=t;$('pmsg').className='msg '+c;};
+$('grant').onclick=async()=>{if(!cur)return;const r=await api('/api/admin/grant',{player:cur.id,note:$('note').value,by:$('by').value});
+  if(r.ok){msg('Точка открыта','ok');showPlayer(await api('/api/admin/player?q='+encodeURIComponent(cur.pcode)));load();}else msg(r.error==='note_required'?'Укажите причину':r.error==='already_full'?'У игрока уже все точки':'Ошибка','bad');};
+$('mergeb').onclick=async()=>{if(!cur)return;const other=await api('/api/admin/player?q='+encodeURIComponent($('merge').value));if(other.error){msg('Второй игрок не найден','bad');return;}
+  if(!confirm(`Перенести прогресс ${other.pcode} к ${cur.pcode}?`))return;const r=await api('/api/admin/merge',{from:other.id,to:cur.id,by:$('by').value});
+  if(r.ok){msg('Игроки объединены','ok');showPlayer(await api('/api/admin/player?q='+encodeURIComponent(cur.pcode)));load();}else msg('Ошибка','bad');};
+if(tok)enter();
+})();
+</script>
+</body>
+</html>

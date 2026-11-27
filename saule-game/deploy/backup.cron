@@ -1,0 +1,2 @@
+# /etc/cron.d/saule-game : daily database backup at 04:10, keeps the last 14 copies
+10 4 * * * www-data cd /opt/saule-game && /usr/bin/node tools/backup.js /opt/saule-game/backups >> /opt/saule-game/backups/backup.log 2>&1
