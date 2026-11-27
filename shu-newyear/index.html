@@ -77,7 +77,7 @@ input[type=text]{font:600 16px var(--body);padding:11px 12px;border-radius:12px;
 .codes{display:flex;gap:6px;flex-wrap:wrap}
 .code{font:700 12px ui-monospace,monospace;padding:4px 8px;border-radius:8px;background:var(--bg);border:1px dashed var(--line);cursor:pointer;color:var(--ink)}
 .code.used{text-decoration:line-through;opacity:.5}
-canvas.game{width:100%;max-width:100%;border-radius:20px;background:linear-gradient(#1E6B3A,#154A2A);touch-action:none;display:block}
+canvas.game{width:100%;max-width:100%;border-radius:20px;background:linear-gradient(var(--berry),var(--red-deep));touch-action:none;display:block}
 .hud{display:flex;justify-content:space-between;font-weight:800;font-variant-numeric:tabular-nums}
 .how{display:grid;gap:8px;margin:0;padding-left:20px}
 .how li{min-width:0}
@@ -535,9 +535,10 @@ function mountAdvent(root){
 
 /* =========== 4. Tree =========== */
 const TOYC=['#C8202A','#1E6B3A','#F2B33D','#7b5cff','#2a8fd6','#E2457A'];
+const BRAND=window.BRAND_GAME||{};
 const SLOTS=[[78,272],[176,270],[122,210],[226,266],[150,186],[126,262],[192,204],[118,136],[182,134],[150,108]];
 function star(R,r){let d='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,q=i%2?r:R;d+=(i?'L':'M')+(Math.cos(a)*q).toFixed(1)+' '+(Math.sin(a)*q).toFixed(1);}return d+'Z';}
-function toy(i,cls){const[x,y]=SLOTS[i],c=i===9?'#F2B33D':TOYC[i%6];return `<g transform="translate(${x} ${y})"><g class="toy ${cls}"><line y1="-24" y2="-12" stroke="#c9a24a" stroke-width="1.2"/><rect x="-3" y="-15" width="6" height="4" rx="1" fill="#d9b25a"/><circle r="11" fill="${c}"/><circle cx="-4" cy="-4" r="3.4" fill="#fff" opacity=".6"/></g></g>`;}
+function toy(i,cls){const[x,y]=SLOTS[i],c=i===9?'#F2B33D':TOYC[i%6];return `<g transform="translate(${x} ${y})"><g class="toy ${cls}"><line y1="-24" y2="-12" stroke="#c9a24a" stroke-width="1.2"/><rect x="-3" y="-15" width="6" height="4" rx="1" fill="#d9b25a"/>${BRAND.toys?`<circle r="12" fill="#fff" stroke="${c}" stroke-width="2.5"/><text y="5" text-anchor="middle" font-size="13">${BRAND.toys[i%BRAND.toys.length]}</text>`:`<circle r="11" fill="${c}"/><circle cx="-4" cy="-4" r="3.4" fill="#fff" opacity=".6"/>`}</g></g>`;}
 function mountTree(root){
   let n=0;const used=new Set(),G=10;
   root.innerHTML=`<div class="stage-c"><div class="stage-top"><span>Игрушек: <b id="tr-n"></b></span><span id="tr-left"></span></div>
@@ -564,7 +565,7 @@ function mountScratch(root){
   const cv=$('tk-c'),x=cv.getContext('2d');let prize,done=false,drawing=false;
   function newCard(){prize=SC_PRIZES[Math.floor(Math.random()*SC_PRIZES.length)];$('tk-u').innerHTML=`<span class="em">${prize[0]}</span><b>${prize[1]}</b><span class="pcode">Промокод: <b>${rcode('WIN')}</b></span>`;
     const r=cv.getBoundingClientRect(),d=devicePixelRatio||1;cv.width=r.width*d;cv.height=r.height*d;x.setTransform(d,0,0,d,0,0);done=false;cv.style.opacity=1;
-    const g=x.createLinearGradient(0,0,r.width,r.height);g.addColorStop(0,'#C8202A');g.addColorStop(1,'#9E1A20');x.globalCompositeOperation='source-over';x.fillStyle=g;x.fillRect(0,0,r.width,r.height);
+    const cs=getComputedStyle(document.documentElement),g=x.createLinearGradient(0,0,r.width,r.height);g.addColorStop(0,cs.getPropertyValue('--berry').trim()||'#C8202A');g.addColorStop(1,cs.getPropertyValue('--red-deep').trim()||'#9E1A20');x.globalCompositeOperation='source-over';x.fillStyle=g;x.fillRect(0,0,r.width,r.height);
     x.fillStyle='rgba(255,255,255,.85)';for(let i=0;i<40;i++){x.beginPath();x.arc((i*53)%r.width,(i*37)%r.height,2,0,7);x.fill();}
     x.font='900 20px Rubik,sans-serif';x.textAlign='center';x.fillStyle='#fff';x.fillText('Сотри меня ✨',r.width/2,r.height/2+7);x.globalCompositeOperation='destination-out';}
   function pct(){const d=x.getImageData(0,0,cv.width,cv.height).data;let c=0,t=0;for(let i=3;i<d.length;i+=64){t++;if(d[i]===0)c++;}return c/t;}
@@ -592,7 +593,7 @@ function mountCatch(root){
     x.clearRect(0,0,600,380);for(let i=0;i<30;i++){x.fillStyle='rgba(255,255,255,.7)';x.beginPath();x.arc((i*131)%600,((i*71)+el*.03)%380,2,0,7);x.fill();}
     x.font='30px serif';x.textAlign='center';x.textBaseline='middle';
     for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':'🎁',it.x,it.y);if(!it.hit&&it.y>300&&it.y<350&&Math.abs(it.x-G.px)<46){it.hit=true;if(it.bad)G.lives--;else G.score++;}}
-    G.items=G.items.filter(it=>!it.hit&&it.y<400);if(img.complete)x.drawImage(img,G.px-38,280,76,76*img.naturalHeight/img.naturalWidth);
+    G.items=G.items.filter(it=>!it.hit&&it.y<400);if(BRAND.catcher){x.font='58px serif';x.fillText(BRAND.catcher,G.px,330);}else if(img.complete)x.drawImage(img,G.px-38,280,76,76*img.naturalHeight/img.naturalWidth);
     $('g-score').textContent=`🎁 ${G.score} / 5`;$('g-lives').textContent='❤️'.repeat(Math.max(0,G.lives));$('g-time').textContent='⏱ '+Math.max(0,Math.ceil((15000-el)/1000));
     if(G.score>=5)return end(true);if(G.lives<=0||el>=15000)return end(false);raf=requestAnimationFrame(fr);}
   return ()=>cancelAnimationFrame(raf);

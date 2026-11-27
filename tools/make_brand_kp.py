@@ -26,7 +26,8 @@ function mountBattle(root){
   draw();
 }
 """
-BATTLE_CSS = """.bt-rows{display:flex;flex-direction:column;gap:10px;width:100%}
+BATTLE_CSS = """.kp-label{display:inline-block;font:700 12px var(--body);letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.16);color:#fff;margin-bottom:8px}
+.bt-rows{display:flex;flex-direction:column;gap:10px;width:100%}
 .bt-row{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;padding:6px;border-radius:14px}
 .bt-row.mine{background:var(--soft)}
 .bt-e{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid var(--line);display:grid;place-items:center;font-size:24px}
@@ -66,7 +67,10 @@ def build(cfg):
     s = s[:i] + '/* ---------- brand overrides ---------- */\n' + cfg['css'] + BATTLE_CSS + s[i:]
     # header
     a = s.index('  <header class="top">'); b = s.index('</header>', a) + len('</header>')
-    s = s[:a] + cfg['header'] + s[b:]
+    hdr = cfg['header'].replace('    <h1>Новогодние игры</h1>', f'    <div class="kp-label">Коммерческое предложение для {cfg["kp_for"]}</div>\n    <h1>Новогодние игры</h1>')
+    assert 'kp-label' in hdr
+    s = s[:a] + hdr + s[b:]
+    rep('<script>\n(function(){', '<script>window.BRAND_GAME=' + json.dumps(cfg['brand_game'], ensure_ascii=False) + ';</script>\n<script>\n(function(){')
     rep('  <p class="ov-hint">Нажмите на игру, чтобы попробовать её и посмотреть пакеты.</p>',
         '  <p class="ov-hint">Нажмите на игру, чтобы попробовать её и посмотреть пакеты.</p>\n\n' + cfg['why'])
     rep('<span class="ic">🧾</span><b>Свой код на каждой покупке</b><small>Упаковка, чек, стакан или карточка</small>', cfg['code_card'])
@@ -101,6 +105,8 @@ CONFIGS = {}
 
 CONFIGS['zenchenko'] = dict(
     name='Зенченко',
+    kp_for='«Зенченко»',
+    brand_game={'catcher': '🧺', 'toys': ['🥛', '🧀', '🧈', '🥞', '🍶']},
     fonts='https://fonts.googleapis.com/css2?family=Russo+One&family=Jost:wght@400;500;600;700&display=swap&subset=cyrillic',
     vars='''  /* Zenchenko: brand blue from logo #1F5090, light blue, yellow accent from site, constructivist headings */
   --bg:#F4F8FD; --card:#FFFFFF; --ink:#16263D; --muted:#5B6B80; --line:#D6E3F5;
@@ -185,6 +191,8 @@ h2{color:var(--brand)}h3{color:var(--brand)}
 
 CONFIGS['kulikov'] = dict(
     name='Kulikov',
+    kp_for='Kulikov',
+    brand_game={'catcher': '🛍️', 'toys': ['🍰', '🧁', '🍓', '🍪', '🎂']},
     fonts='https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=Nunito:wght@400;600;700;800&display=swap&subset=cyrillic',
     vars='''  /* Kulikov: brand purple and lime from kulikov.com, rounded geometric type */
   --bg:#FBF6FC; --card:#FFFFFF; --ink:#2A1033; --muted:#6E5878; --line:#EBDDF0;
