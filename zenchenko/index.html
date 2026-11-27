@@ -1,0 +1,643 @@
+<title>Зенченко: новогодние игры</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Russo+One&family=Jost:wght@400;500;600;700&display=swap&subset=cyrillic">
+<style>
+/* Same look as the Saule proposal: cream, red, fir green, gold stars */
+:root{
+  /* Zenchenko: brand blue from logo #1F5090, light blue, yellow accent from site, constructivist headings */
+  --bg:#F4F8FD; --card:#FFFFFF; --ink:#16263D; --muted:#5B6B80; --line:#D6E3F5;
+  --berry:#1F5090; --pine:#1F5090; --gold:#F2AC33; --ice:#EEF4FC; --soft:#E3EEFC;
+  --red-deep:#163B6C; --stage-a:#FFFFFF; --stage-b:#E6F0FD; --brand:#1F5090;
+  --display:"Russo One", "Jost", system-ui, sans-serif;
+  --pixel:"Russo One", "Jost", system-ui, sans-serif;
+  --body:"Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+:root{color-scheme:light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cg fill='%23F2B33D' opacity='.28'%3E%3Cpath d='M30 18l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z'/%3E%3Cpath d='M120 96l2 5 5 1-4 3 1 5-4-2-4 2 1-5-4-3 5-1z'/%3E%3C/g%3E%3Cg stroke='%231E6B3A' stroke-width='2' stroke-linecap='round' opacity='.18'%3E%3Cpath d='M110 20v20M100 30h20M103 23l14 14M117 23l-14 14'/%3E%3Cpath d='M40 110v16M32 118h16M34 112l12 12M46 112l-12 12'/%3E%3C/g%3E%3C/svg%3E");color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:760px;margin:0 auto;padding-block:20px 48px;
+  padding-left:max(16px, env(safe-area-inset-left,0px));padding-right:max(16px, env(safe-area-inset-right,0px))}
+.eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#FFE7B8;font-weight:800}
+.top{background:linear-gradient(160deg,var(--berry),var(--red-deep));border-radius:26px;padding:20px 20px 22px;position:relative;overflow:hidden;box-shadow:0 6px 0 rgba(0,0,0,.12)}
+.top .lead{color:#FFF1E4}
+.top .badge{display:inline-block;background:#fff;color:var(--berry);font:900 15px var(--pixel);padding:4px 12px;border-radius:10px;margin-right:6px;letter-spacing:0;text-transform:none}
+.top .stars{position:absolute;right:14px;top:10px;font-size:22px;letter-spacing:6px;opacity:.9}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(30px,8vw,48px);line-height:1.1;margin:6px 0 8px;text-wrap:balance;color:#fff;text-shadow:0 3px 0 var(--red-deep)}
+h2{font-family:var(--pixel);font-weight:900;font-size:clamp(20px,5vw,26px);line-height:1.2;margin:0 0 6px;text-wrap:balance;color:var(--berry)}
+h3{font-family:var(--pixel);font-weight:800;font-size:17px;margin:0 0 4px;color:var(--pine)}
+p{margin:0}
+.lead{color:var(--muted);max-width:62ch}
+.note{background:var(--soft);border-radius:16px;padding:10px 14px;font-size:13px;color:var(--ink);margin-top:12px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 14px}
+.tab{font:800 14px var(--body);border:2px solid var(--line);background:var(--card);color:var(--ink);padding:9px 15px;border-radius:999px;cursor:pointer;text-decoration:none}
+.tab[aria-current="true"]{border-color:var(--pine);background:var(--pine);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.panel{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px;box-shadow:0 6px 0 rgba(158,26,32,.08);display:flex;flex-direction:column;gap:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{font:800 15px var(--body);border:0;border-radius:999px;padding:12px 18px;cursor:pointer;background:var(--pine);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.18)}
+.btn.alt{background:var(--ice);color:var(--ink);border:2px solid var(--line);box-shadow:none}
+.btn.hot{background:var(--berry)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn:focus-visible,.tab:focus-visible,input:focus-visible,.hero-pick:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+input[type=text]{font:600 16px var(--body);padding:11px 12px;border-radius:12px;border:2px solid var(--line);background:var(--bg);color:var(--ink);width:150px;text-transform:uppercase}
+.heroes{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;max-width:360px}
+.hero-pick{border:2px solid var(--line);background:var(--bg);border-radius:14px;padding:6px 4px 8px;cursor:pointer;color:var(--ink);font:700 12px var(--body);display:flex;flex-direction:column;align-items:center;gap:2px}
+.hero-pick[aria-pressed="true"]{border-color:var(--berry);background:var(--soft)}
+.hero-pick svg{width:56px;height:56px}
+.stage{display:flex;justify-content:center;align-items:center;background:var(--ice);border-radius:16px;min-height:260px;position:relative;overflow:hidden}
+.stage svg.big{width:210px;height:210px;transition:transform .2s}
+.status{font-weight:700;min-height:1.5em}
+.status.ok{color:var(--pine)} .status.bad{color:var(--berry)}
+.advent{display:grid;grid-template-columns:repeat(8,1fr);gap:5px}
+.day{aspect-ratio:1;border-radius:8px;background:var(--bg);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font:700 12px var(--body);color:var(--muted);font-variant-numeric:tabular-nums;cursor:pointer}
+.day.open{background:var(--berry);color:#fff;border-color:var(--berry)}
+.day.today{outline:2px solid var(--berry)}
+.map2{position:relative;width:100%;max-width:420px;margin:0 auto;border-radius:20px;overflow:hidden;aspect-ratio:572/1024}
+.map2 #map-img{width:100%;height:100%;display:block}
+#map-over{position:absolute;inset:0}
+.mp{position:absolute;width:15%;aspect-ratio:1.2;transform:translate(-50%,-50%);background:url(assets/map_open.webp) no-repeat;border-radius:50%}
+.mp.cur::after{content:"";position:absolute;inset:-12%;border-radius:50%;border:4px solid var(--gold);animation:ring 1.2s ease-out infinite}
+@keyframes ring{from{transform:scale(.85);opacity:1}to{transform:scale(1.35);opacity:0}}
+.mhero{position:absolute;width:13%;transform:translate(-50%,-100%);transition:left .6s,top .6s;filter:drop-shadow(0 4px 3px rgba(0,0,0,.3))}
+.mgoal{position:absolute;font-size:clamp(28px,9vw,44px);transform:translate(-50%,-50%)}
+@media (prefers-reduced-motion:reduce){.mp.cur::after{animation:none}}
+.santa{position:relative;display:flex;align-items:flex-end;justify-content:center;gap:2%;padding:48px 10px 22px;border-radius:22px;border:2px solid var(--line);background:radial-gradient(ellipse 70% 12% at 50% 92%,rgba(158,26,32,.14),transparent 70%),linear-gradient(var(--stage-a),var(--stage-b));overflow:hidden}
+.santa-count{position:absolute;top:12px;left:0;right:0;text-align:center;font:900 15px var(--pixel);color:var(--berry)}
+.santa-man{width:44%;max-width:220px;transform-origin:50% 100%}
+.sack-wrap{position:relative;width:52%;max-width:270px;display:flex;justify-content:center;align-items:flex-end}
+.sack-wrap img{display:block;transform-origin:50% 100%;max-width:100%}
+.gifts{position:absolute;left:12%;right:12%;bottom:62%;height:0;z-index:0}
+.gift{position:absolute;bottom:0;font-size:clamp(26px,8vw,40px);line-height:1;transform:translateX(-50%)}
+.gift.new{animation:drop .7s cubic-bezier(.3,1.4,.5,1)}
+@keyframes drop{from{transform:translate(-50%,-160px) rotate(-30deg);opacity:0}to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.gift.new{animation:none}}
+.map{width:100%;height:auto;max-width:100%;border-radius:16px;display:block}
+.codes{display:flex;gap:6px;flex-wrap:wrap}
+.code{font:700 12px ui-monospace,monospace;padding:4px 8px;border-radius:8px;background:var(--bg);border:1px dashed var(--line);cursor:pointer;color:var(--ink)}
+.code.used{text-decoration:line-through;opacity:.5}
+canvas.game{width:100%;max-width:100%;border-radius:20px;background:linear-gradient(#1E6B3A,#154A2A);touch-action:none;display:block}
+.hud{display:flex;justify-content:space-between;font-weight:800;font-variant-numeric:tabular-nums}
+.how{display:grid;gap:8px;margin:0;padding-left:20px}
+.how li{min-width:0}
+.final{text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+.final img{border-radius:16px;max-width:320px;width:100%}
+.sticker{display:inline-flex;gap:6px;align-items:center;background:var(--gold);color:#2b1a00;border-radius:999px;padding:4px 12px;font-weight:800;font-size:13px}
+.hearts{position:absolute;inset:0;pointer-events:none}
+.heart{position:absolute;font-size:26px;animation:up 1.1s ease-out forwards}
+@keyframes up{from{transform:translateY(0);opacity:1}to{transform:translateY(-120px);opacity:0}}
+@keyframes chew{0%,100%{transform:scale(1)}50%{transform:scale(1.06,.94)}}
+.chew{animation:chew .25s 4}
+@media (prefers-reduced-motion:reduce){.heart,.chew{animation:none}}
+.heroes.two{grid-template-columns:repeat(2,1fr);max-width:360px}
+.hero-pick img{width:72px;height:auto;display:block}
+.pet-stage{min-height:0;padding:44px 0 18px;background:radial-gradient(ellipse 60% 14% at 50% 94%,rgba(158,26,32,.14),transparent 70%),linear-gradient(var(--stage-a),var(--stage-b));flex-direction:column;border:2px solid var(--line);border-radius:22px}
+.sat{position:absolute;top:12px;left:14px;right:14px;display:flex;gap:10px;align-items:center;font:800 12px var(--body);color:var(--ink)}
+.bar{flex:1;height:12px;border-radius:99px;background:rgba(0,0,0,.12);overflow:hidden}
+.bar i{display:block;height:100%;width:50%;background:linear-gradient(90deg,var(--pine),#7CC243);border-radius:99px;transition:width .5s}
+.pet{width:min(260px,64vw);position:relative;animation:breath 3.2s ease-in-out infinite;transform-origin:50% 100%;cursor:pointer;touch-action:manipulation}
+@keyframes breath{0%,100%{transform:scale(1,1)}50%{transform:scale(1.012,.985)}}
+.pet-move{transform-origin:50% 100%}
+.pet-body{position:relative;transform-origin:50% 90%;transition:transform .18s ease-out}
+.pet-body .lay{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;user-select:none}
+.pet-body #l-body{position:relative}
+#l-eyes{transition:transform .07s}
+#l-happy{opacity:0}
+.mouth{position:absolute;pointer-events:none;user-select:none}
+.tray{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.food{font-size:38px;line-height:1;width:66px;height:66px;border-radius:16px;border:2px solid var(--line);background:var(--bg);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none;display:flex;align-items:center;justify-content:center}
+.food:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.drag{position:fixed;z-index:50;font-size:46px;pointer-events:none;transform:translate(-50%,-50%);transition:none}
+.crumb{position:absolute;width:7px;height:7px;border-radius:2px;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.pet{animation:none}}
+.block p+p{margin-top:6px}
+.extra{border:2px dashed var(--line);border-radius:18px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.tag{align-self:flex-start;display:inline-block;background:var(--pine);color:#fff;font:800 11px var(--body);letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:99px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin-top:6px}
+.opt{background:var(--ice);border:2px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.opt h4{margin:0;font:800 16px var(--body)}
+.minus{font-size:13px;color:var(--muted)}
+.cost{font:900 18px var(--pixel);color:var(--berry);margin-top:auto}
+.flow b{white-space:nowrap}
+.list{margin:6px 0 0;padding-left:20px;display:grid;gap:4px}
+.price{background:linear-gradient(160deg,var(--berry),var(--red-deep));color:#fff;border-radius:20px;padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:6px 16px}
+.price .pl{display:block;font:700 12px var(--body);text-transform:uppercase;letter-spacing:.06em;color:#FFE7B8}
+.price b{font:900 24px var(--pixel)}
+
+.scheme{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;margin:4px 0}
+.sc-col{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.sc-col img{width:56px;height:auto}
+.sc-col small{font-weight:800;font-size:12px}
+.bx{width:62px;height:42px;background:var(--berry);border-radius:7px;position:relative;box-shadow:inset 0 9px 0 #F6E3C6}
+.qr{position:absolute;left:50%;top:15px;width:20px;height:20px;transform:translateX(-50%);background:#fff;border-radius:3px;
+  background-image:linear-gradient(90deg,#222 33%,transparent 33% 66%,#222 66%),linear-gradient(#222 33%,transparent 33% 66%,#222 66%);background-size:8px 8px;background-position:2px 2px;background-repeat:repeat}
+.arr{font-weight:900;color:var(--muted);line-height:1}
+.qm{width:56px;height:72px;border-radius:28px;border:3px dashed var(--muted);display:flex;align-items:center;justify-content:center;font:900 28px var(--pixel);color:var(--muted)}
+.flow{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:13px;font-weight:700}
+.flow span{background:var(--ice);border:2px solid var(--line);border-radius:99px;padding:4px 10px}
+.flow span.hot{background:var(--berry);border-color:var(--berry);color:#fff}
+.flow b{color:var(--muted)}
+.cal{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;text-align:center}
+.cal>div{background:var(--ice);border:2px solid var(--line);border-radius:12px;padding:6px 2px;display:flex;flex-direction:column;align-items:center;min-width:0}
+.cal b{font:900 15px var(--pixel);color:var(--berry)}
+.cal span{font-size:22px;line-height:1.2}
+.cal small{font-size:11px;font-weight:700;line-height:1.2}
+.cal .dots{justify-content:center;font:900 22px var(--pixel);color:var(--muted);background:none;border-style:dashed}
+.cal .big{background:var(--berry);border-color:var(--berry);color:#fff}
+.cal .big b{color:#FFE7B8}
+.try{font-size:13px;color:var(--muted);margin-top:4px}
+.price{grid-template-columns:1fr;gap:12px}
+.pr-rows{display:grid;gap:6px}
+.pr{display:flex;justify-content:space-between;gap:12px;align-items:baseline;font-size:14px;color:#FFF1E4}
+.pr b{font:800 16px var(--pixel);white-space:nowrap;color:#fff}
+.pr.main span{font-weight:800;color:#fff}.pr.main b{font-size:22px}
+.pr.all{border-top:1px dashed rgba(255,255,255,.4);padding-top:8px}
+.pr.all b{color:#FFE7B8}
+.pr-term{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.pr-term b{font:900 22px var(--pixel)}
+.pr-term small{color:#FFE7B8;font-weight:700}
+.qrw .sub{font-size:11px;color:var(--muted);line-height:1.25}
+.bx em,.card em{position:absolute;right:-8px;top:-8px;width:22px;height:22px;border-radius:50%;font:900 13px/22px var(--body);font-style:normal;color:#fff;text-align:center}
+.no{background:#B3261E}.yes{background:var(--pine)}
+.bx.open{box-shadow:none;margin-top:14px}
+.bx.open::before{content:"";position:absolute;left:0;right:0;top:-16px;height:18px;background:#F6E3C6;border:2px solid var(--berry);border-radius:6px 6px 0 0;transform:skewX(-12deg)}
+.bx.open .qr.lid{top:-14px;width:14px;height:14px;z-index:1;background-size:6px 6px}
+.card{position:relative;width:66px;height:46px;background:#fff;border:2px solid var(--line);border-radius:8px;display:flex;align-items:center;gap:3px;padding:0 4px}
+.card .qr{position:static;transform:none;width:20px;height:20px;flex:none}
+.card b{font:800 8px ui-monospace,monospace;color:#222}
+.mini{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:12px}
+.mini .b5{width:26px;height:22px;border-radius:5px;background:var(--berry);color:#fff;font:900 12px/22px var(--pixel);text-align:center;box-shadow:inset 0 5px 0 #F6E3C6;padding-top:3px;box-sizing:content-box}
+.mini .cd{font:800 11px ui-monospace,monospace;background:#fff;color:#222;border:1px dashed #999;border-radius:5px;padding:2px 5px}
+.mini .pt{font-weight:800;background:var(--card);border:2px solid var(--line);border-radius:99px;padding:2px 8px}
+.mini b{color:var(--muted)}
+.overview{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:16px}
+.ov{display:flex;gap:12px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:20px;padding:10px 12px;text-decoration:none;color:var(--ink);box-shadow:0 4px 0 rgba(158,26,32,.08)}
+.ov:hover{border-color:var(--berry)}
+.ov img{width:58px;height:72px;object-fit:contain;flex:none}
+.ov img.ov-map{object-fit:cover;border-radius:10px}
+.ov h3{margin:0;font-size:16px;color:var(--berry)}
+.ov p{font-size:13px;line-height:1.3;color:var(--muted)}
+.ov span{display:inline-block;margin-top:4px;font:800 12px var(--body);color:var(--pine)}
+.ov-hint{font-size:13px;color:var(--muted);margin-top:8px}
+.steps{margin-top:16px;background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px}
+.steps ol{margin:8px 0 0;padding-left:22px;display:grid;gap:6px}
+.demo-note{font-size:13px;color:var(--muted);margin:8px 0 4px;background:var(--ice);border:2px dashed var(--line);border-radius:12px;padding:8px 10px}
+.mic-hint{font-size:12px;color:var(--muted);flex:1 1 200px}
+.price{display:block;background:none;color:var(--ink);padding:0}
+.price h3{margin-bottom:8px}
+.pks{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.pk{position:relative;border:2px solid var(--line);border-radius:18px;padding:14px;display:flex;flex-direction:column;gap:4px;background:var(--card)}
+.pk h4{margin:0;font:900 16px var(--pixel);color:var(--pine)}
+.pk p{font-size:13px;line-height:1.35}
+.pk b{font:900 22px var(--pixel);color:var(--ink);margin-top:auto;padding-top:6px}
+.pk small{font-weight:700;color:var(--muted)}
+.pk.best{background:linear-gradient(160deg,var(--berry),var(--red-deep));border-color:var(--berry);color:#fff}
+.pk.best h4,.pk.best b{color:#fff}.pk.best small{color:#FFE7B8}
+.ribbon{position:absolute;top:-11px;right:12px;background:var(--gold);color:#3A1A16;font:800 11px var(--body);padding:3px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:.05em}
+.pk-note{font-size:13px;color:var(--muted);margin-top:10px}
+.pk p{color:var(--ink)}.pk.best p{color:#FFF1E4}
+.wanted,.bonus{margin-top:16px;background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px}
+.wanted p{margin-top:6px}
+.bn{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:10px}
+.bn>div{background:var(--ice);border:2px solid var(--line);border-radius:18px;padding:12px 14px}
+.bn>div>span:first-child{font-size:26px;display:block}
+.bn .tag{margin:2px 0 4px}
+.bn h3{margin:4px 0 2px}
+.bn p{font-size:14px}
+.ask{margin-top:12px;font-weight:800;color:var(--berry)}
+.ucode{display:flex;flex-direction:column;align-items:center;gap:2px;background:var(--card);border:2px dashed var(--berry);border-radius:14px;padding:10px 16px}
+.ucode b{font:900 24px ui-monospace,monospace;letter-spacing:.06em;color:var(--berry)}
+.ucode small{font-size:12px;color:var(--muted)}
+.terms{margin-top:12px;background:var(--ice);border:2px solid var(--line);border-radius:18px;padding:12px 14px}
+.terms h4{margin:0;font:900 16px var(--pixel);color:var(--pine)}
+.terms .list{font-size:14px}
+.deadline{margin-top:10px;background:var(--soft);border-radius:14px;padding:10px 12px;font-weight:700}
+.wa{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;background:#25D366;color:#fff;font:900 17px var(--body);text-decoration:none;padding:15px 26px;border-radius:999px;box-shadow:0 4px 0 #128C4A}
+.wa:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+@media (max-width:600px){.wa{display:flex;width:100%}}
+.advent{grid-template-columns:repeat(7,1fr)}
+footer{margin-top:22px;font-size:12px;color:var(--muted)}
+/* ---------- SHU new year proposal: extra styles ---------- */
+.panel{display:none}
+.panel.on{display:flex}
+.ov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:16px}
+.ov .em{width:58px;height:58px;flex:none;border-radius:16px;background:var(--ice);border:2px solid var(--line);display:grid;place-items:center;font-size:30px}
+.codes-how{margin-top:16px;background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.cflow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center}
+.cflow>div{background:var(--ice);border:2px solid var(--line);border-radius:16px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0}
+.cflow b{font-size:13px;line-height:1.2}
+.cflow small{font-size:11px;color:var(--muted);line-height:1.25}
+.cflow .ic{font-size:26px;line-height:1}
+@media (max-width:520px){.cflow{grid-template-columns:repeat(2,1fr)}}
+.demo-box{display:flex;flex-direction:column;gap:12px}
+.stage-c{position:relative;border-radius:22px;border:2px solid var(--line);background:radial-gradient(ellipse 70% 12% at 50% 92%,rgba(158,26,32,.14),transparent 70%),linear-gradient(var(--stage-a),var(--stage-b));overflow:hidden;padding:44px 12px 18px;display:flex;flex-direction:column;align-items:center}
+.stage-top{position:absolute;top:10px;left:12px;right:12px;display:flex;justify-content:space-between;gap:10px;align-items:center;font:800 13px var(--body)}
+.steps5{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;width:100%;max-width:340px;margin:2px auto 0}
+.steps5 i{height:12px;border-radius:6px;background:rgba(0,0,0,.1);transition:background .4s}
+.steps5 i.on{background:linear-gradient(90deg,var(--pine),#7CC243)}
+.stage-label{font:900 16px var(--pixel);color:var(--berry);text-align:center;margin-bottom:6px}
+.santa-row{display:flex;align-items:flex-end;justify-content:center;gap:2%;width:100%;margin-top:8px}
+.santa-row .santa-man{width:44%;max-width:210px}
+.santa-row .sack-wrap{width:52%;max-width:260px}
+.scan-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.scan-row .used-try{font:700 13px var(--body);color:var(--muted);text-decoration:underline;background:none;border:0;cursor:pointer;padding:6px}
+.adv-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;width:100%}
+.adv-grid button{aspect-ratio:1;border-radius:10px;border:2px solid var(--line);background:var(--card);font:800 13px var(--body);color:var(--muted);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0}
+.adv-grid button.open{background:var(--soft);border-color:var(--berry);color:var(--berry)}
+.adv-grid button.today{background:var(--berry);border-color:var(--berry);color:#fff;animation:pulse 1.6s infinite}
+.adv-grid button.future{opacity:.55}
+.adv-grid button.big{background:var(--gold);border-color:var(--gold);color:#3A1A16}
+@keyframes pulse{50%{transform:scale(1.07)}}
+.adv-head{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;margin-bottom:10px;flex-wrap:wrap}
+.adv-head b{font:900 17px var(--pixel);color:var(--pine)}
+.tree-svg{width:min(300px,80%);height:auto;display:block}
+.toy{transform-box:fill-box;transform-origin:50% 0}
+.toy.drop{animation:tdrop .8s cubic-bezier(.25,1.45,.55,1) both}
+@keyframes tdrop{0%{transform:translateY(-200px);opacity:0}30%{opacity:1}100%{transform:none}}
+.star-t path{fill:#C9B9A6;transition:fill .6s}
+.star-t.lit path{fill:var(--gold)}
+.ticket{position:relative;width:100%;max-width:340px;aspect-ratio:16/10;border-radius:20px;overflow:hidden;background:#fff;box-shadow:0 0 0 5px var(--berry)}
+.ticket .under{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;text-align:center;padding:14px}
+.ticket .under .em{font-size:48px;line-height:1}
+.ticket .under b{font:900 19px var(--pixel);color:var(--berry)}
+.ticket canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair;transition:opacity .4s}
+.modal{position:fixed;inset:0;z-index:60;background:rgba(58,26,22,.45);display:flex;align-items:flex-end;justify-content:center;padding:12px}
+.modal-card{width:100%;max-width:420px;background:#fff;border-radius:24px;padding:22px 18px 16px;display:flex;flex-direction:column;gap:10px;text-align:center;animation:mup .4s cubic-bezier(.2,1.3,.5,1)}
+@keyframes mup{from{transform:translateY(50%);opacity:0}}
+.modal-card .em{font-size:56px;line-height:1}
+.modal-card h3{font-size:20px;color:var(--berry);margin:0}
+.coupon{border:2px dashed var(--berry);border-radius:14px;padding:10px;background:var(--soft)}
+.coupon small{display:block;font:800 11px var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.coupon b{font:900 22px ui-monospace,monospace;letter-spacing:.06em;color:var(--berry)}
+.pcode{font:800 12px var(--body);color:var(--muted);text-align:center}
+.pcode b{font-family:ui-monospace,monospace;color:var(--ink)}
+footer{margin-top:22px;font-size:12px;color:var(--muted)}
+/* ---------- brand overrides ---------- */
+body{background:var(--bg);font-size:16px}
+.top{background:linear-gradient(160deg,#1F5090,#163B6C);text-align:center;padding:24px 20px;box-shadow:0 6px 0 rgba(31,80,144,.15)}
+.top .plate{display:inline-block;background:#fff;border-radius:16px;padding:10px 18px;margin-bottom:12px}
+.top .plate img{display:block;width:min(200px,52vw);height:auto}
+.top .stars{color:#F2AC33}
+h1{text-transform:uppercase;text-shadow:none;letter-spacing:.02em;font-size:clamp(26px,7vw,40px);font-weight:400}
+h2,h3{font-weight:400;text-transform:uppercase;letter-spacing:.02em}
+h2{color:var(--brand)}h3{color:var(--brand)}
+.tab[aria-current="true"]{background:var(--brand);border-color:var(--brand)}
+.ribbon{background:#F2AC33;color:#16263D}
+.pk h4{font-weight:400}
+.pk.best{background:linear-gradient(160deg,#1F5090,#163B6C)}
+.cost{color:var(--brand)}
+.why{margin-top:16px;background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.bt-rows{display:flex;flex-direction:column;gap:10px;width:100%}
+.bt-row{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;padding:6px;border-radius:14px}
+.bt-row.mine{background:var(--soft)}
+.bt-e{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid var(--line);display:grid;place-items:center;font-size:24px}
+.bt-b{min-width:0;display:flex;flex-direction:column;gap:4px}
+.bt-t{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.bt-bar{height:10px;border-radius:6px;background:rgba(0,0,0,.08);overflow:hidden}
+.bt-bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--berry),var(--gold));transition:width .8s}
+.bt-pick{display:flex;flex-wrap:wrap;gap:8px}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <span class="stars" aria-hidden="true">★ ❄</span>
+    <div class="plate"><img src="assets/brand_logo.svg" alt="Зенченко"></div>
+    <h1>Новогодние игры</h1>
+    <p class="lead">Новогодний сезон с «Зенченко»: покупатель сканирует код с упаковки молочной продукции или чека фирменного магазина и сразу играет в телефоне. Подготовлено SHŪ Studio.</p>
+  </header>
+
+  <div class="ov-grid" id="overview"></div>
+  <p class="ov-hint">Нажмите на игру, чтобы попробовать её и посмотреть пакеты.</p>
+
+  <section class="why">
+    <h2>Почему это подходит «Зенченко»</h2>
+    <ul class="list">
+      <li><b>Новые фирменные магазины в Астане.</b> Игра приводит покупателей в магазины и даёт повод возвращаться весь декабрь.</li>
+      <li><b>Широкий ассортимент.</b> Молоко, кефир, ряженка, сметана, творог, масло: игра мотивирует попробовать новые продукты.</li>
+      <li><b>Где будут коды:</b> упаковка продукции, чек фирменного магазина, наклейка или карточка на кассе.</li>
+      <li><b>Семейный бренд с историей.</b> Новогодние рецепты и семейный праздник хорошо ложатся на молочную продукцию.</li>
+    </ul>
+  </section>
+
+  <section class="codes-how">
+    <h2>Как работают коды</h2>
+    <div class="cflow">
+      <div><span class="ic">🥛</span><b>Свой код на каждой покупке</b><small>Упаковка, чек или карточка в фирменном магазине</small></div>
+      <div><span class="ic">📱</span><b>Скан камерой телефона</b><small>Игра открывается сразу</small></div>
+      <div><span class="ic">✅</span><b>Код срабатывает один раз</b><small>Переслать или найти в интернете бесполезно</small></div>
+      <div><span class="ic">💾</span><b>Прогресс сохраняется</b><small>Можно продолжить на другом устройстве по коду игрока</small></div>
+    </div>
+    <p>Сколько упаковок и чеков в акции, столько и кодов: каждый уникальный. Итоговая цена зависит от сложности игры и тиража, то есть от количества кодов.</p>
+  </section>
+
+  <nav class="tabs" id="tabs" aria-label="Игры"></nav>
+  <div id="panels"></div>
+
+  <section class="bonus">
+    <h2>Выгода для бренда</h2>
+    <div class="bn">
+      <div><span>📣</span><h3>Вирусность</h3><p>Например, покупатель получает новогоднюю картинку со своим результатом, чтобы опубликовать её в сторис.</p></div>
+      <div><span>🎨</span><span class="tag">Дополнительно</span><h3>Художник из Казахстана</h3><p>Рисунки для игры может нарисовать художник из Казахстана. Это отдельная договорённость: стоимость и сроки художник обсуждает индивидуально, поэтому в цену пакетов она не входит.</p></div>
+    </div>
+  </section>
+
+  <section class="steps">
+    <h2>Как начать</h2>
+    <ol>
+      <li><b>Выбираете игру и пакет.</b> Можно взять одну игру или несколько.</li>
+      <li><b>Созвон на 10–15 минут.</b> Обсуждаем тираж, призы и где будут коды.</li>
+      <li><b>Договор, оплата и файлы.</b> Срок считаем с момента, когда есть оплата, логотип и материалы бренда.</li>
+      <li><b>Через 1–2 недели</b> готовая игра и коды для печати, срок зависит от пакета.</li>
+    </ol>
+    <p class="deadline">Чтобы игра заработала в декабре, решение лучше принять до 25 ноября. Коды для печати даём в первые 2–3 дня после получения файлов.</p>
+    <p class="ask">Выберите игру, и договоримся о созвоне 🤍</p>
+    <a class="wa" href="https://wa.me/77066767162?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9C%D1%8B%20%D0%BF%D0%BE%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BB%D0%B8%20%D0%BD%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE%D0%B4%D0%BD%D0%B8%D0%B5%20%D0%B8%D0%B3%D1%80%D1%8B%20%D0%B4%D0%BB%D1%8F%20%D0%97%D0%B5%D0%BD%D1%87%D0%B5%D0%BD%D0%BA%D0%BE%2C%20%D1%85%D0%BE%D1%82%D0%B8%D0%BC%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C" target="_blank" rel="noopener">💬 Написать в WhatsApp</a>
+  </section>
+
+  <footer>SHŪ Studio для Зенченко · ноябрь 2026</footer>
+</div>
+<div class="modal" id="modal" hidden></div>
+
+<script>
+(function(){
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const A='assets/';
+const money=n=>n.toLocaleString('ru-RU').replace(/[,  ]/g,' ')+' ₸';
+const rcode=(p)=>{const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';let s='';for(let i=0;i<8;i++)s+=c[Math.floor(Math.random()*c.length)];return (p||'NY')+'-'+s.slice(0,4)+'-'+s.slice(4);};
+const PLAYER=(()=>{try{let v=localStorage.getItem('shuny_player');if(!v){const w=['ЁЛКА','СНЕГ','ЗВЕЗДА','ШАР','ИСКРА'];v=w[Math.floor(Math.random()*w.length)]+'-'+(1000+Math.floor(Math.random()*9000));localStorage.setItem('shuny_player',v);}return v;}catch(e){return 'ЁЛКА-4821';}})();
+
+function modal({em='🎁',title,text='',code='',btn='Готово'}){
+  const m=$('modal');
+  m.innerHTML=`<div class="modal-card" role="dialog" aria-modal="true"><div class="em">${em}</div><h3>${title}</h3>${text?`<p>${text}</p>`:''}${code?`<div class="coupon"><small>Промокод</small><b>${code}</b></div>`:''}<button class="btn" type="button" id="m-ok">${btn}</button></div>`;
+  m.hidden=false;$('m-ok').onclick=()=>{m.hidden=true;};$('m-ok').focus();
+}
+
+/* ---------- shared texts ---------- */
+const TERMS=['Размещение игры на время акции (до 2 месяцев) входит в стоимость, продление от 15 000 ₸ в месяц.',
+  'Сервер и база уникальных кодов в цену не входят, считаем по тиражу и сроку акции.',
+  'Оплата: 50% предоплата, 50% после сдачи игры. Работаем по договору и счёту от ТОО «SHŪ».',
+  'Права на героев, логотип и брендинг остаются у заказчика. Движок и код игры остаются у SHŪ, заказчик получает право использовать игру на срок акции.',
+  'Два круга правок входят. Дополнительные правки и новые идеи оплачиваются отдельно и могут сдвинуть срок.'];
+const INCL_BASE=['Готовая игра в стиле этого демо, доработанная под ваш бренд.','Уникальные коды под ваш тираж и файлы для печати.','Сохранение прогресса и код игрока для другого устройства.','Статистика: сколько кодов активировано и сколько дошли до финала.','Проверка на iPhone и Android, один созвон и два круга правок.'];
+const extra=(title,html)=>`<div class="extra"><span class="tag">Дополнительная идея</span><h3>${title}</h3>${html}</div>`;
+
+const GAMES=[
+ {"id": "advent", "em": "📅", "title": "Новогодний календарь рецептов", "short": "Каждый день рецепт к празднику и сюрприз в фирменном магазине", "from": 250000, "term": "1 неделя", "lead": "С даты старта акции и до 31 декабря каждый день открывается окошко: новогодний рецепт с продукцией «Зенченко» или сюрприз в фирменном магазине.", "how": "Покупатель сканирует код с покупки и попадает в календарь. Каждый день новое окошко. Что будет в окошках, согласуем на созвоне.","extras":[extra("Рецепт дня от покупателей","<p>Покупатели присылают свои рецепты, лучшие попадают в календарь. Это живой контент для соцсетей бренда.</p>")],"pk":[{"n": "Старт", "d": "Окошко каждый день до 31 декабря", "p": 250000, "t": "1 неделя"}, {"n": "С рецептами покупателей", "d": "Календарь + рецепты от покупателей", "p": 350000, "t": "1,5 недели", "best": 1}]},
+ {"id": "elka", "em": "🎄", "title": "Соберите новогоднюю ёлку", "short": "Каждая покупка вешает игрушку, готовая ёлка даёт приз", "from": 250000, "term": "1 неделя", "lead": "Каждый код с упаковки или чека вешает на ёлку новую игрушку. Когда на ёлке все игрушки, загорается звезда и покупатель получает приз.", "how": "Покупатель копит игрушки за покупки. Счётчик показывает, сколько осталось до приза. После приза можно начать новую ёлку.","extras":[extra("Игрушки-продукты","<p>Каждый вид продукции даёт свою игрушку: молоко, кефир, творог, масло. Чтобы собрать всю ёлку, хочется попробовать весь ассортимент.</p>")],"pk":[{"n": "Старт", "d": "Ёлка, игрушки за покупки, приз", "p": 250000, "t": "1 неделя"}, {"n": "С ассортиментом", "d": "Старт + игрушки за разные продукты", "p": 350000, "t": "1,5 недели", "best": 1}]},
+ {"id": "battle", "em": "🏪", "title": "Битва фирменных магазинов", "short": "Магазины соревнуются, покупатели болеют за свой", "from": 300000, "term": "1,5 недели", "lead": "Каждый код с покупки добавляет голос магазину, в котором сделана покупка. Магазин-победитель месяца устраивает праздник для своих покупателей.", "how": "Покупатель выбирает свой магазин или он определяется по коду. Табло показывает, кто лидирует. Итоги и призы для победителей задаёт заказчик.","extras":[extra("Районы Астаны","<p>Соревнуются не магазины, а районы города. Подходит, когда фирменных магазинов станет больше.</p>")],"pk":[{"n": "Старт", "d": "Битва магазинов с табло", "p": 300000, "t": "1,5 недели"}, {"n": "С призами", "d": "Старт + розыгрыш среди покупателей магазина-победителя", "p": 400000, "t": "2 недели", "best": 1}]},
+ {"id": "ded", "em": "🎅", "title": "Спасите Деда Мороза", "short": "Каждый код возвращает подарок в мешок", "from": 300000, "term": "1,5 недели", "lead": "Подарки потерялись, и мешок Деда Мороза опустел. Каждый код с покупки возвращает подарок. Пройдите 5 этапов, и праздник спасён.", "how": "Каждый новый код открывает следующий этап. Счётчик показывает, на каком этапе игрок и сколько осталось. После 5 этапов покупатель получает приз.","extras":[extra("Мини-игра на каждом этапе","<p>Например, «поймай подарки». Доплата от 100 000 ₸ за одну игру на все этапы, от 150 000 ₸ за свою игру на каждом этапе.</p>")],"pk":[{"n": "Старт", "d": "5 этапов, уникальные коды по тиражу", "p": 300000, "t": "1,5 недели"}, {"n": "С мини-игрой", "d": "Старт + одна мини-игра на все этапы", "p": 400000, "t": "2 недели", "best": 1}]},
+ {"id": "scratch", "em": "🎟️", "title": "Стирай и выигрывай", "short": "Сотрите слой и узнайте приз", "from": 250000, "term": "1 неделя", "lead": "Покупатель стирает пальцем новогодний слой и видит свой приз: продукт в подарок, скидку в фирменном магазине или промокод.", "how": "Каждый код с покупки даёт одну карточку. Какие призы и как часто они выпадают, задаёт заказчик.","extras":[extra("Собери набор","<p>На карточках выпадают продукты набора. Собрал все, получил большой приз.</p>")],"pk":[{"n": "Старт", "d": "Карточка с призом за каждый код", "p": 250000, "t": "1 неделя"}, {"n": "С набором", "d": "Старт + сбор набора и большой приз", "p": 350000, "t": "1,5 недели", "best": 1}]},
+ {"id": "catch", "em": "🥛", "title": "Поймай молочный подарок", "short": "Ловите продукты, очки превращаются в промокод", "from": 250000, "term": "1 неделя", "lead": "Короткая игра на 15 секунд: ловите продукты «Зенченко» и уворачивайтесь от снежинок. Набрали очки, получили промокод.", "how": "Код с покупки даёт попытку. Чем больше очков, тем лучше приз. Призы и пороги очков задаёт заказчик.","extras":[extra("Таблица лидеров","<p>Лучшие игроки недели видят себя в таблице, а победитель получает главный приз.</p>")],"pk":[{"n": "Старт", "d": "Игра, очки и промокоды", "p": 250000, "t": "1 неделя"}, {"n": "С турниром", "d": "Старт + таблица лидеров недели", "p": 350000, "t": "1,5 недели", "best": 1}]}
+];
+
+const BATTLE_OPTS=[{"e": "🏪", "n": "Магазин на Молдагалиева", "v": 34}, {"e": "🏬", "n": "Магазин №2", "v": 29}, {"e": "🏠", "n": "Магазин №3", "v": 22}];
+const BATTLE_NOTE="В демо названия магазинов для примера.";
+
+/* ---------- render overview, tabs, panels ---------- */
+const OVIMG={"ded": "santa_joy.webp"};
+$('overview').innerHTML=GAMES.map(g=>`<a class="ov" href="#${g.id}">${OVIMG[g.id]?`<img src="${A+OVIMG[g.id]}" alt="">`:`<span class="em" aria-hidden="true">${g.em}</span>`}<div><h3>${g.title}</h3><p>${g.short}</p><span>от ${money(g.from)} · ${g.term}</span></div></a>`).join('');
+$('tabs').innerHTML=GAMES.map((g,i)=>`<a class="tab" href="#${g.id}" data-t="${g.id}">${i+1}. ${g.title}</a>`).join('');
+$('panels').innerHTML=GAMES.map(g=>`<section class="panel" id="p-${g.id}">
+  <div><h2>${g.title}</h2><p class="lead">${g.lead}</p></div>
+  <div class="demo-box" id="demo-${g.id}"></div>
+  <p class="demo-note"><b>Только для пробы на сайте.</b> В настоящей игре покупатель сканирует код камерой телефона. Здесь покупку заменяет кнопка.</p>
+  <div class="block"><h3>Как это работает</h3><p>${g.how}</p></div>
+  ${g.extras.join('')}
+  <div class="block"><h3>Что входит в работу</h3><ul class="list">${INCL_BASE.map(t=>`<li>${t}</li>`).join('')}</ul></div>
+  <div class="price"><h3>Пакеты</h3><div class="pks">${g.pk.map(x=>`<div class="pk ${x.best?'best':''}">${x.best?'<span class="ribbon">Рекомендуем</span>':''}<h4>${x.n}</h4><p>${x.d}</p><b>от ${money(x.p)}</b><small>${x.t}</small></div>`).join('')}</div>
+    <p class="pk-note">Итоговая цена зависит от сложности игры и тиража (количества кодов). Срок считается после оплаты и получения материалов бренда.</p>
+    <div class="terms"><h4>Условия</h4><ul class="list">${TERMS.map(t=>`<li>${t}</li>`).join('')}</ul></div></div>
+</section>`).join('');
+
+/* ---------- shared scan bar ---------- */
+function scanBar(onCode,label){
+  const used=[];
+  const w=document.createElement('div');w.className='scan-row';
+  w.innerHTML=`<button class="btn hot" type="button">📷 ${label||'Сканировать код'}</button><button class="used-try" type="button">Попробовать уже использованный код</button>`;
+  const [b,u]=w.querySelectorAll('button');
+  b.onclick=()=>{const c=rcode();used.push(c);onCode(c);};
+  u.onclick=()=>{const c=used[used.length-1]||'NY-7KQ2-M9XA';onCode(c,true);};
+  return w;
+}
+const status=()=>{const s=document.createElement('div');s.className='status';s.setAttribute('aria-live','polite');return s;};
+const playerLine=()=>{const p=document.createElement('p');p.className='pcode';p.innerHTML=`Код игрока: <b>${PLAYER}</b> · по нему игра продолжится на другом устройстве`;return p;};
+
+/* =========== 1. Friend (mascot) =========== */
+const MOUTHS={open:{w:144,ax:72.5},o:{w:58,ax:29.5},i:{w:185,ax:94.5},closed:{w:146,ax:73}};
+const HERO={W:440,H:512,mx:241,mtop:232,k:.42,eyeY:185,eyes:[[174,182],[323,188]]};
+function mountFriend(root){
+  root.innerHTML=`<div class="stage pet-stage" id="friend-stage">
+      <div class="sat" aria-label="Сытость"><span>Сытость</span><div class="bar"><i id="sat-bar"></i></div></div>
+      <div class="pet" id="pet" style="aspect-ratio:${HERO.W}/${HERO.H};width:min(230px,58vw)"><div class="pet-move" id="pet-move"><div class="pet-body" id="pet-body">
+        <img class="lay" id="l-body" src="${A}mascot_body.webp" alt="">
+        <img class="lay" id="l-eyes" src="${A}mascot_eyes.webp" alt="">
+        <svg class="lay" id="l-happy" viewBox="0 0 ${HERO.W} ${HERO.H}" aria-hidden="true">${HERO.eyes.map(([x,y])=>`<path d="M${x-34} ${y+12} Q${x} ${y-26} ${x+34} ${y+12}" fill="none" stroke="#2a1d3a" stroke-width="9" stroke-linecap="round"/>`).join('')}</svg>
+        <img class="mouth" id="l-mouth" alt="">
+      </div></div></div>
+      <div class="hearts" id="hearts"></div>
+    </div>
+    <div class="tray" id="tray" aria-label="Угощения"></div>
+    <div class="row"><button class="btn hot" id="rec" type="button">🎤 Скажи что-нибудь</button>
+      <span class="mic-hint">Голос никуда не отправляется и не сохраняется, всё происходит только на телефоне. Если микрофон не включается, откройте ссылку в Safari или Chrome.</span></div>
+    <div class="row" id="file-rec" hidden><label class="btn alt" for="voice-file">🎙 Записать голос</label><input id="voice-file" type="file" accept="audio/*" capture hidden></div>
+    <div class="status" id="friend-status" aria-live="polite"></div>`;
+  let ctx=null,busy=false,talking=false,lean=0,squash=[1,1],sat=70;
+  const body=$('pet-body'),move=$('pet-move'),mouthEl=$('l-mouth'),eyesEl=$('l-eyes'),happyEl=$('l-happy');
+  $('l-eyes').style.transformOrigin=`50% ${HERO.eyeY/HERO.H*100}%`;
+  const audio=()=>{if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();return ctx;};
+  function setMouth(k,frown){const m=MOUTHS[k];mouthEl.src=A+'mouth_'+k+'.webp';mouthEl.style.width=(m.w*HERO.k/HERO.W*100)+'%';
+    mouthEl.style.left=((HERO.mx-m.ax*HERO.k)/HERO.W*100)+'%';mouthEl.style.top=((HERO.mtop+(frown?5:0))/HERO.H*100)+'%';mouthEl.style.transform=frown?'scaleY(-1)':'';}
+  const idle=()=>setMouth('closed',sat<25);
+  function setEyes(m){eyesEl.style.transform=m==='blink'?'scaleY(.08)':'';eyesEl.style.opacity=m==='happy'?0:1;happyEl.style.opacity=m==='happy'?1:0;}
+  const apply=()=>{body.style.transform=`rotate(${lean}deg) scale(${squash[0]},${squash[1]})`;};
+  const say=(t,c)=>{const s=$('friend-status');s.textContent=t;s.className='status '+(c||'');};
+  const satDraw=()=>{$('sat-bar').style.width=Math.round(sat)+'%';};
+  idle();setEyes('normal');satDraw();
+  const iv=setInterval(()=>{sat=Math.max(0,sat-.12);satDraw();},1000);
+  (function blink(){setTimeout(async()=>{if(!busy&&eyesEl.style.opacity!=='0'){setEyes('blink');await sleep(110);if(eyesEl.style.opacity!=='0')setEyes('normal');}blink();},1800+Math.random()*3200);})();
+  function crunch(){const ac=audio(),t=ac.currentTime;for(let j=0;j<3;j++){const n=ac.sampleRate*.05,b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);
+    for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,3);const s=ac.createBufferSource();s.buffer=b;const f=ac.createBiquadFilter();f.type='bandpass';f.frequency.value=1600+Math.random()*2600;
+    const g=ac.createGain();g.gain.value=.9;s.connect(f);f.connect(g);g.connect(ac.destination);s.start(t+j*.028);}}
+  function blip(f0,f1,d){const ac=audio(),t=ac.currentTime,o=ac.createOscillator(),g=ac.createGain();o.type='triangle';o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f1,t+d);
+    g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.25,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(ac.destination);o.start(t);o.stop(t+d+.05);}
+  function burst(ch,n){const hs=$('hearts');for(let i=0;i<n;i++){const d=document.createElement('span');d.className='heart';d.textContent=ch[i%ch.length];d.style.left=(36+Math.random()*28)+'%';d.style.top='40%';d.style.animationDelay=(i*.12)+'s';hs.appendChild(d);setTimeout(()=>d.remove(),1600);}}
+  async function happy(msg){setEyes('happy');setMouth('open');blip(420,880,.25);
+    if(!reduced)move.animate([{transform:'translateY(0)'},{transform:'translateY(4px) scale(1.06,.92)',offset:.2},{transform:'translateY(-30px) scale(.96,1.05)',offset:.55},{transform:'translateY(0)'}],{duration:620,easing:'ease-out'});
+    burst(['💜','✨','💜'],3);if(msg)say(msg,'ok');await sleep(900);setEyes('normal');idle();}
+  async function no(msg){setMouth('closed');if(!reduced)move.animate([0,-9,9,-7,7,0].map(d=>({transform:`rotate(${d}deg)`})),{duration:600});blip(300,200,.18);say(msg,'bad');await sleep(650);idle();}
+  const FOODS=[{"e": "🥛", "n": "молоко", "v": 20}, {"e": "🧀", "n": "творог", "v": 20}, {"e": "🥞", "n": "сырник", "v": 25}, {"e": "🧈", "n": "масло", "v": 15}];
+  $('tray').innerHTML=FOODS.map((f,i)=>`<button type="button" class="food" data-i="${i}" aria-label="Угостить: ${f.n}">${f.e}</button>`).join('');
+  const mc=()=>{const m=mouthEl.getBoundingClientRect();return[m.left+m.width/2,m.top+m.height/2];};
+  async function eat(f,clone){busy=true;lean=0;apply();
+    if(sat>=100){clone&&clone.remove();await no('Я наелся! Приходи позже 🙂');busy=false;return;}
+    if(clone){const[x,y]=mc();clone.style.transition='left .14s,top .14s,transform .14s,opacity .14s';clone.style.left=x+'px';clone.style.top=y+'px';clone.style.transform='translate(-50%,-50%) scale(.25)';clone.style.opacity='.4';await sleep(140);clone.remove();}
+    for(let r=0;r<3;r++)for(const k of ['o','closed','i','closed']){setMouth(k);squash=k==='o'?[.97,1.04]:k==='i'?[1.04,.97]:[1.02,.98];apply();if(k==='closed')crunch();await sleep(115);}
+    squash=[1,1];apply();sat=Math.min(100,sat+f.v);satDraw();await happy(sat>=100?'Ммм, вкусно! Я наелся 🥰':'Ням! Вкусно!');busy=false;}
+  let drag=null;const tray=$('tray');
+  tray.addEventListener('pointerdown',e=>{const b=e.target.closest('.food');if(!b||busy||talking)return;audio().resume?.();e.preventDefault();b.setPointerCapture(e.pointerId);
+    const f=FOODS[+b.dataset.i],c=document.createElement('div');c.className='drag';c.textContent=f.e;c.style.left=e.clientX+'px';c.style.top=e.clientY+'px';document.body.appendChild(c);b.style.opacity=.3;drag={b,f,c,x0:e.clientX,y0:e.clientY,near:false};});
+  tray.addEventListener('pointermove',e=>{if(!drag)return;drag.c.style.left=e.clientX+'px';drag.c.style.top=e.clientY+'px';const[x,y]=mc(),d=Math.hypot(e.clientX-x,e.clientY-y),near=d<170;
+    if(near!==drag.near){drag.near=near;if(near&&sat<100){setMouth('open');setEyes('normal');}else idle();}lean=near?Math.max(-8,Math.min(8,(e.clientX-x)/12)):0;apply();});
+  function end(e){if(!drag)return;const{b,f,c,x0,y0}=drag;drag=null;b.style.opacity='';const[x,y]=mc();if(Math.hypot(e.clientX-x,e.clientY-y)<110){eat(f,c);return;}
+    lean=0;apply();idle();if(Math.hypot(e.clientX-x0,e.clientY-y0)<8){c.remove();say('Перетащи угощение герою прямо в рот 👄');return;}
+    const r=b.getBoundingClientRect();c.style.transition='left .25s,top .25s';c.style.left=(r.left+r.width/2)+'px';c.style.top=(r.top+r.height/2)+'px';setTimeout(()=>c.remove(),260);}
+  tray.addEventListener('pointerup',end);tray.addEventListener('pointercancel',end);
+  tray.addEventListener('keydown',e=>{const b=e.target.closest('.food');if(b&&(e.key==='Enter'||e.key===' ')&&!busy){e.preventDefault();audio().resume?.();eat(FOODS[+b.dataset.i],null);}});
+  $('pet').onclick=async()=>{if(busy||talking)return;busy=true;audio().resume?.();await happy('Хи-хи, щекотно!');busy=false;};
+  async function play(buf0){const ac=audio();let buf;try{buf=await ac.decodeAudioData(buf0);}catch(e){say('Не получилось прочитать запись, попробуй ещё раз.','bad');return;}
+    const src=ac.createBufferSource();src.buffer=buf;src.playbackRate.value=1.6;const an=ac.createAnalyser();an.fftSize=512;src.connect(an);an.connect(ac.destination);
+    const data=new Uint8Array(an.fftSize);let on=true,last='',lt=0;talking=true;
+    (function loop(now){if(!on)return;an.getByteTimeDomainData(data);let m=0;for(const v of data)m=Math.max(m,Math.abs(v-128));const k=m<7?'closed':m<20?'i':m<38?'o':'open';
+      if(k!==last&&now-lt>70){last=k;lt=now;setMouth(k);}requestAnimationFrame(loop);})(0);
+    src.onended=()=>{on=false;talking=false;idle();say('Скажи ещё что-нибудь!','ok');};say('Герой повторяет…');src.start();}
+  let rec=null,chunks=[],tm=null;
+  $('rec').onclick=async()=>{audio().resume?.();if(rec&&rec.state==='recording'){rec.stop();return;}
+    try{const st=await navigator.mediaDevices.getUserMedia({audio:true});chunks=[];rec=new MediaRecorder(st);rec.ondataavailable=e=>chunks.push(e.data);
+      rec.onstop=async()=>{clearTimeout(tm);st.getTracks().forEach(t=>t.stop());$('rec').textContent='🎤 Скажи что-нибудь';play(await new Blob(chunks).arrayBuffer());};
+      rec.start();$('rec').textContent='⏹ Стоп';say('Слушаю… (до 5 секунд)');tm=setTimeout(()=>rec.state==='recording'&&rec.stop(),5000);
+    }catch(e){$('file-rec').hidden=false;say('Микрофон в этом окне недоступен, используй кнопку «Записать голос».','bad');}};
+  $('voice-file').onchange=async e=>{const f=e.target.files[0];if(!f)return;audio().resume?.();play(await f.arrayBuffer());e.target.value='';};
+  return ()=>clearInterval(iv);
+}
+
+/* =========== 2. Santa: stages counter =========== */
+const SACK=[['sack0',255],['sack1',391],['sack2',260],['sack3',215],['sack3',215],['sack4',216]];
+const SACK_TXT=['Мешок пустой','Игрушки нашлись!','Упаковываем подарки','Подарки в мешке','Почти готово!','Мешок собран! 🎉'];
+function mountSanta(root){
+  let n=0;const used=new Set();
+  root.innerHTML=`<div class="stage-c"><div class="stage-top"><span id="sn-stage"></span><b id="sn-left"></b></div>
+    <div class="steps5" id="sn-steps">${'<i></i>'.repeat(5)}</div>
+    <div class="santa-row"><img class="santa-man" id="sn-man" src="${A}santa_sad.webp" alt="Дед Мороз"><div class="sack-wrap"><img id="sn-sack" src="${A}sack0.webp" alt="Мешок"></div></div></div>`;
+  const st=status(),bar=scanBar((c,again)=>{
+      if(again||used.has(c)){st.className='status bad';st.textContent=`Код ${c} уже использован. Один код работает один раз.`;return;}
+      if(n>=5){st.className='status';st.textContent='Мешок уже собран. Нажмите «Начать заново».';return;}
+      used.add(c);n++;draw(true);st.className='status ok';st.textContent=n>=5?'Праздник спасён! 🎉':`Код ${c} принят! Подарок вернулся в мешок.`;
+      if(n>=5)setTimeout(()=>modal({em:'🎅',title:'Праздник спасён!',text:'Приз ваш. В игре здесь будет приз от бренда.',code:rcode('GIFT')}),700);});
+  const rs=document.createElement('button');rs.className='btn alt';rs.type='button';rs.textContent='Начать заново';rs.onclick=()=>{n=0;used.clear();draw(false);st.textContent='';};
+  root.append(bar,st,playerLine(),rs);
+  function draw(anim){const[img,w]=SACK[n];$('sn-stage').textContent=`Пройдено этапов: ${n} из 5`;
+    $('sn-left').textContent=n>=5?'Праздник спасён!':`Осталось: ${5-n}`;[...$('sn-steps').children].forEach((x,i)=>x.classList.toggle('on',i<n));
+    $('sn-man').src=A+(n>=5?'santa_joy':n===4?'santa_wow':'santa_sad')+'.webp';const s=$('sn-sack');s.src=A+img+'.webp';s.style.width=Math.min(100,w/330*100)+'%';
+    if(anim&&!reduced){s.animate([{transform:'scale(.6)',opacity:.2},{transform:'scale(1.1)',opacity:1,offset:.6},{transform:'scale(1)'}],{duration:550});
+      $('sn-man').animate([{transform:'translateY(0)'},{transform:'translateY(-22px)'},{transform:'translateY(0)'}],{duration:550});}}
+  draw(false);
+}
+
+/* =========== 3. Advent =========== */
+const ADV_PRIZES=[["🥞", "Сырники к завтраку", "Рецепт с творогом «Зенченко»"], ["🎂", "Торт «Наполеон» на сметане", "Новогодний рецепт"], ["🏷️", "Скидка в фирменном магазине", "На молочную продукцию сегодня"], ["🥗", "Салат с домашней сметаной", "Рецепт к праздничному столу"], ["🥛", "Кефир в подарок", "К любой покупке в фирменном магазине"], ["🧈", "Новогодняя выпечка на масле", "Рецепт дня"]];
+function mountAdvent(root){
+  const days=31;let today=1;const opened=new Set();
+  root.innerHTML=`<div class="stage-c"><div class="adv-head"><b id="ad-date"></b><span class="mic-hint" style="flex:none">Открыто: <b id="ad-cnt"></b></span></div><div class="adv-grid" id="ad-grid"></div></div>`;
+  const nx=document.createElement('div');nx.className='row';nx.innerHTML=`<button class="btn" type="button" id="ad-next">Следующий день (для пробы)</button>`;
+  const st=status();root.append(nx,st,playerLine());
+  function draw(){$('ad-date').textContent=`Сегодня ${today} декабря`;$('ad-cnt').textContent=opened.size;
+    $('ad-grid').innerHTML=Array.from({length:days},(_,i)=>{const d=i+1;const cls=opened.has(d)?'open':d===today?'today':d>today?'future':'';return `<button type="button" class="${cls} ${d===31?'big':''}" data-d="${d}" aria-label="${d} декабря">${opened.has(d)?'✓':d}</button>`;}).join('');}
+  $('ad-grid').onclick=e=>{const b=e.target.closest('button');if(!b)return;const d=+b.dataset.d;
+    if(d>today){st.className='status';st.textContent=`${d} декабря это окошко откроется в свой день.`;return;}
+    if(opened.has(d)){st.className='status';st.textContent='Это окошко уже открыто.';return;}
+    if(d<today){st.className='status';st.textContent='Этот день прошёл. Код с покупки может открыть пропущенное окошко.';return;}
+    opened.add(d);draw();const p=d===31?["🎄", "Новогодний набор", "Главный подарок сезона от «Зенченко»"]:ADV_PRIZES[(d-1)%ADV_PRIZES.length];
+    modal({em:p[0],title:`${d} декабря: ${p[1]}`,text:p[2],code:rcode('ADV')});};
+  $('ad-next').onclick=()=>{today=today>=31?1:today+1;if(today===1)opened.clear();draw();st.textContent='';};
+  draw();
+}
+
+/* =========== 4. Tree =========== */
+const TOYC=['#C8202A','#1E6B3A','#F2B33D','#7b5cff','#2a8fd6','#E2457A'];
+const SLOTS=[[78,272],[176,270],[122,210],[226,266],[150,186],[126,262],[192,204],[118,136],[182,134],[150,108]];
+function star(R,r){let d='';for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,q=i%2?r:R;d+=(i?'L':'M')+(Math.cos(a)*q).toFixed(1)+' '+(Math.sin(a)*q).toFixed(1);}return d+'Z';}
+function toy(i,cls){const[x,y]=SLOTS[i],c=i===9?'#F2B33D':TOYC[i%6];return `<g transform="translate(${x} ${y})"><g class="toy ${cls}"><line y1="-24" y2="-12" stroke="#c9a24a" stroke-width="1.2"/><rect x="-3" y="-15" width="6" height="4" rx="1" fill="#d9b25a"/><circle r="11" fill="${c}"/><circle cx="-4" cy="-4" r="3.4" fill="#fff" opacity=".6"/></g></g>`;}
+function mountTree(root){
+  let n=0;const used=new Set(),G=10;
+  root.innerHTML=`<div class="stage-c"><div class="stage-top"><span>Игрушек: <b id="tr-n"></b></span><span id="tr-left"></span></div>
+    <svg class="tree-svg" viewBox="0 0 300 360" role="img" aria-label="Новогодняя ёлка"><ellipse cx="150" cy="342" rx="140" ry="16" fill="#fff" opacity=".8"/>
+    <rect x="136" y="296" width="28" height="44" rx="4" fill="#7a4a2a"/><path d="M150 150 L274 302 Q150 320 26 302Z" fill="#1E6B3A"/><path d="M150 92 L248 230 Q150 246 52 230Z" fill="#23813f"/><path d="M150 36 L218 154 Q150 168 82 154Z" fill="#2a944a"/>
+    <g id="tr-toys"></g><g id="tr-star" class="star-t" transform="translate(150 34)"><path d="${star(17,7.5)}"/></g></svg>
+    <div class="steps5" style="grid-template-columns:repeat(10,1fr)" id="tr-seg">${'<i></i>'.repeat(G)}</div></div>`;
+  const st=status(),bar=scanBar((c,again)=>{if(again||used.has(c)){st.className='status bad';st.textContent=`Код ${c} уже использован.`;return;}
+    if(n>=G){st.className='status';st.textContent='Ёлка уже готова. Нажмите «Начать заново».';return;}
+    used.add(c);n++;$('tr-toys').insertAdjacentHTML('beforeend',toy(n-1,reduced?'':'drop'));draw();st.className='status ok';st.textContent=n>=G?'Ёлка готова!':`Код ${c} принят! Игрушка №${n} на ёлке.`;
+    if(n>=G)setTimeout(()=>modal({em:'🎄',title:'Ёлка готова!',text:'Приз ваш. Можно начать новую ёлку.',code:rcode('ELKA')}),800);},'Сканировать код с покупки');
+  const rs=document.createElement('button');rs.className='btn alt';rs.type='button';rs.textContent='Начать заново';rs.onclick=()=>{n=0;used.clear();$('tr-toys').innerHTML='';draw();st.textContent='';};
+  root.append(bar,st,playerLine(),rs);
+  function draw(){$('tr-n').textContent=`${n} из ${G}`;$('tr-left').textContent=n>=G?'Приз ваш 🎁':`До приза: ${G-n}`;[...$('tr-seg').children].forEach((x,i)=>x.classList.toggle('on',i<n));$('tr-star').classList.toggle('lit',n>=G);}
+  draw();
+}
+
+/* =========== 5. Scratch =========== */
+const SC_PRIZES=[["🥛", "Молоко в подарок"], ["🧀", "Творог в подарок"], ["🏷️", "Скидка 15% в фирменном магазине"], ["🧈", "Масло в подарок"], ["🎁", "Новогодний набор"]];
+function mountScratch(root){
+  root.innerHTML=`<div class="stage-c" style="padding-top:18px"><div class="ticket" id="tk"><div class="under" id="tk-u"></div><canvas id="tk-c"></canvas></div></div>`;
+  const st=status(),bar=scanBar((c,again)=>{if(again){st.className='status bad';st.textContent=`Код ${c} уже использован.`;return;}newCard();st.className='status ok';st.textContent=`Код ${c} принят! Сотрите слой пальцем.`;},'Сканировать код и получить карточку');
+  root.append(bar,st,playerLine());
+  const cv=$('tk-c'),x=cv.getContext('2d');let prize,done=false,drawing=false;
+  function newCard(){prize=SC_PRIZES[Math.floor(Math.random()*SC_PRIZES.length)];$('tk-u').innerHTML=`<span class="em">${prize[0]}</span><b>${prize[1]}</b><span class="pcode">Промокод: <b>${rcode('WIN')}</b></span>`;
+    const r=cv.getBoundingClientRect(),d=devicePixelRatio||1;cv.width=r.width*d;cv.height=r.height*d;x.setTransform(d,0,0,d,0,0);done=false;cv.style.opacity=1;
+    const g=x.createLinearGradient(0,0,r.width,r.height);g.addColorStop(0,'#C8202A');g.addColorStop(1,'#9E1A20');x.globalCompositeOperation='source-over';x.fillStyle=g;x.fillRect(0,0,r.width,r.height);
+    x.fillStyle='rgba(255,255,255,.85)';for(let i=0;i<40;i++){x.beginPath();x.arc((i*53)%r.width,(i*37)%r.height,2,0,7);x.fill();}
+    x.font='900 20px Rubik,sans-serif';x.textAlign='center';x.fillStyle='#fff';x.fillText('Сотри меня ✨',r.width/2,r.height/2+7);x.globalCompositeOperation='destination-out';}
+  function pct(){const d=x.getImageData(0,0,cv.width,cv.height).data;let c=0,t=0;for(let i=3;i<d.length;i+=64){t++;if(d[i]===0)c++;}return c/t;}
+  function rub(e){if(!drawing||done)return;const r=cv.getBoundingClientRect();x.beginPath();x.arc(e.clientX-r.left,e.clientY-r.top,20,0,7);x.fill();
+    if(pct()>.5){done=true;cv.style.opacity=0;modal({em:prize[0],title:prize[1],text:'Покажите промокод на кассе.',code:rcode('WIN')});}}
+  cv.addEventListener('pointerdown',e=>{drawing=true;cv.setPointerCapture(e.pointerId);rub(e);});cv.addEventListener('pointermove',rub);
+  cv.addEventListener('pointerup',()=>drawing=false);cv.addEventListener('pointercancel',()=>drawing=false);
+  requestAnimationFrame(newCard);
+}
+
+/* =========== 6. Catch =========== */
+function mountCatch(root){
+  root.innerHTML=`<div class="hud"><span id="g-score">🎁 0 / 5</span><span id="g-lives"></span><span id="g-time">15</span></div>
+    <canvas class="game" id="cv" width="600" height="380"></canvas><p class="mic-hint">Водите пальцем или мышкой, ловите подарки и уворачивайтесь от снежинок.</p>`;
+  const st=status(),b=document.createElement('button');b.className='btn hot';b.type='button';b.textContent='▶ Играть';root.append(b,st);
+  const cv=$('cv'),x=cv.getContext('2d'),img=new Image();img.src=A+'mascot_full.webp';let raf=0,G=null;
+  function frameStatic(t){x.clearRect(0,0,600,380);x.fillStyle='#fff';x.font='800 24px Nunito,sans-serif';x.textAlign='center';x.fillText(t,300,190);}
+  frameStatic('Нажмите «Играть»');
+  b.onclick=()=>{cancelAnimationFrame(raf);G={px:300,items:[],score:0,lives:3,t0:performance.now(),last:performance.now(),spawn:0,over:false};st.textContent='';
+    const mv=e=>{const r=cv.getBoundingClientRect();G&&(G.px=Math.max(40,Math.min(560,(e.clientX-r.left)/r.width*600)));};cv.onpointermove=mv;cv.onpointerdown=mv;raf=requestAnimationFrame(fr);};
+  function end(win){G.over=true;cancelAnimationFrame(raf);frameStatic(win?'Победа! 🎉':'Почти! Попробуйте ещё раз');
+    if(win)modal({em:'🎁',title:'Отлично поймано!',text:`Очки: ${G.score}. Промокод на скидку:`,code:rcode('GIFT')});}
+  function fr(now){if(!G||G.over)return;const dt=Math.min(40,now-G.last);G.last=now;const el=now-G.t0;G.spawn-=dt;
+    if(G.spawn<=0){G.spawn=520;G.items.push({x:30+Math.random()*540,y:-20,v:.17+Math.random()*.08,bad:Math.random()<.3});}
+    x.clearRect(0,0,600,380);for(let i=0;i<30;i++){x.fillStyle='rgba(255,255,255,.7)';x.beginPath();x.arc((i*131)%600,((i*71)+el*.03)%380,2,0,7);x.fill();}
+    x.font='30px serif';x.textAlign='center';x.textBaseline='middle';
+    for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':(["\ud83e\udd5b", "\ud83e\uddc0", "\ud83e\uddc8", "\ud83c\udf81"][Math.floor(it.x)%4]),it.x,it.y);if(!it.hit&&it.y>300&&it.y<350&&Math.abs(it.x-G.px)<46){it.hit=true;if(it.bad)G.lives--;else G.score++;}}
+    G.items=G.items.filter(it=>!it.hit&&it.y<400);if(img.complete)x.drawImage(img,G.px-38,280,76,76*img.naturalHeight/img.naturalWidth);
+    $('g-score').textContent=`🎁 ${G.score} / 5`;$('g-lives').textContent='❤️'.repeat(Math.max(0,G.lives));$('g-time').textContent='⏱ '+Math.max(0,Math.ceil((15000-el)/1000));
+    if(G.score>=5)return end(true);if(G.lives<=0||el>=15000)return end(false);raf=requestAnimationFrame(fr);}
+  return ()=>cancelAnimationFrame(raf);
+}
+
+
+/* =========== Battle: every code is a vote =========== */
+function mountBattle(root){
+  const O=BATTLE_OPTS.map(o=>({...o}));let mine=null;
+  root.innerHTML=`<div class="stage-c" style="padding-top:16px"><div class="bt-rows" id="bt-rows"></div><p class="mic-hint" style="text-align:center;margin-top:8px">${BATTLE_NOTE}</p></div>`;
+  const pick=document.createElement('div');pick.className='bt-pick';pick.innerHTML=O.map((o,i)=>`<button class="btn alt" type="button" data-i="${i}">${o.e} ${o.n}</button>`).join('');
+  const st=status();
+  const bar=scanBar((c,again)=>{if(again){st.className='status bad';st.textContent=`Код ${c} уже использован.`;return;}
+    if(mine===null){st.className='status';st.textContent='Сначала выберите, за кого играете.';return;}
+    O[mine].v+=1+Math.floor(Math.random()*3);draw();st.className='status ok';st.textContent=`Код ${c} принят! +1 голос за «${O[mine].n}».`;},'Сканировать код и проголосовать');
+  root.append(pick,bar,st,playerLine());
+  pick.onclick=e=>{const b=e.target.closest('button');if(!b)return;mine=+b.dataset.i;pick.querySelectorAll('button').forEach((x,i)=>x.className='btn '+(i===mine?'':'alt'));st.className='status ok';st.textContent=`Вы играете за «${O[mine].n}». Каждый код с покупки добавляет голос.`;draw();};
+  function draw(){const tot=O.reduce((a,o)=>a+o.v,0),max=Math.max(...O.map(o=>o.v));
+    $('bt-rows').innerHTML=O.map((o,i)=>{const p=Math.round(o.v/tot*100);return `<div class="bt-row ${i===mine?'mine':''}"><span class="bt-e">${o.e}</span><div class="bt-b"><div class="bt-t"><b>${o.n}${o.v===max?' · лидер':''}</b><span>${p}%</span></div><div class="bt-bar"><i style="width:${p}%"></i></div></div></div>`;}).join('');}
+  draw();
+}
+
+/* ---------- routing ---------- */
+const MOUNT={drug:mountFriend,ded:mountSanta,advent:mountAdvent,elka:mountTree,scratch:mountScratch,catch:mountCatch,battle:mountBattle};
+let cleanup=null,current='';
+function route(){const t=(location.hash||'#advent').slice(1);const k=MOUNT[t]&&GAMES.some(g=>g.id===t)?t:'advent';
+  document.querySelectorAll('.tab').forEach(a=>a.setAttribute('aria-current',a.dataset.t===k));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+k));
+  if(k===current)return;if(cleanup){cleanup();cleanup=null;}
+  document.querySelectorAll('.demo-box').forEach(d=>d.innerHTML='');current=k;cleanup=MOUNT[k]($('demo-'+k))||null;}
+addEventListener('hashchange',route);route();
+document.querySelectorAll('.ov').forEach(a=>a.addEventListener('click',()=>setTimeout(()=>$('tabs').scrollIntoView({behavior:'smooth'}),50)));
+document.addEventListener('click',e=>{if(e.target.closest('[data-go-catch]'))location.hash='#catch';});
+})();
+</script>
