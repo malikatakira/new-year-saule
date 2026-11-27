@@ -7,10 +7,10 @@
 <style>
 /* Same look as the Saule proposal: cream, red, fir green, gold stars */
 :root{
-  /* Gasteria: dark chocolate logo plate, cream terrazzo, rust accent from their QR menu, brass, fir green for New Year */
+  /* Gasteria: dark chocolate logo plate, cream terrazzo, rust accent from their QR menu, brass */
   --bg:#F6F1EA; --card:#FFFFFF; --ink:#33241D; --muted:#7D6A5E; --line:#E4D8CC;
   --berry:#B7410E; --pine:#2F5D4A; --gold:#C9A063; --ice:#F3ECE4; --soft:#F6E5DA;
-  --red-deep:#33241D; --stage-a:#FBF7F2; --stage-b:#EFE4D8; --choc:#3A2A22;
+  --red-deep:#33241D; --stage-a:#FBF7F2; --stage-b:#EFE4D8; --choc:#3A2A22; --brand:#3A2A22;
   --display:"Poiret One", "Montserrat", system-ui, sans-serif;
   --pixel:"Montserrat", system-ui, sans-serif;
   --body:"Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -274,7 +274,8 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
 .pcode{font:800 12px var(--body);color:var(--muted);text-align:center}
 .pcode b{font-family:ui-monospace,monospace;color:var(--ink)}
 footer{margin-top:22px;font-size:12px;color:var(--muted)}
-/* ---------- Gasteria overrides ---------- */
+/* ---------- brand overrides ---------- */
+
 body{background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='%23C9A063' opacity='.22'%3E%3Ccircle cx='14' cy='20' r='2'/%3E%3Ccircle cx='70' cy='54' r='1.5'/%3E%3Ccircle cx='100' cy='12' r='1.2'/%3E%3C/g%3E%3Cg fill='%23B7410E' opacity='.12'%3E%3Ccircle cx='40' cy='92' r='2.2'/%3E%3Ccircle cx='96' cy='96' r='1.4'/%3E%3C/g%3E%3C/svg%3E");font-size:15px}
 .top{background:var(--choc);box-shadow:0 6px 0 rgba(51,36,29,.15);text-align:center;padding:26px 20px 24px}
 .top .logo{display:block;width:min(260px,70%);margin:0 auto 10px}
@@ -296,12 +297,56 @@ h3{font-weight:700;color:var(--berry)}
 .kp-label{display:inline-block;font:600 11px var(--body);letter-spacing:.18em;text-transform:uppercase;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.12);color:#E9D9C6;margin:2px 0 8px}
 .for-g{margin-top:16px;background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px}
 footer{margin-top:22px;font-size:12px;color:var(--muted)}
+.kp-label{color:#E9D9C6;letter-spacing:.18em;font-weight:600;font-size:11px}
+.why{margin-top:16px;background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.kp-label{display:inline-block;font:700 12px var(--body);letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.16);color:#fff;margin-bottom:8px}
+.bt-rows{display:flex;flex-direction:column;gap:10px;width:100%}
+.bt-row{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;padding:6px;border-radius:14px}
+.bt-row.mine{background:var(--soft)}
+.bt-e{width:44px;height:44px;border-radius:50%;background:var(--card);border:2px solid var(--line);display:grid;place-items:center;font-size:24px}
+.bt-b{min-width:0;display:flex;flex-direction:column;gap:4px}
+.bt-t{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.bt-bar{height:10px;border-radius:6px;background:rgba(0,0,0,.08);overflow:hidden}
+.bt-bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--berry),var(--gold));transition:width .8s}
+.bt-pick{display:flex;flex-wrap:wrap;gap:8px}
+.cb-inv{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%}
+.cb-toy{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;opacity:.55;min-width:0}
+.cb-toy.on{opacity:1;border-color:var(--berry)}
+.cb-toy span{font-size:26px;line-height:1}.cb-toy b{font-size:9.5px;text-align:center;overflow-wrap:anywhere;line-height:1.15}
+a.btn{text-decoration:none}.cb-toy small{font-size:11px;color:var(--muted)}
+.cb-buy{display:flex;flex-wrap:wrap;gap:8px}
+.cb-list{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.cb-row{display:grid;grid-template-columns:1fr auto;gap:4px 10px;align-items:center;background:var(--ice);border:2px solid var(--line);border-radius:14px;padding:8px 10px}
+.cb-row.ok{border-color:var(--berry);background:var(--soft)}
+.cb-row span{font-size:18px;grid-column:1/-1;letter-spacing:2px}.cb-row b{font-size:14px}.cb-row .btn{padding:8px 12px;font-size:13px}
+.cb-swap{background:var(--ice);border:2px dashed var(--line);border-radius:14px;padding:10px 12px;font-size:14px;display:flex;flex-direction:column;gap:8px}
+.cb-swap select{flex:1 1 110px;min-width:0}
+.cb-swap select,.cd-form select,.cd-form textarea,.cd-form input{font:600 15px var(--body);padding:9px 10px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);max-width:100%}
+.ct-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;width:100%}
+.ct-house{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;color:var(--ink);font:inherit;text-align:center;filter:grayscale(.6);opacity:.75}
+.ct-house.lit{filter:none;opacity:1;border-color:var(--gold);box-shadow:0 0 18px rgba(242,179,61,.45)}
+.ct-house span{font-size:30px;line-height:1}.ct-house b{font-size:13px;line-height:1.25}.ct-house small{color:var(--pine);font-weight:800;font-size:12px}
+.cd-form{display:flex;flex-direction:column;gap:10px}
+.cd-form label{display:flex;flex-direction:column;gap:4px;font-weight:700;font-size:14px}
+.cd-form textarea{resize:vertical;min-height:70px}
+.cd-ph{align-self:flex-start}
+.cd-theme{width:40px;height:40px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line);cursor:pointer}
+.cd-theme.on{box-shadow:0 0 0 3px var(--berry)}
+.cd-canvas{width:100%;max-width:330px;height:auto;border-radius:18px;display:block;margin:0 auto;box-shadow:0 8px 24px rgba(0,0,0,.18)}
+.pz{position:relative;width:min(300px,82%);aspect-ratio:1;border-radius:18px;overflow:hidden;background-size:cover;background-position:center;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);margin:0 auto;box-shadow:0 6px 18px rgba(0,0,0,.15)}
+.pz i{background:linear-gradient(160deg,var(--berry),var(--red-deep));border:1px solid rgba(255,255,255,.35);display:grid;place-items:center;color:rgba(255,255,255,.8);font:800 18px var(--body);font-style:normal;transition:opacity .5s,transform .5s}
+.pz i.open{opacity:0;transform:scale(.6)}
+.bd{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%}
+.bd-c{position:relative;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px 6px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center;min-height:96px}
+.bd-c.fin{border-color:var(--gold);background:var(--soft)}
+.bd-c small{position:absolute;top:4px;left:7px;font-size:11px;color:var(--muted);font-weight:800}
+.bd-c span{font-size:22px;line-height:1.2}.bd-c b{font-size:11px;line-height:1.25}.bd-c em{font-style:normal;font-size:22px;min-height:24px}
 </style>
 
 <div class="wrap">
   <header class="top">
     <span class="stars" aria-hidden="true">✦ ❄</span>
-    <img class="logo" src="assets/gasteria_logo.svg" alt="GASTERIA · кофе, хлеб, счастье">
+    <img class="logo" src="assets/brand_logo.svg" alt="GASTERIA · кофе, хлеб, счастье">
     <div class="kp-label">Коммерческое предложение для Gasteria</div>
     <h1>Новогодние игры</h1>
     <p class="lead">Новогодний сезон в Gasteria: покупатель сканирует код со стакана, пакета для хлеба или коробки десерта и сразу играет в телефоне. Подготовлено SHŪ Studio.</p>
@@ -310,11 +355,11 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
   <div class="ov-grid" id="overview"></div>
   <p class="ov-hint">Нажмите на игру, чтобы попробовать её и посмотреть пакеты.</p>
 
-  <section class="for-g">
+  <section class="why">
     <h2>Почему это подходит Gasteria</h2>
     <ul class="list">
-      <li><b>Кофе, хлеб, счастье.</b> Игры построены вокруг того, за чем к вам приходят: кофе, выпечка, завтраки и витрина десертов.</li>
-      <li><b>Несколько точек.</b> Туран, Riviera, THE ONE и другие: можно сделать игру, где коды из разных кофеен открывают разные этапы.</li>
+      <li><b>Кофе, хлеб, счастье.</b> Каждый напиток и блюдо превращаются в ёлочную игрушку, а из игрушек складываются подарки. Это продолжение идеи «каждый напиток превращается в цветок для букета», только в новогоднем виде.</li>
+      <li><b>Несколько точек.</b> Туран, Riviera, THE ONE: задания города и битва кофеен ведут покупателя в разные Gasteria.</li>
       <li><b>Где будут коды:</b> стаканы навынос, крафт-пакеты для хлеба и круассанов, коробки тортов, вкладыши в заказы Wolt, чек.</li>
       <li><b>Тон бренда.</b> Без кричащих скидок: тёплые сюрпризы и маленькие радости, как и в вашей подаче «начни утро красиво».</li>
     </ul>
@@ -346,20 +391,20 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
     <h2>Как начать</h2>
     <ol>
       <li><b>Выбираете игру и пакет.</b> Можно взять одну игру или несколько.</li>
-      <li><b>Созвон на 10–15 минут.</b> Обсуждаем тираж, призы, точки и где будут коды.</li>
+      <li><b>Созвон на 10–15 минут.</b> Обсуждаем тираж, призы и где будут коды.</li>
       <li><b>Договор, оплата и файлы.</b> Срок считаем с момента, когда есть оплата, логотип и материалы бренда.</li>
       <li><b>Через 1–2 недели</b> готовая игра и коды для печати, срок зависит от пакета.</li>
     </ol>
     <p class="deadline">Чтобы игра заработала в декабре, решение лучше принять до 25 ноября. Коды для печати даём в первые 2–3 дня после получения файлов.</p>
     <p class="ask">Выберите игру, и договоримся о созвоне 🤍</p>
-    <a class="wa" href="https://wa.me/77066767162?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5!%20%D0%9C%D1%8B%20%D0%BF%D0%BE%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BB%D0%B8%20%D0%BD%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE%D0%B4%D0%BD%D0%B8%D0%B5%20%D0%B8%D0%B3%D1%80%D1%8B%20%D0%B4%D0%BB%D1%8F%20Gasteria%2C%20%D1%85%D0%BE%D1%82%D0%B8%D0%BC%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C" target="_blank" rel="noopener">💬 Написать в WhatsApp</a>
+    <a class="wa" href="https://wa.me/77066767162?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9C%D1%8B%20%D0%BF%D0%BE%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BB%D0%B8%20%D0%BD%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE%D0%B4%D0%BD%D0%B8%D0%B5%20%D0%B8%D0%B3%D1%80%D1%8B%20%D0%B4%D0%BB%D1%8F%20Gasteria%2C%20%D1%85%D0%BE%D1%82%D0%B8%D0%BC%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C" target="_blank" rel="noopener">💬 Написать в WhatsApp</a>
   </section>
 
   <footer>SHŪ Studio для Gasteria · ноябрь 2026</footer>
 </div>
 <div class="modal" id="modal" hidden></div>
 
-<script>window.BRAND_GAME={"catcher":"🛍️","toys":["🥐","☕","🍰","🍞","🥞"]};</script>
+<script>window.BRAND_GAME={"catcher": "🛍️", "toys": ["🥐", "☕", "🍰", "🍞", "🥞"], "combo": {"items": [{"k": "ball", "e": "🔴", "n": "Шар", "src": "☕ Латте"}, {"k": "star", "e": "⭐", "n": "Звезда", "src": "🥤 Раф"}, {"k": "bell", "e": "🔔", "n": "Колокольчик", "src": "☕ Капучино"}, {"k": "flake", "e": "❄️", "n": "Снежинка", "src": "🥐 Круассан"}, {"k": "cone", "e": "🌲", "n": "Шишка", "src": "🍰 Десерт"}], "combos": [{"need": {"ball": 1, "star": 1}, "prize": "Круассан к кофе"}, {"need": {"bell": 1, "flake": 1}, "prize": "Глинтвейн дня"}, {"need": {"ball": 1, "star": 1, "bell": 1}, "prize": "Десерт с витрины"}, {"need": {"cone": 2}, "prize": "Хлеб домой в подарок"}, {"need": {"ball": 1, "star": 1, "bell": 1, "flake": 1, "cone": 1}, "prize": "Новогодний торт"}]}, "city": [{"e": "🍳", "t": "Закажите новогодний завтрак"}, {"e": "👫", "t": "Приходите с другом", "bonus": "Второй кофе в подарок"}, {"e": "🍷", "t": "Попробуйте глинтвейн"}, {"e": "🏙️", "t": "Загляните в другую Gasteria"}, {"e": "📸", "t": "Сфотографируйте ёлку в зале"}, {"e": "🍞", "t": "Возьмите хлеб домой"}], "cityPrize": "Новогодний подарок от Gasteria."};</script>
 <script>
 (function(){
 const $=id=>document.getElementById(id);
@@ -386,41 +431,17 @@ const INCL_BASE=['Готовая игра в стиле этого демо, д�
 const extra=(title,html)=>`<div class="extra"><span class="tag">Дополнительная идея</span><h3>${title}</h3>${html}</div>`;
 
 const GAMES=[
- {id:'drug',em:'💜',title:'Мой новогодний друг',short:'Новогодний герой Gasteria ест круассаны, смеётся и повторяет голос',from:300000,term:'1 неделя',
-  lead:'Перетащите угощение герою в рот, и он схрумкает его. Нажмите на героя, и он засмеётся. Скажите что-нибудь, и он повторит смешным голосом.',
-  how:'Покупатель сканирует код с покупки, и у него появляется новогодний друг Gasteria. Героя нарисуем под ваш бренд, в демо его роль играет маскот SHŪ. Новые коды дают новые угощения из вашего меню.',
-  extras:[extra('Разные герои в разных покупках','<p>Делаем несколько героев. Какой попадётся, заранее неизвестно, и покупателю хочется собрать всех. Это повод для повторной покупки.</p>'),
-          extra('Адвент-календарь для друга','<p>До 31 декабря каждый день открывается окошко с угощением для друга. Покупатель возвращается в Gasteria каждый день.</p>')],
-  pk:[{n:'Старт',d:'Новогодний друг с одним героем бренда',p:300000,t:'1 неделя'},{n:'Расширенный',d:'Друг + разные герои + адвент-календарь',p:450000,t:'1,5 недели',best:1}]},
- {id:'ded',em:'🎅',title:'Спасите Деда Мороза',short:'Каждый код возвращает подарок в мешок',from:300000,term:'1,5 недели',
-  lead:'Деду Морозу не хватает счастья: мешок опустел. Каждый код с покупки в Gasteria возвращает подарок. Пройдите 5 этапов, и праздник спасён.',
-  how:'Каждый новый код открывает следующий этап. Счётчик показывает, на каком этапе игрок и сколько осталось. После 5 этапов мешок собран и покупатель получает приз.',
-  extras:[extra('Мини-игра на каждом этапе','<div class="opts"><div class="opt"><h4>Одна игра на все этапы</h4><p>Например, «лови подарки». С каждым этапом немного сложнее.</p><p class="cost">Доплата от 100 000 ₸</p></div><div class="opt"><h4>Своя игра на каждом этапе</h4><p>Например: поймай подарки, попади снежком в цель, собери пазл.</p><p class="cost">Доплата от 150 000 ₸</p><p class="minus">Цена зависит от выбранных игр: простые дешевле, сложнее дороже.</p></div></div><div class="row"><button class="btn" type="button" data-go-catch>▶ Попробовать пример игры</button></div>')],
-  pk:[{n:'Старт',d:'5 этапов, уникальные коды по тиражу',p:300000,t:'1,5 недели'},{n:'С мини-игрой',d:'Старт + одна мини-игра на все этапы',p:400000,t:'2 недели',best:1}]},
- {id:'advent',em:'📅',title:'Адвент-календарь',short:'Окошко с сюрпризом каждый день до 31 декабря',from:250000,term:'1 неделя',
-  lead:'С даты старта акции и до 31 декабря каждый день открывается окошко: круассан к кофе, десерт, сюрприз от бариста. Код с покупки открывает бонусное окошко.',
-  how:'Покупатель сканирует код с покупки и попадает в календарь. Каждый день можно открыть новое окошко. Что будет в окошках, согласуем на созвоне.',
-  extras:[extra('Мой новогодний друг в календаре','<p>В календаре живёт герой бренда. Окошки дают ему угощения и наряды, и покупатель заходит каждый день, чтобы порадовать друга.</p>')],
-  pk:[{n:'Старт',d:'Окошко каждый день до 31 декабря',p:250000,t:'1 неделя'},{n:'С другом',d:'Календарь + Мой новогодний друг',p:450000,t:'1,5 недели',best:1}]},
- {id:'elka',em:'🎄',title:'Растим ёлку',short:'Каждая покупка вешает игрушку, готовая ёлка даёт приз',from:250000,term:'1 неделя',
-  lead:'Каждый код с покупки вешает на ёлку новую игрушку. Когда на ёлке все игрушки, загорается звезда и покупатель получает приз от Gasteria.',
-  how:'Покупатель копит игрушки за покупки. Счётчик показывает, сколько осталось до приза. После приза можно начать новую ёлку.',
-  extras:[extra('Ёлка по всем кофейням','<p>Редкие игрушки выпадают только в определённых точках: на Туране, в Riviera, в THE ONE. Чтобы собрать всю ёлку, хочется заглянуть в разные кофейни.</p>')],
-  pk:[{n:'Старт',d:'Ёлка, игрушки за покупки, приз',p:250000,t:'1 неделя'},{n:'С коллекцией',d:'Старт + редкие игрушки',p:350000,t:'1,5 недели',best:1}]},
- {id:'scratch',em:'🎟️',title:'Стирай и выигрывай',short:'Сотрите слой и узнайте приз',from:250000,term:'1 неделя',
-  lead:'Покупатель стирает пальцем новогодний слой и видит свой приз: десерт, круассан или напиток.',
-  how:'Каждый код с покупки даёт одну карточку. Какие призы и как часто они выпадают, задаёт заказчик.',
-  extras:[extra('Собери набор','<p>На карточках выпадают части набора. Собрал все, получил большой приз.</p>')],
-  pk:[{n:'Старт',d:'Карточка с призом за каждый код',p:250000,t:'1 неделя'},{n:'С набором',d:'Старт + сбор набора и большой приз',p:350000,t:'1,5 недели',best:1}]},
- {id:'catch',em:'🎁',title:'Поймай подарок',short:'Ловите подарки, очки превращаются в промокод',from:250000,term:'1 неделя',
-  lead:'Короткая игра на 15 секунд: ловите подарки Gasteria и уворачивайтесь от снежинок. Набрали очки, получили сюрприз.',
-  how:'Код с покупки даёт попытку. Чем больше очков, тем лучше приз. Призы и пороги очков задаёт заказчик.',
-  extras:[extra('Таблица лидеров','<p>Лучшие игроки недели видят себя в таблице, а победитель получает главный приз от бренда.</p>')],
-  pk:[{n:'Старт',d:'Игра, очки и промокоды',p:250000,t:'1 неделя'},{n:'С турниром',d:'Старт + таблица лидеров недели',p:350000,t:'1,5 недели',best:1}]}
+ {"id": "combo", "em": "🎄", "title": "Ёлочные игрушки за блюда", "short": "Каждый напиток и блюдо дают игрушку, наборы игрушек дают подарки", "from": 350000, "term": "1,5 недели", "lead": "Латте дарит шар, раф звезду, капучино колокольчик, круассан снежинку, десерт шишку. Соберите набор игрушек и обменяйте его на подарок: круассан, глинтвейн, десерт или новогодний торт.", "how": "Каждый код с покупки добавляет игрушку того блюда, которое купил покупатель. Наборы из 2, 3 или 5 игрушек дают разные подарки. Если какая-то игрушка не нужна, две одинаковые меняются на одну недостающую.","extras":[extra("Редкая золотая игрушка","<p>Иногда вместо обычной игрушки выпадает золотая: она заменяет любую. Повод заказать ещё.</p>"),extra("Ёлка дома","<p>Собранные игрушки висят на виртуальной ёлке покупателя. Ёлкой можно поделиться в сторис.</p>")],"pk":[{"n": "Старт", "d": "Игрушки за блюда, наборы и обмен", "p": 350000, "t": "1,5 недели"}, {"n": "С ёлкой", "d": "Старт + своя ёлка и сторис", "p": 450000, "t": "2 недели", "best": 1}]},
+ {"id": "city", "em": "🏙️", "title": "Новогодний город заданий", "short": "Выполняйте задания, и дома в городе зажигают огни", "from": 350000, "term": "1,5 недели", "lead": "Новогодний город Gasteria: каждое задание зажигает огни в доме. Закажите завтрак, приходите с другом, загляните в другую кофейню. Весь город сияет, и вас ждёт подарок.", "how": "Задание засчитывается кодом с чека. Задания можно открывать постепенно, каждый день новое. Задания и подарки задаёт заказчик.","extras":[extra("Задание дня","<p>Каждый день в городе появляется новое задание с бонусом на сегодня.</p>")],"pk":[{"n": "Старт", "d": "Город из 6 заданий и подарок", "p": 350000, "t": "1,5 недели"}, {"n": "Задание дня", "d": "Старт + новое задание каждый день", "p": 450000, "t": "2 недели", "best": 1}]},
+ {"id": "advent", "em": "📅", "title": "Адвент-календарь", "short": "Окошко с сюрпризом каждый день до 31 декабря", "from": 250000, "term": "1 неделя", "lead": "С даты старта акции и до 31 декабря каждый день открывается окошко: круассан к кофе, десерт, сюрприз от бариста. Код с покупки открывает бонусное окошко.", "how": "Покупатель сканирует код с покупки и попадает в календарь. Каждый день можно открыть новое окошко. Что будет в окошках, согласуем на созвоне.","extras":[extra("Игрушка в окошке","<p>В некоторых окошках ёлочная игрушка для набора. Две игры работают вместе.</p>")],"pk":[{"n": "Старт", "d": "Окошко каждый день до 31 декабря", "p": 250000, "t": "1 неделя"}, {"n": "С игрушками", "d": "Календарь + игрушки для наборов", "p": 400000, "t": "1,5 недели", "best": 1}]},
+ {"id": "battle", "em": "☕", "title": "Битва кофеен Gasteria", "short": "Точки соревнуются, покупатели болеют за свою", "from": 300000, "term": "1,5 недели", "lead": "Туран против Riviera и THE ONE: каждый код с покупки добавляет голос кофейне. Кофейня-победитель устраивает новогодний вечер для своих гостей.", "how": "Табло показывает, кто лидирует. Итоги и призы для победителей задаёт заказчик.","extras":[extra("Битва напитков","<p>Вместо точек соревнуются напитки: латте против рафа и глинтвейна.</p>")],"pk":[{"n": "Старт", "d": "Битва кофеен с табло", "p": 300000, "t": "1,5 недели"}, {"n": "С вечером", "d": "Старт + розыгрыш среди гостей кофейни-победителя", "p": 400000, "t": "2 недели", "best": 1}]}
 ];
 
+const BATTLE_OPTS=[{"e": "🏛️", "n": "Gasteria Туран", "v": 34}, {"e": "🌊", "n": "Gasteria Riviera", "v": 31}, {"e": "🏙️", "n": "Gasteria THE ONE", "v": 26}];
+const BATTLE_NOTE="В демо проценты для примера.";
+
 /* ---------- render overview, tabs, panels ---------- */
-const OVIMG={drug:'mascot_full.webp',ded:'santa_joy.webp'};
+const OVIMG={};
 $('overview').innerHTML=GAMES.map(g=>`<a class="ov" href="#${g.id}">${OVIMG[g.id]?`<img src="${A+OVIMG[g.id]}" alt="">`:`<span class="em" aria-hidden="true">${g.em}</span>`}<div><h3>${g.title}</h3><p>${g.short}</p><span>от ${money(g.from)} · ${g.term}</span></div></a>`).join('');
 $('tabs').innerHTML=GAMES.map((g,i)=>`<a class="tab" href="#${g.id}" data-t="${g.id}">${i+1}. ${g.title}</a>`).join('');
 $('panels').innerHTML=GAMES.map(g=>`<section class="panel" id="p-${g.id}">
@@ -491,7 +512,7 @@ function mountFriend(root){
     if(!reduced)move.animate([{transform:'translateY(0)'},{transform:'translateY(4px) scale(1.06,.92)',offset:.2},{transform:'translateY(-30px) scale(.96,1.05)',offset:.55},{transform:'translateY(0)'}],{duration:620,easing:'ease-out'});
     burst(['💜','✨','💜'],3);if(msg)say(msg,'ok');await sleep(900);setEyes('normal');idle();}
   async function no(msg){setMouth('closed');if(!reduced)move.animate([0,-9,9,-7,7,0].map(d=>({transform:`rotate(${d}deg)`})),{duration:600});blip(300,200,.18);say(msg,'bad');await sleep(650);idle();}
-  const FOODS=[{e:'🥐',n:'круассан',v:20},{e:'☕',n:'кофе',v:15},{e:'🍰',n:'медовик',v:25},{e:'🥞',n:'панкейк',v:20}];
+  const FOODS=[{"e": "🥐", "n": "круассан", "v": 20}, {"e": "☕", "n": "кофе", "v": 15}, {"e": "🍰", "n": "медовик", "v": 25}, {"e": "🥞", "n": "панкейк", "v": 20}];
   $('tray').innerHTML=FOODS.map((f,i)=>`<button type="button" class="food" data-i="${i}" aria-label="Угостить: ${f.n}">${f.e}</button>`).join('');
   const mc=()=>{const m=mouthEl.getBoundingClientRect();return[m.left+m.width/2,m.top+m.height/2];};
   async function eat(f,clone){busy=true;lean=0;apply();
@@ -550,7 +571,7 @@ function mountSanta(root){
 }
 
 /* =========== 3. Advent =========== */
-const ADV_PRIZES=[['🥐','Круассан к кофе','Классический круассан к любому напитку'],['🍷','Глинтвейн дня','Зимний напиток со скидкой'],['🍰','Кусочек медовика','К любому кофе'],['🍳','Завтрак со скидкой','Начните утро красиво'],['🍞','Хлеб дня','Свежий хлеб к заказу'],['✨','Сюрприз от бариста','Спросите у бариста']];
+const ADV_PRIZES=[["🥐", "Круассан к кофе", "Классический круассан к любому напитку"], ["🍷", "Глинтвейн дня", "Зимний напиток со скидкой"], ["🍰", "Кусочек медовика", "К любому кофе"], ["🍳", "Завтрак со скидкой", "Начните утро красиво"], ["🍞", "Хлеб дня", "Свежий хлеб к заказу"], ["✨", "Сюрприз от бариста", "Спросите у бариста"]];
 function mountAdvent(root){
   const days=31;let today=1;const opened=new Set();
   root.innerHTML=`<div class="stage-c"><div class="adv-head"><b id="ad-date"></b><span class="mic-hint" style="flex:none">Открыто: <b id="ad-cnt"></b></span></div><div class="adv-grid" id="ad-grid"></div></div>`;
@@ -562,7 +583,7 @@ function mountAdvent(root){
     if(d>today){st.className='status';st.textContent=`${d} декабря это окошко откроется в свой день.`;return;}
     if(opened.has(d)){st.className='status';st.textContent='Это окошко уже открыто.';return;}
     if(d<today){st.className='status';st.textContent='Этот день прошёл. Код с покупки может открыть пропущенное окошко.';return;}
-    opened.add(d);draw();const p=d===31?['🎄','Новогодний торт','Главный подарок сезона от Gasteria']:ADV_PRIZES[(d-1)%ADV_PRIZES.length];
+    opened.add(d);draw();const p=d===31?["🎄", "Новогодний торт", "Главный подарок сезона от Gasteria"]:ADV_PRIZES[(d-1)%ADV_PRIZES.length];
     modal({em:p[0],title:`${d} декабря: ${p[1]}`,text:p[2],code:rcode('ADV')});};
   $('ad-next').onclick=()=>{today=today>=31?1:today+1;if(today===1)opened.clear();draw();st.textContent='';};
   draw();
@@ -592,7 +613,7 @@ function mountTree(root){
 }
 
 /* =========== 5. Scratch =========== */
-const SC_PRIZES=[['☕','Кофе в подарок'],['🥐','Круассан в подарок'],['🍰','Десерт с витрины'],['🍷','Глинтвейн −20%'],['🎁','Сюрприз от Gasteria']];
+const SC_PRIZES=[["☕", "Кофе в подарок"], ["🥐", "Круассан в подарок"], ["🍰", "Десерт с витрины"], ["🍷", "Глинтвейн −20%"], ["🎁", "Сюрприз от Gasteria"]];
 function mountScratch(root){
   root.innerHTML=`<div class="stage-c" style="padding-top:18px"><div class="ticket" id="tk"><div class="under" id="tk-u"></div><canvas id="tk-c"></canvas></div></div>`;
   const st=status(),bar=scanBar((c,again)=>{if(again){st.className='status bad';st.textContent=`Код ${c} уже использован.`;return;}newCard();st.className='status ok';st.textContent=`Код ${c} принят! Сотрите слой пальцем.`;},'Сканировать код и получить карточку');
@@ -627,17 +648,144 @@ function mountCatch(root){
     if(G.spawn<=0){G.spawn=520;G.items.push({x:30+Math.random()*540,y:-20,v:.17+Math.random()*.08,bad:Math.random()<.3});}
     x.clearRect(0,0,600,380);for(let i=0;i<30;i++){x.fillStyle='rgba(255,255,255,.7)';x.beginPath();x.arc((i*131)%600,((i*71)+el*.03)%380,2,0,7);x.fill();}
     x.font='30px serif';x.textAlign='center';x.textBaseline='middle';
-    for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':(['🥐','☕','🍰','🎁'][Math.floor(it.x)%4]),it.x,it.y);if(!it.hit&&it.y>300&&it.y<350&&Math.abs(it.x-G.px)<46){it.hit=true;if(it.bad)G.lives--;else G.score++;}}
+    for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':(["\ud83e\udd50", "\u2615", "\ud83c\udf70", "\ud83c\udf81"][Math.floor(it.x)%4]),it.x,it.y);if(!it.hit&&it.y>300&&it.y<350&&Math.abs(it.x-G.px)<46){it.hit=true;if(it.bad)G.lives--;else G.score++;}}
     G.items=G.items.filter(it=>!it.hit&&it.y<400);if(BRAND.catcher){x.font='58px serif';x.fillText(BRAND.catcher,G.px,330);}else if(img.complete)x.drawImage(img,G.px-38,280,76,76*img.naturalHeight/img.naturalWidth);
     $('g-score').textContent=`🎁 ${G.score} / 5`;$('g-lives').textContent='❤️'.repeat(Math.max(0,G.lives));$('g-time').textContent='⏱ '+Math.max(0,Math.ceil((15000-el)/1000));
     if(G.score>=5)return end(true);if(G.lives<=0||el>=15000)return end(false);raf=requestAnimationFrame(fr);}
   return ()=>cancelAnimationFrame(raf);
 }
 
+
+/* =========== Battle: every code is a vote =========== */
+function mountBattle(root){
+  const O=BATTLE_OPTS.map(o=>({...o}));let mine=null;
+  root.innerHTML=`<div class="stage-c" style="padding-top:16px"><div class="bt-rows" id="bt-rows"></div><p class="mic-hint" style="text-align:center;margin-top:8px">${BATTLE_NOTE}</p></div>`;
+  const pick=document.createElement('div');pick.className='bt-pick';pick.innerHTML=O.map((o,i)=>`<button class="btn alt" type="button" data-i="${i}">${o.e} ${o.n}</button>`).join('');
+  const st=status();
+  const bar=scanBar((c,again)=>{if(again){st.className='status bad';st.textContent=`Код ${c} уже использован.`;return;}
+    if(mine===null){st.className='status';st.textContent='Сначала выберите, за кого играете.';return;}
+    O[mine].v+=1+Math.floor(Math.random()*3);draw();st.className='status ok';st.textContent=`Код ${c} принят! +1 голос за «${O[mine].n}».`;},'Сканировать код и проголосовать');
+  root.append(pick,bar,st,playerLine());
+  pick.onclick=e=>{const b=e.target.closest('button');if(!b)return;mine=+b.dataset.i;pick.querySelectorAll('button').forEach((x,i)=>x.className='btn '+(i===mine?'':'alt'));st.className='status ok';st.textContent=`Вы играете за «${O[mine].n}». Каждый код с покупки добавляет голос.`;draw();};
+  function draw(){const tot=O.reduce((a,o)=>a+o.v,0),max=Math.max(...O.map(o=>o.v));
+    $('bt-rows').innerHTML=O.map((o,i)=>{const p=Math.round(o.v/tot*100);return `<div class="bt-row ${i===mine?'mine':''}"><span class="bt-e">${o.e}</span><div class="bt-b"><div class="bt-t"><b>${o.n}${o.v===max?' · лидер':''}</b><span>${p}%</span></div><div class="bt-bar"><i style="width:${p}%"></i></div></div></div>`;}).join('');}
+  draw();
+}
+
+/* =========== Brand modules: combo toys, task city, postcard, puzzle, family board =========== */
+const BG=window.BRAND_GAME||{};
+
+/* --- Combo: every dish gives a tree toy, toys combine into offers, 2 same = 1 any --- */
+function mountCombo(root){
+  const C=BG.combo,inv={};C.items.forEach(it=>inv[it.k]=0);
+  root.innerHTML=`<div class="stage-c" style="padding-top:16px"><div class="cb-inv" id="cb-inv"></div></div>
+    <div class="cb-buy" id="cb-buy">${C.items.map(it=>`<button class="btn alt" type="button" data-k="${it.k}">${it.src}</button>`).join('')}</div>
+    <div class="block"><h3>Комбинации</h3><div class="cb-list" id="cb-list"></div></div>
+    <div class="cb-swap"><b>Обмен:</b> 2 одинаковые игрушки на 1 недостающую
+      <div class="row"><select id="cb-from" aria-label="Отдать две"></select><span>→</span><select id="cb-to" aria-label="Получить одну"></select><button class="btn alt" type="button" id="cb-sw">Обменять</button></div></div>`;
+  const st=status();root.append(st,playerLine());
+  const by=k=>C.items.find(i=>i.k===k);
+  function draw(){
+    $('cb-inv').innerHTML=C.items.map(it=>`<div class="cb-toy ${inv[it.k]?'on':''}"><span>${it.e}</span><b>${it.n}</b><small>× ${inv[it.k]}</small></div>`).join('');
+    $('cb-list').innerHTML=C.combos.map((c,i)=>{const ok=Object.entries(c.need).every(([k,n])=>inv[k]>=n);
+      return `<div class="cb-row ${ok?'ok':''}"><span>${Object.entries(c.need).map(([k,n])=>by(k).e.repeat(n)).join(' + ')}</span><b>${c.prize}</b><button class="btn ${ok?'':'alt'}" type="button" data-c="${i}" ${ok?'':'disabled'}>Забрать</button></div>`;}).join('');
+    $('cb-from').innerHTML=C.items.filter(it=>inv[it.k]>=2).map(it=>`<option value="${it.k}">${it.e} ${it.n} ×2</option>`).join('')||'<option value="">нет пар</option>';
+    $('cb-to').innerHTML=C.items.map(it=>`<option value="${it.k}">${it.e} ${it.n}</option>`).join('');
+  }
+  $('cb-buy').onclick=e=>{const b=e.target.closest('button');if(!b)return;const k=b.dataset.k;inv[k]++;draw();st.className='status ok';st.textContent=`Код ${rcode()} принят! ${by(k).src} = ${by(k).e} ${by(k).n}.`;};
+  $('cb-list').onclick=e=>{const b=e.target.closest('button[data-c]');if(!b||b.disabled)return;const c=C.combos[+b.dataset.c];
+    Object.entries(c.need).forEach(([k,n])=>inv[k]-=n);draw();modal({em:'🎄',title:c.prize,text:'Покажите экран на кассе.',code:rcode('GIFT')});};
+  $('cb-sw').onclick=()=>{const f=$('cb-from').value,t=$('cb-to').value;if(!f){st.className='status bad';st.textContent='Для обмена нужны две одинаковые игрушки.';return;}
+    if(f===t){st.className='status bad';st.textContent='Выберите другую игрушку.';return;}inv[f]-=2;inv[t]++;draw();st.className='status ok';st.textContent=`Обмен: 2 × ${by(f).n} → ${by(t).e} ${by(t).n}.`;};
+  draw();
+}
+
+/* --- Task city: each task done (code at the till) lights a house --- */
+function mountCity(root){
+  const T=BG.city;const done=new Set();
+  root.innerHTML=`<div class="stage-c" style="padding-top:16px"><div class="stage-top"><span>Огни города: <b id="ct-n"></b></span><b id="ct-l"></b></div>
+    <div class="ct-grid" id="ct-grid"></div></div><p class="mic-hint">Нажмите на дом: в игре задание засчитывается кодом с чека.</p>`;
+  const st=status();root.append(st,playerLine());
+  function draw(){$('ct-n').textContent=`${done.size} из ${T.length}`;$('ct-l').textContent=done.size>=T.length?'Город сияет!':`Осталось: ${T.length-done.size}`;
+    $('ct-grid').innerHTML=T.map((t,i)=>`<button type="button" class="ct-house ${done.has(i)?'lit':''}" data-i="${i}"><span>${done.has(i)?'🏠':'🏚️'}</span><b>${t.e} ${t.t}</b>${done.has(i)?'<small>✓ выполнено</small>':''}</button>`).join('');}
+  $('ct-grid').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;if(done.has(i)){st.className='status';st.textContent='Это задание уже выполнено.';return;}
+    done.add(i);draw();st.className='status ok';st.textContent=`Код ${rcode()} принят! Дом зажёг огни.`;
+    if(T[i].bonus)setTimeout(()=>modal({em:T[i].e,title:T[i].bonus,text:'Бонус за задание.',code:rcode('CITY')}),300);
+    if(done.size>=T.length)setTimeout(()=>modal({em:'🌟',title:'Город сияет!',text:BG.cityPrize,code:rcode('CITY')}),700);};
+  draw();
+}
+
+/* --- Postcard: recipient, wish, optional photo, rendered on the phone --- */
+function mountCard(root){
+  const P=BG.card;let photo=null;
+  root.innerHTML=`<div class="cd-form">
+      <label>Кому<select id="cd-to">${P.to.map((t,i)=>`<option value="${i}">${t.n}</option>`).join('')}</select></label>
+      <label>От кого<input type="text" id="cd-from" maxlength="24" placeholder="Ваше имя" style="text-transform:none;width:100%"></label>
+      <label>Пожелание<textarea id="cd-wish" rows="3" maxlength="160"></textarea></label>
+      ${P.photo?`<label class="btn alt cd-ph" for="cd-file">📷 ${P.photoLabel||'Добавить фото'}</label><input id="cd-file" type="file" accept="image/*" hidden>`:''}
+      <div class="row">${P.themes.map((t,i)=>`<button type="button" class="cd-theme ${i?'':'on'}" data-t="${i}" style="background:linear-gradient(160deg,${t[0]},${t[1]})" aria-label="Оформление ${i+1}"></button>`).join('')}</div>
+    </div>
+    <div class="stage-c" style="padding:14px"><canvas id="cd-c" width="600" height="800" class="cd-canvas"></canvas></div>
+    <div class="row"><a class="btn hot" id="cd-save" download="novogodnyaya-otkrytka.png">💾 Сохранить открытку</a>${P.game?`<a class="btn alt" href="#${P.game}">🎮 Мини-игра на открытке</a>`:''}</div>
+    <p class="mic-hint">${P.photo?'Фото никуда не отправляется: открытка собирается прямо в телефоне.':'Открытка собирается прямо в телефоне.'}</p>`;
+  let theme=0;const cv=$('cd-c'),x=cv.getContext('2d');
+  const setWish=()=>{$('cd-wish').value=P.to[+$('cd-to').value].w;};setWish();
+  function wrap(t,mx,y,maxW,lh){const words=t.split(' ');let line='';for(const w of words){const test=line?line+' '+w:w;if(x.measureText(test).width>maxW&&line){x.fillText(line,mx,y);line=w;y+=lh;}else line=test;}x.fillText(line,mx,y);return y;}
+  function draw(){const[t0,t1]=P.themes[theme];const g=x.createLinearGradient(0,0,600,800);g.addColorStop(0,t0);g.addColorStop(1,t1);x.fillStyle=g;x.fillRect(0,0,600,800);
+    x.fillStyle='rgba(255,255,255,.75)';for(let i=0;i<70;i++){x.beginPath();x.arc((i*137)%600,(i*89)%800,(i%3)+1.5,0,7);x.fill();}
+    x.textAlign='center';x.fillStyle='#fff';x.font='800 30px '+getComputedStyle(document.body).fontFamily;x.fillText(P.brand,300,60);
+    let y=120;
+    if(photo){const s=300,r=photo.width/photo.height,sw=r>1?photo.height:photo.width,sx=(photo.width-sw)/2,sy=(photo.height-sw)/2;x.save();x.beginPath();x.arc(300,y+s/2,s/2,0,7);x.closePath();x.clip();x.drawImage(photo,sx,sy,sw,sw,150,y,s,s);x.restore();
+      x.strokeStyle='#fff';x.lineWidth=8;x.beginPath();x.arc(300,y+s/2,s/2,0,7);x.stroke();y+=s+70;}
+    else{x.font='130px serif';x.fillText(P.to[+$('cd-to').value].e,300,y+140);y+=210;}
+    x.font='900 46px '+getComputedStyle(document.body).fontFamily;x.fillText('С Новым годом,',300,y);x.fillText(P.to[+$('cd-to').value].hi+'!',300,y+54);
+    x.font='600 30px '+getComputedStyle(document.body).fontFamily;const ye=wrap($('cd-wish').value,300,y+110,520,38);
+    const fr=$('cd-from').value.trim();if(fr){x.font='italic 600 26px '+getComputedStyle(document.body).fontFamily;x.fillText('С любовью, '+fr,300,Math.min(ye+56,760));}
+    try{$('cd-save').href=cv.toDataURL('image/png');}catch(e){}}
+  root.querySelector('.cd-form').addEventListener('input',e=>{if(e.target.id==='cd-to')setWish();draw();});
+  root.querySelectorAll('.cd-theme').forEach(b=>b.onclick=()=>{theme=+b.dataset.t;root.querySelectorAll('.cd-theme').forEach(z=>z.classList.toggle('on',z===b));draw();});
+  if(P.photo)$('cd-file').onchange=e=>{const f=e.target.files[0];if(!f)return;const img=new Image();img.onload=()=>{photo=img;draw();};img.src=URL.createObjectURL(f);};
+  document.fonts&&document.fonts.ready.then(draw);draw();
+}
+
+/* --- Puzzle: every code opens one piece of a picture --- */
+function mountPuzzle(root){
+  const Z=BG.puzzle,N=9;let open=new Set();const used=new Set();
+  root.innerHTML=`<div class="stage-c" style="padding-top:40px"><div class="stage-top"><span>Открыто: <b id="pz-n"></b></span><b id="pz-l"></b></div>
+    <div class="pz" id="pz" style="background-image:url(${A+Z.img})">${Array.from({length:N},(_,i)=>`<i data-i="${i}"><span>${i+1}</span></i>`).join('')}</div></div>`;
+  const st=status(),bar=scanBar((c,again)=>{if(again||used.has(c)){st.className='status bad';st.textContent=`Код ${c} уже использован.`;return;}
+    if(open.size>=N){st.className='status';st.textContent='Пазл уже собран. Нажмите «Начать заново».';return;}
+    used.add(c);const rest=[...Array(N).keys()].filter(i=>!open.has(i));open.add(rest[Math.floor(Math.random()*rest.length)]);draw();
+    st.className='status ok';st.textContent=open.size>=N?Z.done:`Код ${c} принят! Открыт кусочек ${open.size} из ${N}.`;
+    if(open.size>=N)setTimeout(()=>modal({em:'🧩',title:Z.done,text:Z.prize,code:rcode('PUZ')}),600);},'Сканировать код с покупки');
+  const rs=document.createElement('button');rs.className='btn alt';rs.type='button';rs.textContent='Начать заново';rs.onclick=()=>{open=new Set();used.clear();draw();st.textContent='';};
+  root.append(bar,st,playerLine(),rs);
+  function draw(){$('pz-n').textContent=`${open.size} из ${N}`;$('pz-l').textContent=open.size>=N?'Собрано!':`Осталось: ${N-open.size}`;
+    $('pz').querySelectorAll('i').forEach(t=>t.classList.toggle('open',open.has(+t.dataset.i)));}
+  draw();
+}
+
+/* --- Family board game: one phone, the family takes turns --- */
+function mountBoard(root){
+  const B=BG.board,L=B.cells.length;const pl=[{e:'👧',p:0},{e:'👨',p:0}];let turn=0,busy=false;
+  root.innerHTML=`<div class="stage-c" style="padding-top:16px"><div class="bd" id="bd"></div></div>
+    <div class="row"><button class="btn hot" type="button" id="bd-roll">🎲 Бросить кубик</button><span class="mic-hint" id="bd-turn"></span></div>`;
+  const st=status(),rs=document.createElement('button');rs.className='btn alt';rs.type='button';rs.textContent='Начать заново';
+  rs.onclick=()=>{pl.forEach(p=>p.p=0);turn=0;draw();st.textContent='';};root.append(st,rs);
+  function draw(){$('bd').innerHTML=B.cells.map((c,i)=>`<div class="bd-c ${i===L-1?'fin':''}"><small>${i+1}</small><span>${c.e}</span><b>${c.t}</b><em>${pl.filter(p=>p.p===i).map(p=>p.e).join('')}</em></div>`).join('');
+    $('bd-turn').textContent=`Ходит ${pl[turn].e}`;}
+  $('bd-roll').onclick=async()=>{if(busy)return;const P=pl[turn];if(P.p>=L-1)return;busy=true;const d=1+Math.floor(Math.random()*3);
+    for(let s=0;s<d&&P.p<L-1;s++){P.p++;draw();await sleep(220);}
+    const c=B.cells[P.p];st.className='status ok';st.textContent=`${P.e} выбросил ${d}: ${c.e} ${c.t}`;
+    if(P.p>=L-1)setTimeout(()=>modal({em:'🏆',title:'Семья дошла до финиша!',text:B.prize,code:rcode('FAM')}),400);
+    turn=(turn+1)%pl.length;draw();busy=false;};
+  draw();
+}
+
 /* ---------- routing ---------- */
-const MOUNT={drug:mountFriend,ded:mountSanta,advent:mountAdvent,elka:mountTree,scratch:mountScratch,catch:mountCatch};
+const MOUNT={drug:mountFriend,ded:mountSanta,advent:mountAdvent,elka:mountTree,scratch:mountScratch,catch:mountCatch,battle:mountBattle,combo:mountCombo,city:mountCity,card:mountCard,puzzle:mountPuzzle,board:mountBoard};
 let cleanup=null,current='';
-function route(){const t=(location.hash||'#drug').slice(1);const k=MOUNT[t]?t:'drug';
+function route(){const t=(location.hash||'#combo').slice(1);const k=MOUNT[t]&&GAMES.some(g=>g.id===t)?t:'combo';
   document.querySelectorAll('.tab').forEach(a=>a.setAttribute('aria-current',a.dataset.t===k));
   document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('on',p.id==='p-'+k));
   if(k===current)return;if(cleanup){cleanup();cleanup=null;}

@@ -1,0 +1,22 @@
+/* ---------- Gasteria overrides ---------- */
+body{background:var(--bg) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cg fill='%23C9A063' opacity='.22'%3E%3Ccircle cx='14' cy='20' r='2'/%3E%3Ccircle cx='70' cy='54' r='1.5'/%3E%3Ccircle cx='100' cy='12' r='1.2'/%3E%3C/g%3E%3Cg fill='%23B7410E' opacity='.12'%3E%3Ccircle cx='40' cy='92' r='2.2'/%3E%3Ccircle cx='96' cy='96' r='1.4'/%3E%3C/g%3E%3C/svg%3E");font-size:15px}
+.top{background:var(--choc);box-shadow:0 6px 0 rgba(51,36,29,.15);text-align:center;padding:26px 20px 24px}
+.top .logo{display:block;width:min(260px,70%);margin:0 auto 10px}
+.top .eyebrow{color:#E9D9C6;letter-spacing:.22em}
+.top .stars{color:#C9A063}
+h1{font-family:var(--display);font-weight:400;color:#fff;text-shadow:none;letter-spacing:.04em;font-size:clamp(28px,7vw,42px)}
+h2{font-weight:700;letter-spacing:.01em;color:var(--choc)}
+h3{font-weight:700;color:var(--berry)}
+.btn{font-weight:700}
+.tab{font-weight:600}
+.tab[aria-current="true"]{background:var(--choc);border-color:var(--choc)}
+.ov h3{color:var(--choc)}
+.pk h4{color:var(--berry)}
+.pk.best{background:linear-gradient(160deg,var(--choc),#4a352b);border-color:var(--choc)}
+.ribbon{background:var(--gold);color:#33241D}
+.bar i{background:linear-gradient(90deg,var(--berry),var(--gold))}
+.steps5 i.on{background:linear-gradient(90deg,var(--berry),var(--gold))}
+.wa{background:#25D366}
+.kp-label{display:inline-block;font:600 11px var(--body);letter-spacing:.18em;text-transform:uppercase;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.12);color:#E9D9C6;margin:2px 0 8px}
+.for-g{margin-top:16px;background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px}
+footer{margin-top:22px;font-size:12px;color:var(--muted)}

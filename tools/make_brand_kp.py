@@ -64,7 +64,7 @@ def build(cfg):
     a = s.index(':root{\n  --bg:'); b = s.index('}', a) + 1
     s = s[:a] + ':root{\n' + cfg['vars'] + '\n}' + s[b:]
     i = s.index('</style>')
-    s = s[:i] + '/* ---------- brand overrides ---------- */\n' + cfg['css'] + BATTLE_CSS + s[i:]
+    s = s[:i] + '/* ---------- brand overrides ---------- */\n' + cfg['css'] + BATTLE_CSS + brand_configs.MODULE_CSS + s[i:]
     # header
     a = s.index('  <header class="top">'); b = s.index('</header>', a) + len('</header>')
     hdr = cfg['header'].replace('    <h1>Новогодние игры</h1>', f'    <div class="kp-label">Коммерческое предложение для {cfg["kp_for"]}</div>\n    <h1>Новогодние игры</h1>')
@@ -87,9 +87,9 @@ def build(cfg):
     a = s.index('  const FOODS='); b = s.index(';', a) + 1
     s = s[:a] + '  const FOODS=' + json.dumps(cfg['foods'], ensure_ascii=False) + ';' + s[b:]
     rep("x.fillText(it.bad?'❄️':'🎁',it.x,it.y);", "x.fillText(it.bad?'❄️':(" + json.dumps(cfg['catch']) + "[Math.floor(it.x)%" + str(len(cfg['catch'])) + "]),it.x,it.y);")
-    rep('/* ---------- routing ---------- */', BATTLE_JS + '\n/* ---------- routing ---------- */')
+    rep('/* ---------- routing ---------- */', BATTLE_JS + (ROOT / 'tools' / 'brand_modules.js').read_text() + '\n/* ---------- routing ---------- */')
     rep('const MOUNT={drug:mountFriend,ded:mountSanta,advent:mountAdvent,elka:mountTree,scratch:mountScratch,catch:mountCatch};',
-        'const MOUNT={drug:mountFriend,ded:mountSanta,advent:mountAdvent,elka:mountTree,scratch:mountScratch,catch:mountCatch,battle:mountBattle};')
+        'const MOUNT={drug:mountFriend,ded:mountSanta,advent:mountAdvent,elka:mountTree,scratch:mountScratch,catch:mountCatch,battle:mountBattle,combo:mountCombo,city:mountCity,card:mountCard,puzzle:mountPuzzle,board:mountBoard};')
     rep("const t=(location.hash||'#drug').slice(1);const k=MOUNT[t]?t:'drug';",
         f"const t=(location.hash||'#{cfg['games'][0]['id']}').slice(1);const k=MOUNT[t]&&GAMES.some(g=>g.id===t)?t:'{cfg['games'][0]['id']}';")
     for o, n in cfg.get('texts', []):
@@ -274,6 +274,10 @@ h2{color:var(--brand);font-weight:700}h3{color:var(--brand);font-weight:700}
     foods=[{'e': '🍰', 'n': 'торт', 'v': 25}, {'e': '🧁', 'n': 'капкейк', 'v': 15}, {'e': '🍪', 'n': 'печенье', 'v': 20}, {'e': '🍓', 'n': 'клубника', 'v': 20}],
     catch=['🍰', '🧁', '🍪', '🎁'],
 )
+
+sys.path.insert(0, str(ROOT / 'tools'))
+import brand_configs
+brand_configs.update(CONFIGS)
 
 if __name__ == '__main__':
     brand = sys.argv[1]
