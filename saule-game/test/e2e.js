@@ -17,8 +17,10 @@ const assert = (c, m) => { if (!c) throw new Error('assert: ' + m); console.log(
 async function playOpenGame(p, n) {
   await p.waitForSelector('#game:not([hidden]) #g-go', { timeout: 8000 });
   await snap(p, `g${n}_rules`);
-  await p.click('#g-go'); await p.waitForTimeout(2600);
-  await snap(p, `g${n}_play`);
+  await p.click('#g-go'); await p.waitForTimeout(2400);
+  if (n === 3) for (let k = 0; k < 6; k++) { await p.mouse.click(150, 500); await p.waitForTimeout(450); }
+  if (n === 4) { await p.click('#m3 button[data-i="0"]'); await p.waitForTimeout(150); }
+  await p.waitForTimeout(800); await snap(p, `g${n}_play`);
   await p.evaluate(() => window.__finish(true));
   await p.waitForSelector('#res:not([hidden]) #r-ok'); await snap(p, `g${n}_win`);
   await p.click('#r-ok');
@@ -33,10 +35,11 @@ server.listen(0, async () => {
     const p = await ctx.newPage(); const errs = []; p.on('pageerror', e => errs.push(e.message));
     // fresh player: start screen
     await p.goto(base + '/'); await p.waitForSelector('#start:not([hidden])'); await p.waitForTimeout(600); await snap(p, 'start');
-    await p.click('.chip[data-i="1"]'); assert((await p.getAttribute('.hero-big', 'alt')) === 'Кактус', 'hero picked');
+    await p.click('.chip[data-i="1"]'); assert(await p.$eval('.chip.on', e => e.dataset.i) === '1', 'hero picked');
     // QR link opens point 1 directly
     await p.goto(base + '/?c=SL-AAAA-AAAA'); await playOpenGame(p, 1);
-    await p.waitForSelector('#map:not([hidden])'); await p.waitForTimeout(1300); await snap(p, 'map1');
+    await p.waitForSelector('#map:not([hidden])'); await p.waitForTimeout(1600); await snap(p, 'map1');
+    assert(await p.$$eval('.mate.on', a => a.length) === 2, 'hero joined team after point 1');
     assert(await stars(p) === 1, 'one star after QR'); assert(p.url() === base + '/', 'url cleaned');
     // typed codes for points 2..5
     for (let i = 2; i <= 5; i++) {

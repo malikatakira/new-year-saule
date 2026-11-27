@@ -50,7 +50,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-
 .story{background:rgba(255,255,255,.92);border-radius:24px;padding:12px 14px;font-weight:700;font-size:15px;box-shadow:0 8px 24px rgba(31,80,120,.18);margin:12px 0}
 .story b{color:var(--red)}
 .heroes .hero-big{width:auto;max-width:86%;height:100%;max-height:420px;object-fit:contain;animation:bounce 2.4s ease-in-out infinite}
-.hero-name{margin:6px 0 8px;font:900 22px var(--font-head);color:var(--red2)}
+.hero-name{margin:4px 0 8px;font:900 22px var(--font-head);color:var(--red2)}
 .chips{display:flex;justify-content:center;gap:10px}
 .chip{width:62px;height:62px;border-radius:50%;background:#fff;box-shadow:0 4px 0 rgba(0,0,0,.1);overflow:hidden;padding:4px;transition:transform .15s}
 .chip img{width:100%;height:100%;object-fit:contain;object-position:top}
@@ -81,6 +81,14 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-
 @keyframes float{50%{translate:0 -6px}}
 .bubble{position:absolute;left:50%;top:12px;transform:translateX(-50%);background:#fff;border-radius:18px;padding:8px 14px;font:800 14px var(--font-head);box-shadow:0 6px 18px rgba(0,0,0,.18);white-space:nowrap;z-index:5;max-width:92%;overflow:hidden;text-overflow:ellipsis}
 .bubble.bad{color:var(--red)}.bubble.ok{color:var(--green2)}
+.team{display:flex;justify-content:center;gap:8px}
+.mate{width:46px;height:46px;border-radius:50%;background:#fff;box-shadow:0 3px 0 rgba(0,0,0,.1);overflow:hidden;padding:3px}
+.mate img{width:100%;height:100%;object-fit:cover;object-position:top;filter:grayscale(1) brightness(1.15) opacity(.45);transition:filter .8s}
+.mate.on img{filter:none}.mate.on{box-shadow:0 0 0 3px var(--gold),0 3px 0 rgba(0,0,0,.1)}
+.mate.fresh{animation:pinpop2 .8s .4s cubic-bezier(.3,1.6,.5,1) both}.mate.fresh img{animation:tocolor 1.2s .4s both}
+@keyframes pinpop2{from{transform:scale(.5)}}
+@keyframes tocolor{from{filter:grayscale(1) brightness(1.15) opacity(.45)}to{filter:none}}
+.join{width:120px;margin:0 auto;animation:tocolor 1.4s .3s both}
 .dock{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:8px}
 .dock .btn{padding:13px 6px;font-size:14px;border-radius:18px;white-space:nowrap}
 
@@ -94,6 +102,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-
 .field{font:800 20px ui-monospace,Menlo,monospace;letter-spacing:.06em;text-align:center;padding:14px;border-radius:16px;border:3px solid #ecdcc4;background:#fff;color:var(--ink);text-transform:uppercase;width:100%}
 .field:focus{border-color:var(--gold);outline:none}
 .pcode{font:900 26px ui-monospace,Menlo,monospace;text-align:center;background:#fff;border:3px dashed var(--gold);border-radius:18px;padding:12px;letter-spacing:.05em}
+.demo-g{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.demo-g .btn{padding:10px 0;font-size:16px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .small{font-size:14px;color:var(--muted);font-weight:700}
 .msg{font:800 15px var(--font-head);min-height:1.3em;text-align:center}
@@ -130,6 +139,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-
 @keyframes fin{from{transform:translate(-50%,-50%) scale(.2)}}
 .flake.pop{animation:fout .25s forwards}
 @keyframes fout{to{transform:translate(-50%,-50%) scale(1.8);opacity:0}}
+/* match-3 */
+.m3-wrap{position:absolute;inset:10px;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center}
+.m3-bar{width:100%;max-width:420px;height:14px;border-radius:7px;background:rgba(255,255,255,.2);overflow:hidden}
+.m3-bar i{display:block;height:100%;background:linear-gradient(90deg,#FFC93C,#2aa556);transition:width .2s}
+.m3-bar.low i{background:var(--red)}
+.m3{width:100%;max-width:420px;aspect-ratio:1;display:grid;grid-template-columns:repeat(6,1fr);gap:4px;touch-action:none;user-select:none}
+.m3 button{background:rgba(255,255,255,.93);border-radius:10px;font-size:clamp(20px,7vw,32px);display:grid;place-items:center;box-shadow:0 3px 0 rgba(0,0,0,.2);padding:0}
+.m3 button.sel{box-shadow:0 0 0 3px var(--gold);transform:scale(.9)}
+.m3 button.pop{animation:m3pop .23s forwards}.m3 button.drop{animation:m3drop .26s ease-out}.m3 button.no{animation:shake .3s}
+@keyframes m3pop{to{transform:scale(1.5);opacity:0}}
+@keyframes m3drop{from{transform:translateY(-70%);opacity:.2}}
+@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
 /* puzzle */
 .pz-wrap{position:absolute;inset:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
 .pz-hint{width:84px;height:84px;border-radius:12px;box-shadow:0 0 0 3px #fff;opacity:.95}
@@ -164,7 +185,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-
     <p class="sub">5 точек · 5 игр · подарок в конце</p></div>
   <div class="heroes" id="heroes"></div>
   <div>
-    <p class="hero-name" id="hero-name"></p>
+    <p class="hero-name">Выберите героя</p>
     <div class="chips" id="chips"></div>
     <div class="story">В каждой коробке Funky Pop <b>QR-код</b>. Он открывает точку на карте и новую игру. Пройдите 5 точек и заберите <b>подарок</b>!</div>
     <button class="btn big" id="go" type="button">Начать ✨</button>
@@ -174,6 +195,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-
 <!-- MAP -->
 <section class="screen" id="map" hidden><div class="app">
   <div class="hud"><span class="logo">Funky Pop</span><div class="stars" id="stars" aria-label="Пройдено точек"></div></div>
+  <div class="team" id="team" aria-label="Команда героев"></div>
   <div class="board"><div class="mapbox" id="mapbox"><img src="assets/map_locked.webp" alt="Карта"><div id="layer"></div><div class="bubble" id="bubble" hidden></div></div></div>
   <div class="dock">
     <button class="btn" id="b-code" type="button">📷 Ввести код</button>
@@ -210,15 +232,15 @@ const CFG={
   points:5,
   support:'https://t.me/',                                   // Telegram support bot
   prize:'Покажите этот экран на кассе: подарок от Saule ждёт вас! 🎁',
-  heroes:[ // Saule originals; names are working titles until Saule confirms
-    {img:'assets/hero_berry.webp',name:'Клубничка'},{img:'assets/hero_cactus.webp',name:'Кактус'},
-    {img:'assets/hero_rasp.webp',name:'Малинка'},{img:'assets/hero_wink.webp',name:'Подмигун'}],
-  games:[ // one game per point
-    {id:'catch',  title:'Лови подарки',     em:'🎁',rule:'Водите героем и ловите подарки. Снежинки отнимают жизнь!'},
-    {id:'memory', title:'Найди пары',       em:'🃏',rule:'Открывайте по две карточки и находите одинаковые.'},
-    {id:'tap',    title:'Собери снежинки',  em:'❄️',rule:'Нажимайте на снежинки, пока они не растаяли. Подарок даёт 2 очка!'},
-    {id:'throw',  title:'Попади снежком',   em:'⛄',rule:'Нажимайте на экран, чтобы бросить снежок в снеговика.'},
-    {id:'puzzle', title:'Собери картинку',  em:'🧩',rule:'Меняйте кусочки местами: нажмите на один, потом на другой.'}
+  heroes:[ // Saule originals, names to be added when Saule sends them
+    {img:'assets/hero_berry.webp'},{img:'assets/hero_cactus.webp'},{img:'assets/hero_rasp.webp'},{img:'assets/hero_wink.webp'}],
+  joinAt:[1,2,3],  // after these points the other heroes join the team and become colored
+  games:[ // one game per point; 'throw' and 'tap' are spare games, put them here to swap
+    {id:'puzzle', title:'Собери картинку', em:'🧩',rule:'Меняйте кусочки местами: нажмите на один, потом на другой. Образец сверху.'},
+    {id:'catch',  title:'Поймай героев',   em:'📦',rule:'Двигайте коробку Funky Pop и ловите героев. Снежки не ловите: они отнимают жизнь!'},
+    {id:'runner', title:'Прыгай!',          em:'🏃',rule:'Герой бежит сам. Нажимайте на экран, чтобы перепрыгнуть препятствия. Добегите до флага!'},
+    {id:'match3', title:'Три в ряд',        em:'🍬',rule:'Меняйте соседние фишки местами и собирайте 3 в ряд. Не дайте шкале опустеть 40 секунд!'},
+    {id:'memory', title:'Найди пары',       em:'🃏',rule:'Открывайте по две карточки и находите одинаковые.'}
   ]
 };
 const $=id=>document.getElementById(id);
@@ -250,14 +272,19 @@ function fxLoop(){fc.clearRect(0,0,innerWidth,innerHeight);parts=parts.filter(p=
 function show(id){['start','map','game','final'].forEach(s=>$(s).hidden=s!==id);}
 let bubT;function bubble(t,c){const b=$('bubble');b.textContent=t;b.className='bubble '+(c||'');b.hidden=false;clearTimeout(bubT);bubT=setTimeout(()=>b.hidden=true,4200);}
 
-function heroesHtml(el,pick){el.innerHTML=CFG.heroes.map((h,i)=>`<img src="${h.img}" alt="${h.name}" data-i="${i}" class="${pick&&i===heroIdx?'pick':''}">`).join('');}
+function heroesHtml(el){el.innerHTML=CFG.heroes.map((h,i)=>`<img src="${h.img}" alt="Герой ${i+1}" style="animation-delay:${i*.3}s">`).join('');}
 function pickerHtml(){const h=CFG.heroes[heroIdx];
-  $('heroes').innerHTML=`<img class="hero-big" src="${h.img}" alt="${h.name}">`;
-  $('hero-name').textContent=h.name;
-  $('chips').innerHTML=CFG.heroes.map((x,i)=>`<button type="button" class="chip ${i===heroIdx?'on':''}" data-i="${i}" aria-label="${x.name}"><img src="${x.img}" alt=""></button>`).join('');}
+  $('heroes').innerHTML=`<img class="hero-big" src="${h.img}" alt="Выбранный герой">`;
+  $('chips').innerHTML=CFG.heroes.map((x,i)=>`<button type="button" class="chip ${i===heroIdx?'on':''}" data-i="${i}" aria-label="Герой ${i+1}"><img src="${x.img}" alt=""></button>`).join('');}
+// team: chosen hero first, the others join after CFG.joinAt points
+const others=()=>CFG.heroes.map((_,i)=>i).filter(i=>i!==heroIdx);
+const joinedAt=p=>{const k=CFG.joinAt.indexOf(p);return k<0?null:others()[k];};
+function teamHtml(n,anim){const list=[heroIdx,...others()];
+  $('team').innerHTML=list.map((h,k)=>{const on=k===0||n>=CFG.joinAt[k-1];const fresh=anim&&k>0&&n===CFG.joinAt[k-1];
+    return `<span class="mate ${on?'on':''} ${fresh?'fresh':''}"><img src="${CFG.heroes[h].img}" alt=""></span>`;}).join('');}
 function drawMap(anim){
   const n=me?me.points:0;
-  $('stars').innerHTML=Array.from({length:CFG.points},(_,i)=>`<i class="${i<n?'on':''}">⭐</i>`).join('');
+  $('stars').innerHTML=Array.from({length:CFG.points},(_,i)=>`<i class="${i<n?'on':''}">⭐</i>`).join('');teamHtml(n,anim);
   let o='';MP.forEach(([x,y],i)=>{const w=MW*.155,h=w/1.2;
     if(i<n)o+=`<div class="pin ${anim&&i===n-1?'done':''}" style="left:${x/MW*100}%;top:${y/MH*100}%;background-size:${MW/w*100}% auto;background-position:${(x-w/2)/(MW-w)*100}% ${(y-h/2)/(MH-h)*100}%"></div>`;
     else if(i===n)o+=`<button class="pin next" type="button" aria-label="Следующая точка" style="left:${x/MW*100}%;top:${y/MH*100}%"></button>`;});
@@ -270,7 +297,12 @@ function drawMap(anim){
 }
 
 /* ================= api ================= */
-async function call(path,body){const r=await fetch(path,body?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{});if(r.status===429)throw new Error('slow');return r.json();}
+const DEMO=new URLSearchParams(location.search).has('demo');
+let demoP=+(store.get('demo_p')||0);
+function demoApi(path){const me0=()=>({key:'demo',pcode:'ДЕМО-0000-SHU',points:demoP,total:CFG.points});
+  if(path==='/api/scan'){if(demoP>=CFG.points)return{status:'full',...me0()};demoP++;store.set('demo_p',demoP);return{status:'new',point:demoP,...me0()};}
+  return me0();}
+async function call(path,body){if(DEMO)return demoApi(path.split('?')[0]);const r=await fetch(path,body?{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}:{});if(r.status===429)throw new Error('slow');return r.json();}
 async function ensurePlayer(){
   const qs=new URLSearchParams(location.search);
   if(qs.get('p')){try{const r=await call('/api/restore',{pcode:qs.get('p')});if(r.key){store.set('key',r.key);me=r;}}catch(e){}}
@@ -305,18 +337,24 @@ function openHelp(){openSheet(`<h2>Помощь</h2>
   <p>🎁 В каждой коробке Funky Pop свой QR-код. Один код открывает одну точку.</p>
   <p>📱 Открывайте игру камерой телефона, в Safari или Chrome: так прогресс сохраняется.</p>
   <p>👤 Играете на другом телефоне? Откройте «Мой код» и отправьте ссылку себе.</p>
-  <a class="btn big" href="${CFG.support}" target="_blank" rel="noopener">💬 Написать в поддержку</a>`);}
+  <a class="btn big" href="${CFG.support}" target="_blank" rel="noopener">💬 Написать в поддержку</a>`+(DEMO?`
+  <p class="small" style="margin-top:6px">Демо: сыграть в любую игру</p>
+  <div class="demo-g">${CFG.games.map((g,i)=>`<button class="btn ghost" type="button" data-g="${i+1}">${i+1}. ${g.em}</button>`).join('')}</div>
+  <button class="btn ghost" id="demo-reset" type="button">Сбросить прогресс</button>`:''));
+  if(DEMO){$('sheet-card').querySelector('.demo-g').onclick=e=>{const b=e.target.closest('button');if(!b)return;closeSheet();playPoint(+b.dataset.g,true);};
+    $('demo-reset').onclick=()=>{demoP=0;store.set('demo_p',0);store.set('started','');location.reload();};}}
 $('b-code').onclick=openCode;$('b-me').onclick=openMe;$('b-help').onclick=openHelp;
 
 /* ================= mini-games ================= */
 let stopGame=null;
-function result(win,point){return new Promise(res=>{$('res-card').innerHTML=win
-  ?`<div class="st">⭐⭐⭐</div><h2>Точка ${point}!</h2><p style="font-weight:800">${point>=CFG.points?'Вы прошли всю карту!':'Отлично! Герой идёт дальше.'}</p><button class="btn big green" id="r-ok" type="button">Дальше →</button>`
+function result(win,point,replay){const j=replay?null:joinedAt(point);return new Promise(res=>{$('res-card').innerHTML=win
+  ?(j!==null?`<img class="join" src="${CFG.heroes[j].img}" alt=""><h2>Новый друг!</h2><p style="font-weight:800">Он присоединился к вашей команде. Точка ${point} пройдена ⭐</p>`
+    :`<div class="st">⭐⭐⭐</div><h2>Точка ${point}!</h2><p style="font-weight:800">${point>=CFG.points?'Вы прошли всю карту!':'Отлично! Герой идёт дальше.'}</p>`)+`<button class="btn big green" id="r-ok" type="button">Дальше →</button>`
   :`<div class="st">❄️</div><h2>Почти!</h2><p style="font-weight:800">Точка уже ваша. Сыграем ещё раз?</p><div class="row2"><button class="btn ghost" id="r-skip" type="button">Пропустить</button><button class="btn" id="r-again" type="button">Ещё раз</button></div>`;
   $('res').hidden=false;if(win)confetti();
   const close=v=>{$('res').hidden=true;res(v);};
   if(win)$('r-ok').onclick=()=>close('ok');else{$('r-again').onclick=()=>close('again');$('r-skip').onclick=()=>close('ok');}});}
-async function playPoint(point){
+async function playPoint(point,replay){
   const g=CFG.games[point-1]||CFG.games[0];
   for(;;){
     show('game');$('g-num').textContent=point;$('g-title').textContent=g.title;$('g-sub').textContent=`Точка ${point} из ${CFG.points}`;
@@ -327,8 +365,9 @@ async function playPoint(point){
     for(const t of ['3','2','1']){$('cnt').innerHTML=`<span>${t}</span>`;await sleep(reduce?100:700);}$('cnt').remove();
     const win=await new Promise(res=>{if(store.get('debug'))window.__finish=res;stopGame=GAMES[g.id](area,res)||null;});
     if(stopGame){stopGame();stopGame=null;}
-    const a=await result(win,point);if(a==='again')continue;break;
+    const a=await result(win,point,replay);if(a==='again')continue;break;
   }
+  if(replay){show('map');drawMap(false);return;}
   if(me.points>=CFG.points)return showFinal(true);
   show('map');drawMap(true);bubble(`Точка ${point} открыта! ⭐`,'ok');
 }
@@ -336,20 +375,97 @@ const timer=(sec,onEnd)=>{const t0=performance.now();let dead=false;const iv=set
 const canvasIn=area=>{const c=document.createElement('canvas');area.appendChild(c);const r=area.getBoundingClientRect(),d=devicePixelRatio||1;c.width=r.width*d;c.height=r.height*d;const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);return{c,x,W:r.width,H:r.height};};
 
 const GAMES={
-  /* 1. catch gifts */
-  catch(area,done){const{c,x,W,H}=canvasIn(area),img=new Image();img.src=heroImg();const GOAL=6;
-    let px=W/2,items=[],score=0,lives=3,last=performance.now(),spawn=0,raf,over=false;
-    const mv=e=>{const r=c.getBoundingClientRect();px=Math.max(30,Math.min(W-30,e.clientX-r.left));};c.onpointermove=mv;c.onpointerdown=mv;
-    const end=w=>{if(over)return;over=true;cancelAnimationFrame(raf);stopT();done(w);};const stopT=timer(20,()=>end(false));
-    const hud=()=>{$('g-score').textContent=`🎁 ${score}/${GOAL}`;$('g-extra').textContent='❤️'.repeat(Math.max(0,lives));};hud();
+  /* catch heroes with the Funky Pop box, avoid snowballs */
+  catch(area,done){const{c,x,W,H}=canvasIn(area);const GOAL=8;
+    const imgs=CFG.heroes.map(h=>{const i=new Image();i.src=h.img;return i;});
+    let px=W/2,items=[],pops=[],score=0,lives=3,last=performance.now(),spawn=0,raf,over=false;
+    const mv=e=>{const r=c.getBoundingClientRect();px=Math.max(50,Math.min(W-50,e.clientX-r.left));};c.onpointermove=mv;c.onpointerdown=mv;
+    const end=w=>{if(over)return;over=true;cancelAnimationFrame(raf);stopT();done(w);};const stopT=timer(30,()=>end(false));
+    const hud=()=>{$('g-score').textContent=`🧸 ${score}/${GOAL}`;$('g-extra').textContent='❤️'.repeat(Math.max(0,lives));};hud();
+    const BY=H-70;
+    function box(){x.save();x.translate(px,BY);
+      x.fillStyle='#A3141C';x.beginPath();x.roundRect(-52,-6,104,58,10);x.fill();
+      x.fillStyle='#E0262F';x.beginPath();x.roundRect(-48,-2,96,50,8);x.fill();
+      x.fillStyle='#FFC93C';x.fillRect(-7,-2,14,50);x.fillRect(-48,14,96,10);
+      x.fillStyle='#fff';x.font='900 12px Rubik,sans-serif';x.textAlign='center';x.fillText('FUNKY POP',0,40);x.restore();}
     function fr(t){if(over)return;const dt=Math.min(40,t-last);last=t;spawn-=dt;
-      if(spawn<=0){spawn=480;items.push({x:24+Math.random()*(W-48),y:-20,v:.14+Math.random()*.1,bad:Math.random()<.3,s:Math.random()*6});}
-      x.clearRect(0,0,W,H);x.textAlign='center';x.textBaseline='middle';
-      for(const it of items){it.y+=it.v*dt;it.s+=.05;x.font=(it.bad?'30px':'34px')+' serif';x.save();x.translate(it.x,it.y);x.rotate(Math.sin(it.s)*.3);x.fillText(it.bad?'❄️':'🎁',0,0);x.restore();
-        if(!it.hit&&it.y>H-95&&it.y<H-40&&Math.abs(it.x-px)<42){it.hit=true;it.bad?lives--:score++;hud();}}
-      items=items.filter(i=>!i.hit&&i.y<H+30);const hw=72,hh=img.naturalWidth?hw*img.naturalHeight/img.naturalWidth:90;if(img.complete)x.drawImage(img,px-hw/2,H-hh-6,hw,hh);
+      if(spawn<=0){spawn=Math.max(420,650-score*25);const bad=Math.random()<.35;
+        items.push({x:30+Math.random()*(W-60),y:-50,v:.13+Math.random()*.07+score*.006,bad,k:Math.floor(Math.random()*imgs.length),r:Math.random()*6});}
+      x.clearRect(0,0,W,H);
+      for(const it of items){it.y+=it.v*dt;it.r+=dt*.003;x.save();x.translate(it.x,it.y);x.rotate(Math.sin(it.r)*.35);
+        if(it.bad){x.fillStyle='#fff';x.strokeStyle='#9cc8ef';x.lineWidth=3;x.beginPath();x.arc(0,0,17,0,7);x.fill();x.stroke();
+          x.fillStyle='#d6ebff';x.beginPath();x.arc(-5,-5,5,0,7);x.fill();}
+        else{const im=imgs[it.k];if(im.complete&&im.naturalWidth){const h=64,w=h*im.naturalWidth/im.naturalHeight;x.drawImage(im,-w/2,-h/2,w,h);}}
+        x.restore();
+        if(!it.hit&&it.y>BY-30&&it.y<BY+20&&Math.abs(it.x-px)<55){it.hit=true;pops.push({x:it.x,y:BY-30,t:0,bad:it.bad});it.bad?lives--:score++;hud();}}
+      items=items.filter(i=>!i.hit&&i.y<H+40);box();
+      x.textAlign='center';x.font='900 22px Rubik,sans-serif';
+      for(const p of pops){p.t+=dt;x.globalAlpha=Math.max(0,1-p.t/600);x.fillStyle=p.bad?'#ff6b6b':'#FFC93C';x.fillText(p.bad?'−❤️':'+1',p.x,p.y-p.t/12);x.globalAlpha=1;}
+      pops=pops.filter(p=>p.t<600);
       if(score>=GOAL)return end(true);if(lives<=0)return end(false);raf=requestAnimationFrame(fr);}
     raf=requestAnimationFrame(fr);return()=>{over=true;cancelAnimationFrame(raf);stopT();};},
+
+  /* runner: tap to jump over obstacles, reach the flag */
+  runner(area,done){const{c,x,W,H}=canvasIn(area);const GOAL=400,img=new Image();img.src=heroImg();
+    const G=H-56,HX=W*.2;let y=0,vy=0,dist=0,speed=.3,obs=[],gap=500,lives=3,inv=0,raf,over=false,last=performance.now(),run=0;
+    const OB=[{e:'⛄',w:34,h:46,s:50},{e:'🎄',w:34,h:50,s:52},{e:'🎁',w:30,h:30,s:34}];
+    const jump=()=>{if(over)return;if(y>=0){vy=-1.0;}};
+    c.onpointerdown=jump;const key=e=>{if(e.code==='Space'||e.code==='ArrowUp'){e.preventDefault();jump();}};addEventListener('keydown',key);
+    const end=w=>{if(over)return;over=true;cancelAnimationFrame(raf);removeEventListener('keydown',key);done(w);};
+    const hud=()=>{$('g-score').textContent=`🏁 ${Math.min(GOAL,Math.floor(dist))}/${GOAL} м`;$('g-extra').textContent='❤️'.repeat(Math.max(0,lives));};hud();$('g-time').textContent='';
+    function hills(off,col,amp,base){x.fillStyle=col;x.beginPath();x.moveTo(0,H);for(let i=0;i<=W;i+=10)x.lineTo(i,base-amp*(1+Math.sin((i+off)/90)));x.lineTo(W,H);x.fill();}
+    function fr(t){if(over)return;const dt=Math.min(34,t-last);last=t;
+      speed=Math.min(.55,.3+dist/1600);dist+=speed*dt/10;run+=dt;
+      vy+=.0032*dt;y+=vy*dt;if(y>0){y=0;vy=0;}
+      gap-=speed*dt;if(gap<=0){const o=OB[Math.floor(Math.random()*OB.length)];obs.push({...o,x:W+20});gap=260+Math.random()*320+speed*200;}
+      for(const o of obs)o.x-=speed*dt;obs=obs.filter(o=>o.x>-50);
+      x.clearRect(0,0,W,H);
+      hills(dist*2,'rgba(255,255,255,.18)',22,G-40);hills(dist*5,'rgba(255,255,255,.35)',14,G-10);
+      x.fillStyle='#fff';x.fillRect(0,G,W,H-G);x.fillStyle='#d6ebff';for(let i=-(dist*10%40);i<W;i+=40)x.fillRect(i,G+10,18,4);
+      // finish flag
+      const fx=HX+(GOAL-dist)*10;if(fx<W+40){x.font='44px serif';x.textAlign='center';x.fillText('🏁',fx,G-12);}
+      x.textAlign='center';x.textBaseline='alphabetic';
+      for(const o of obs){x.font=o.s+'px serif';x.fillText(o.e,o.x,G+2);}
+      // hero
+      const hh=78,hw=img.naturalWidth?hh*img.naturalWidth/img.naturalHeight:56,top=G+y-hh;
+      inv=Math.max(0,inv-dt);
+      if(img.complete&&(!inv||Math.floor(inv/100)%2)){x.save();x.translate(HX,top+hh/2);x.rotate(y<0?-.12:Math.sin(run/70)*.06);x.drawImage(img,-hw/2,-hh/2+(y<0?0:Math.abs(Math.sin(run/70))*-3),hw,hh);x.restore();}
+      if(!inv)for(const o of obs){if(Math.abs(o.x-HX)<(o.w/2+hw*.28)&&G+y>G-o.h+8){lives--;inv=1300;hud();break;}}
+      // progress bar
+      x.fillStyle='rgba(255,255,255,.25)';x.fillRect(12,10,W-24,6);x.fillStyle='#FFC93C';x.fillRect(12,10,(W-24)*Math.min(1,dist/GOAL),6);
+      hud();if(lives<=0)return end(false);if(dist>=GOAL)return end(true);raf=requestAnimationFrame(fr);}
+    raf=requestAnimationFrame(fr);return()=>{over=true;cancelAnimationFrame(raf);removeEventListener('keydown',key);};},
+
+  /* match-3 survival: keep the bar above zero for 40 s */
+  match3(area,done){const N=6,E=['🎄','⭐','🎁','🍬','🔔','❄️'];let g=[],sel=null,busy=false,over=false,bar=.6,score=0;
+    area.innerHTML='<div class="m3-wrap"><div class="m3-bar" id="m3bar"><i id="m3b"></i></div><div class="m3" id="m3"></div></div>';
+    const el=$('m3'),rnd=()=>Math.floor(Math.random()*E.length);
+    for(let i=0;i<N*N;i++){let v;do{v=rnd();}while((i%N>=2&&g[i-1]===v&&g[i-2]===v)||(i>=2*N&&g[i-N]===v&&g[i-2*N]===v));g.push(v);}
+    const draw=(cls={})=>{el.innerHTML=g.map((v,i)=>`<button type="button" data-i="${i}" class="${i===sel?'sel':''} ${cls[i]||''}">${v<0?'':E[v]}</button>`).join('');};
+    const matches=()=>{const m=new Set();for(let r=0;r<N;r++)for(let c0=0;c0<N;c0++){const i=r*N+c0,v=g[i];if(v<0)continue;
+        if(c0<=N-3&&g[i+1]===v&&g[i+2]===v){let k=c0;while(k<N&&g[r*N+k]===v){m.add(r*N+k);k++;}}
+        if(r<=N-3&&g[i+N]===v&&g[i+2*N]===v){let k=r;while(k<N&&g[k*N+c0]===v){m.add(k*N+c0);k++;}}}return m;};
+    const sw=(a,b)=>{[g[a],g[b]]=[g[b],g[a]];};
+    const hasMove=()=>{for(let i=0;i<N*N;i++)for(const j of [i%N<N-1?i+1:-1,i+N<N*N?i+N:-1]){if(j<0)continue;sw(i,j);const ok=matches().size>0;sw(i,j);if(ok)return true;}return false;};
+    const hud=()=>{$('g-score').textContent=`🍬 ${score}`;$('m3b').style.width=Math.max(0,bar*100)+'%';$('m3bar').classList.toggle('low',bar<.25);};
+    async function resolve(){let m;while((m=matches()).size&&!over){score+=m.size;bar=Math.min(1,bar+m.size*.035);hud();
+        const cls={};m.forEach(i=>cls[i]='pop');draw(cls);await sleep(230);m.forEach(i=>g[i]=-1);
+        const drop={};for(let c0=0;c0<N;c0++){const col=[];for(let r=N-1;r>=0;r--){const v=g[r*N+c0];if(v>=0)col.push(v);}
+          for(let r=N-1,k=0;r>=0;r--,k++){const i=r*N+c0;const nv=k<col.length?col[k]:rnd();if(g[i]!==nv||k>=col.length)drop[i]='drop';g[i]=nv;}}
+        draw(drop);await sleep(260);}
+      if(!hasMove()&&!over){do{g.sort(()=>Math.random()-.5);}while(matches().size||!hasMove());draw();}}
+    async function trySwap(a,b){if(busy||over)return;busy=true;sel=null;sw(a,b);draw();
+      if(!matches().size){await sleep(160);sw(a,b);draw({[a]:'no',[b]:'no'});}else await resolve();busy=false;}
+    const adj=(a,b)=>(Math.abs(a-b)===1&&Math.floor(a/N)===Math.floor(b/N))||Math.abs(a-b)===N;
+    let st=null;
+    el.onpointerdown=e=>{const b=e.target.closest('button');if(!b)return;st={i:+b.dataset.i,x:e.clientX,y:e.clientY};};
+    el.onpointerup=e=>{if(!st||busy||over){st=null;return;}const dx=e.clientX-st.x,dy=e.clientY-st.y,i=st.i;st=null;
+      if(Math.max(Math.abs(dx),Math.abs(dy))>18){const j=Math.abs(dx)>Math.abs(dy)?(dx>0&&i%N<N-1?i+1:dx<0&&i%N>0?i-1:-1):(dy>0&&i+N<N*N?i+N:dy<0&&i-N>=0?i-N:-1);if(j>=0)trySwap(i,j);return;}
+      if(sel===null){sel=i;draw();}else if(sel===i){sel=null;draw();}else if(adj(sel,i))trySwap(sel,i);else{sel=i;draw();}};
+    draw();hud();
+    const drain=setInterval(()=>{if(over)return;bar-=.0035;hud();if(bar<=0){over=true;stopT();clearInterval(drain);done(false);}},100);
+    const stopT=timer(40,()=>{if(!over){over=true;clearInterval(drain);done(true);}});
+    return()=>{over=true;stopT();clearInterval(drain);};},
 
   /* 2. memory pairs */
   memory(area,done){const E=['🎄','⛄','🎁','⭐','🍬','🔔'];const deck=[...E,...E].sort(()=>Math.random()-.5);let open=[],found=0,moves=0,lock=false,over=false;const LIM=16;
@@ -410,7 +526,7 @@ function storyCard(){const c=document.createElement('canvas');c.width=720;c.heig
   x.textAlign='center';x.fillStyle='#E0262F';x.font='400 92px "Rubik Bubbles", Rubik, sans-serif';x.fillText('Я прошёл',360,200);x.fillText('карту!',360,300);
   const img=new Image();return new Promise(res=>{img.onload=()=>{const w=420,h=w*img.naturalHeight/img.naturalWidth;x.drawImage(img,150,380,w,h);
     x.fillStyle='#3A1A16';x.font='900 46px Rubik, sans-serif';x.fillText('Funky Pop · Saule',360,1140);x.font='700 34px Nunito, sans-serif';x.fillText('Новогодняя карта',360,1200);res(c);};img.src=heroImg();});}
-async function showFinal(fresh){show('final');heroesHtml($('fin-heroes'),false);$('prize').textContent=CFG.prize;if(fresh)confetti(200);
+async function showFinal(fresh){show('final');heroesHtml($('fin-heroes'));$('prize').textContent=CFG.prize;if(fresh)confetti(200);
   const c=await storyCard();$('story').src=c.toDataURL('image/png');
   $('share').onclick=async()=>{try{const blob=await new Promise(r=>c.toBlob(r,'image/png'));const f=new File([blob],'funky-pop.png',{type:'image/png'});
     if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f],title:'Новогодняя карта Saule'});else{const a=document.createElement('a');a.href=c.toDataURL('image/png');a.download='funky-pop.png';a.click();}}catch(e){}};}
@@ -423,9 +539,9 @@ $('go').onclick=()=>{store.set('started','1');show('map');drawMap(false);if(!me.
 (async()=>{
   try{await ensurePlayer();}catch(e){show('start');$('go').disabled=true;$('go').textContent='Нет связи с игрой';return;}
   const qs=new URLSearchParams(location.search),c=qs.get('c');
-  if(c||qs.get('p'))history.replaceState(null,'',location.pathname);
+  if(c||qs.get('p'))history.replaceState(null,'',location.pathname+(DEMO?'?demo':''));
   if(c){show('map');drawMap(false);await scan(c,null);return;}
-  if(store.get('started')||me.points){show('map');drawMap(false);if(me.points>=CFG.points)bubble('Карта пройдена! 🎉','ok');}else show('start');
+  if(store.get('started')||me.points){show('map');drawMap(false);if(me.points>=CFG.points)bubble('Карта пройдена! 🎉','ok');else if(DEMO)bubble('Демо: подойдёт любой код','ok');}else show('start');
 })();
 })();
 </script>
