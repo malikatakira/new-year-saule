@@ -103,6 +103,15 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-
 .field:focus{border-color:var(--gold);outline:none}
 .pcode{font:900 26px ui-monospace,Menlo,monospace;text-align:center;background:#fff;border:3px dashed var(--gold);border-radius:18px;padding:12px;letter-spacing:.05em}
 .demo-g{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.demo-g .btn{padding:10px 0;font-size:16px}
+.scan-row .btn{font-size:16px;padding:15px 8px;white-space:nowrap}
+.code-row{display:grid;grid-template-columns:1fr auto;gap:8px}.code-row .btn{padding:0 20px;font-size:24px}
+.cam{position:fixed;inset:0;z-index:70;background:#000;display:flex;align-items:center;justify-content:center}
+.cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cam-frame{position:relative;width:min(70vw,300px);aspect-ratio:1;border-radius:26px;border:4px solid var(--gold);box-shadow:0 0 0 100vmax rgba(0,0,0,.5);overflow:hidden}
+.cam-frame::after{content:"";position:absolute;left:8%;right:8%;height:3px;border-radius:2px;background:var(--gold);box-shadow:0 0 12px var(--gold);animation:scanl 1.8s ease-in-out infinite alternate}
+@keyframes scanl{from{top:8%}to{top:92%}}
+.cam-hint{position:absolute;z-index:2;top:max(28px,env(safe-area-inset-top));left:16px;right:16px;margin:0;text-align:center;color:#fff;font:900 19px var(--font-head);text-shadow:0 2px 6px rgba(0,0,0,.5)}
+.cam-x{position:absolute;z-index:2;bottom:max(28px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);min-width:180px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .small{font-size:14px;color:var(--muted);font-weight:700}
 .msg{font:800 15px var(--font-head);min-height:1.3em;text-align:center}
@@ -220,6 +229,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;touch-
   <div class="row2"><button class="btn gold" id="share" type="button">📲 В сторис</button><button class="btn green" id="back" type="button">🗺 К карте</button></div>
 </div></section>
 
+<div class="cam" id="cam" hidden><video id="cam-v" playsinline muted autoplay></video>
+  <p class="cam-hint">Наведите камеру на QR из коробки</p><div class="cam-frame"></div>
+  <button class="btn ghost cam-x" id="cam-x" type="button">Закрыть</button></div>
 <div class="sheet" id="sheet" hidden><div class="sheet-card" id="sheet-card"></div></div>
 <div class="res" id="res" hidden><div class="res-card" id="res-card"></div></div>
 <canvas id="fx" aria-hidden="true"></canvas>
@@ -322,10 +334,46 @@ async function scan(code,msgEl){
 function openSheet(html){$('sheet-card').innerHTML='<div class="grab"></div>'+html;$('sheet').hidden=false;}
 function closeSheet(){$('sheet').hidden=true;}
 $('sheet').onclick=e=>{if(e.target===$('sheet'))closeSheet();};
-function openCode(){openSheet(`<h2>Код из коробки</h2><p class="small">Наведите камеру телефона на QR в коробке. Или введите код, который напечатан под QR:</p>
-  <input class="field" id="f-code" placeholder="SL-XXXX-XXXX" maxlength="16" autocomplete="off" inputmode="text"><div class="msg" id="f-msg"></div>
-  <button class="btn big" id="f-go" type="button">Открыть точку</button>`);
-  const f=$('f-code');f.focus();const go=()=>scan(f.value,$('f-msg'));$('f-go').onclick=go;f.onkeydown=e=>{if(e.key==='Enter')go();};}
+function openCode(){openSheet(`<h2>Код из коробки</h2>
+  <div class="row2 scan-row"><button class="btn" id="f-cam" type="button">📷 Сканировать</button><button class="btn green" id="f-photo" type="button">🖼 Из фото</button></div>
+  <input type="file" id="f-file" accept="image/*" hidden>
+  <div class="msg" id="f-msg"></div>
+  <p class="small">Или введите код, который напечатан под QR:</p>
+  <div class="code-row"><input class="field" id="f-code" placeholder="SL-XXXX-XXXX" maxlength="16" autocomplete="off" inputmode="text"><button class="btn gold" id="f-go" type="button" aria-label="Открыть точку">→</button></div>`);
+  const f=$('f-code'),go=()=>scan(f.value,$('f-msg'));$('f-go').onclick=go;f.onkeydown=e=>{if(e.key==='Enter')go();};
+  $('f-cam').onclick=openCam;$('f-photo').onclick=()=>$('f-file').click();
+  $('f-file').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;say('Ищем QR на фото…','');
+    try{const bmp=await createImageBitmap(file,{imageOrientation:'from-image'});const t=await decodeQR(bmp,bmp.width,bmp.height,true);bmp.close&&bmp.close();
+      if(!t)return say('QR не найден. Снимите поближе, чтобы QR был целиком, или введите код.','bad');useQR(t);}
+    catch(err){say('Не получилось открыть фото. Попробуйте другое или введите код.','bad');}};}
+const say=(t,c)=>{const m=$('f-msg');if(m){m.textContent=t;m.className='msg '+(c||'');}else bubble(t,c);};
+
+/* ================= QR reader: camera and photo ================= */
+// text from QR -> box code: our link has ?c=CODE; also accept the bare code
+function codeFrom(t){t=String(t||'');try{const c=new URL(t).searchParams.get('c');if(c)return c;}catch(e){}
+  const m=t.toUpperCase().match(/SL-?[A-Z0-9]{4}-?[A-Z0-9]{4}/);return m?m[0]:(DEMO&&t?'DEMO':null);}
+function useQR(t){const c=codeFrom(t);if(!c)return say('Это не QR из коробки Funky Pop.','bad');say('QR найден!','ok');scan(c,$('f-msg'));}
+let jsqrP=null;const loadJsQR=()=>jsqrP||(jsqrP=new Promise((res,rej)=>{if(window.jsQR)return res();const el=document.createElement('script');el.src='vendor/jsQR.js';el.onload=res;el.onerror=()=>{jsqrP=null;rej();};document.head.appendChild(el);}));
+const BD=('BarcodeDetector' in window)?(()=>{try{return new BarcodeDetector({formats:['qr_code']});}catch(e){return null;}})():null;
+async function decodeQR(src,w,h,thorough){
+  if(BD){try{const r=await BD.detect(src);if(r[0])return r[0].rawValue;if(!thorough)return null;}catch(e){}}
+  await loadJsQR();const k=Math.min(1,(thorough?1400:720)/Math.max(w,h)),c=document.createElement('canvas');c.width=Math.round(w*k);c.height=Math.round(h*k);
+  const x=c.getContext('2d',{willReadFrequently:true});x.drawImage(src,0,0,c.width,c.height);const d=x.getImageData(0,0,c.width,c.height);
+  const r=window.jsQR(d.data,c.width,c.height,{inversionAttempts:thorough?'attemptBoth':'dontInvert'});return r&&r.data;}
+let camStream=null,camOn=false;
+async function openCam(){
+  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia)return say('Камера здесь недоступна. Загрузите фото QR или введите код.','bad');
+  try{camStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment',width:{ideal:1280},height:{ideal:720}},audio:false});}
+  catch(e){return say('Нет доступа к камере. Разрешите камеру в настройках браузера или загрузите фото QR.','bad');}
+  const v=$('cam-v');v.srcObject=camStream;$('cam').hidden=false;camOn=true;try{await v.play();}catch(e){}
+  if(!BD)loadJsQR().catch(()=>{});
+  const tick=async()=>{if(!camOn)return;
+    if(v.readyState>=2&&v.videoWidth){let t=null;try{t=await decodeQR(v,v.videoWidth,v.videoHeight,false);}catch(e){}
+      if(t&&camOn){if(navigator.vibrate)navigator.vibrate(60);closeCam();useQR(t);return;}}
+    setTimeout(tick,180);};tick();}
+function closeCam(){camOn=false;$('cam').hidden=true;if(camStream){camStream.getTracks().forEach(t=>t.stop());camStream=null;}$('cam-v').srcObject=null;}
+$('cam-x').onclick=closeCam;
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&camOn)closeCam();});
 function openMe(){const link=`${location.origin}${location.pathname}?p=${encodeURIComponent(me.pcode)}`,txt='Моя новогодняя карта Saule: '+link;
   openSheet(`<h2>Мой код игрока</h2><div class="pcode">${me.pcode}</div>
   <p class="small">По этому коду игра продолжится на другом телефоне. Отправьте ссылку себе:</p>
