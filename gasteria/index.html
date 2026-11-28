@@ -299,6 +299,7 @@ h3{font-weight:700;color:var(--berry)}
 footer{margin-top:22px;font-size:12px;color:var(--muted)}
 .kp-label{color:#E9D9C6;letter-spacing:.18em;font-weight:600;font-size:11px}
 .why{margin-top:16px;background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.cb-inv{grid-template-columns:repeat(4,1fr)}
 .kp-label{display:inline-block;font:700 12px var(--body);letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:99px;background:rgba(255,255,255,.16);color:#fff;margin-bottom:8px}
 .bt-rows{display:flex;flex-direction:column;gap:10px;width:100%}
 .bt-row{display:grid;grid-template-columns:44px 1fr;gap:10px;align-items:center;padding:6px;border-radius:14px}
@@ -309,6 +310,8 @@ footer{margin-top:22px;font-size:12px;color:var(--muted)}
 .bt-bar{height:10px;border-radius:6px;background:rgba(0,0,0,.08);overflow:hidden}
 .bt-bar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--berry),var(--gold));transition:width .8s}
 .bt-pick{display:flex;flex-wrap:wrap;gap:8px}
+.wanted{margin-top:16px;background:var(--card);border:2px solid var(--line);border-radius:24px;padding:18px}
+.wanted p{margin-top:6px}
 .cb-inv{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;width:100%}
 .cb-toy{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:8px 2px;display:flex;flex-direction:column;align-items:center;gap:2px;opacity:.55;min-width:0}
 .cb-toy.on{opacity:1;border-color:var(--berry)}
@@ -346,11 +349,16 @@ a.btn{text-decoration:none}.cb-toy small{font-size:11px;color:var(--muted)}
 <div class="wrap">
   <header class="top">
     <span class="stars" aria-hidden="true">✦ ❄</span>
-    <img class="logo" src="assets/brand_logo.svg" alt="GASTERIA · кофе, хлеб, счастье">
+    <img class="logo" src="assets/brand_logo.svg" alt="GASTERIA">
     <div class="kp-label">Коммерческое предложение для Gasteria</div>
     <h1>Новогодние игры</h1>
-    <p class="lead">Новогодний сезон в Gasteria: покупатель сканирует код со стакана, пакета для хлеба или коробки десерта и сразу играет в телефоне. Подготовлено SHŪ Studio.</p>
+    <p class="lead">Новогодний сезон в Gasteria: покупатель сканирует QR со стакана навынос, карточки в папке со счётом или вкладыша в коробке торта и сразу играет в телефоне. Подготовлено SHŪ Studio.</p>
   </header>
+
+  <section class="wanted">
+    <h2>Идея для вас</h2>
+    <p>В Gasteria приходят и за кофе, и за ужином. Каждый заказ, будь то латте, паста, пицца или стейк, превращается в ёлочную игрушку, а из игрушек складываются подарки: кофе или десерт с витрины. Гость возвращается, чтобы дособрать ёлку.</p>
+  </section>
 
   <div class="ov-grid" id="overview"></div>
   <p class="ov-hint">Нажмите на игру, чтобы попробовать её и посмотреть пакеты.</p>
@@ -358,22 +366,22 @@ a.btn{text-decoration:none}.cb-toy small{font-size:11px;color:var(--muted)}
   <section class="why">
     <h2>Почему это подходит Gasteria</h2>
     <ul class="list">
-      <li><b>Кофе, хлеб, счастье.</b> Каждый напиток и блюдо превращаются в ёлочную игрушку, а из игрушек складываются подарки. Это продолжение идеи «каждый напиток превращается в цветок для букета», только в новогоднем виде.</li>
-      <li><b>Несколько точек.</b> Туран, Riviera, THE ONE: задания города и битва кофеен ведут покупателя в разные Gasteria.</li>
-      <li><b>Где будут коды:</b> стаканы навынос, крафт-пакеты для хлеба и круассанов, коробки тортов, вкладыши в заказы Wolt, чек.</li>
-      <li><b>Тон бренда.</b> Без кричащих скидок: тёплые сюрпризы и маленькие радости, как и в вашей подаче «начни утро красиво».</li>
+      <li><b>Ёлочные игрушки за заказы.</b> Каждый напиток и блюдо превращаются в ёлочную игрушку, а из игрушек складываются подарки.</li>
+      <li><b>Несколько точек.</b> Туран и Токпанова: задания города и битва кофеен ведут гостя в разные Gasteria.</li>
+      <li><b>Где будут коды:</b> стаканы навынос, карточка с QR в папке со счётом, вкладыш внутри коробки торта.</li>
+      <li><b>Тон бренда.</b> Без кричащих скидок: тёплые сюрпризы и маленькие радости.</li>
     </ul>
   </section>
 
   <section class="codes-how">
     <h2>Как работают коды</h2>
     <div class="cflow">
-      <div><span class="ic">☕</span><b>Свой код на каждой покупке</b><small>Стакан, пакет для хлеба, коробка торта или чек</small></div>
+      <div><span class="ic">☕</span><b>Свой код на каждой покупке</b><small>Стакан навынос, карточка в папке со счётом или вкладыш в коробке торта</small></div>
       <div><span class="ic">📱</span><b>Скан камерой телефона</b><small>Игра открывается сразу</small></div>
       <div><span class="ic">✅</span><b>Код срабатывает один раз</b><small>Переслать или найти в интернете бесполезно</small></div>
       <div><span class="ic">💾</span><b>Прогресс сохраняется</b><small>Можно продолжить на другом устройстве по коду игрока</small></div>
     </div>
-    <p>Сколько чашек, пакетов и коробок в акции, столько и кодов: каждый уникальный. Итоговая цена зависит от сложности игры и тиража, то есть от количества кодов.</p>
+    <p>Сколько заказов в акции, столько и кодов: каждый уникальный. Итоговая цена зависит от сложности игры и тиража, то есть от количества кодов.</p>
   </section>
 
   <nav class="tabs" id="tabs" aria-label="Игры"></nav>
@@ -395,7 +403,7 @@ a.btn{text-decoration:none}.cb-toy small{font-size:11px;color:var(--muted)}
       <li><b>Договор, оплата и файлы.</b> Срок считаем с момента, когда есть оплата, логотип и материалы бренда.</li>
       <li><b>Через 1–2 недели</b> готовая игра и коды для печати, срок зависит от пакета.</li>
     </ol>
-    <p class="deadline">Чтобы игра заработала в декабре, решение лучше принять до 25 ноября. Коды для печати даём в первые 2–3 дня после получения файлов.</p>
+    <p class="deadline">Чтобы игра заработала в декабре, решение лучше принять до 4 декабря. Коды для печати даём в первые 2–3 дня после получения файлов.</p>
     <p class="ask">Выберите игру, и договоримся о созвоне 🤍</p>
     <a class="wa" href="https://wa.me/77066767162?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9C%D1%8B%20%D0%BF%D0%BE%D1%81%D0%BC%D0%BE%D1%82%D1%80%D0%B5%D0%BB%D0%B8%20%D0%BD%D0%BE%D0%B2%D0%BE%D0%B3%D0%BE%D0%B4%D0%BD%D0%B8%D0%B5%20%D0%B8%D0%B3%D1%80%D1%8B%20%D0%B4%D0%BB%D1%8F%20Gasteria%2C%20%D1%85%D0%BE%D1%82%D0%B8%D0%BC%20%D0%BE%D0%B1%D1%81%D1%83%D0%B4%D0%B8%D1%82%D1%8C" target="_blank" rel="noopener">💬 Написать в WhatsApp</a>
   </section>
@@ -404,7 +412,7 @@ a.btn{text-decoration:none}.cb-toy small{font-size:11px;color:var(--muted)}
 </div>
 <div class="modal" id="modal" hidden></div>
 
-<script>window.BRAND_GAME={"catcher": "🛍️", "toys": ["🥐", "☕", "🍰", "🍞", "🥞"], "combo": {"items": [{"k": "ball", "e": "🔴", "n": "Шар", "src": "☕ Латте"}, {"k": "star", "e": "⭐", "n": "Звезда", "src": "🥤 Раф"}, {"k": "bell", "e": "🔔", "n": "Колокольчик", "src": "☕ Капучино"}, {"k": "flake", "e": "❄️", "n": "Снежинка", "src": "🥐 Круассан"}, {"k": "cone", "e": "🌲", "n": "Шишка", "src": "🍰 Десерт"}], "combos": [{"need": {"ball": 1, "star": 1}, "prize": "Круассан к кофе"}, {"need": {"bell": 1, "flake": 1}, "prize": "Глинтвейн дня"}, {"need": {"ball": 1, "star": 1, "bell": 1}, "prize": "Десерт с витрины"}, {"need": {"cone": 2}, "prize": "Хлеб домой в подарок"}, {"need": {"ball": 1, "star": 1, "bell": 1, "flake": 1, "cone": 1}, "prize": "Новогодний торт"}]}, "city": [{"e": "🍳", "t": "Закажите новогодний завтрак"}, {"e": "👫", "t": "Приходите с другом", "bonus": "Второй кофе в подарок"}, {"e": "🍷", "t": "Попробуйте глинтвейн"}, {"e": "🏙️", "t": "Загляните в другую Gasteria"}, {"e": "📸", "t": "Сфотографируйте ёлку в зале"}, {"e": "🍞", "t": "Возьмите хлеб домой"}], "cityPrize": "Новогодний подарок от Gasteria."};</script>
+<script>window.BRAND_GAME={"catcher": "🛍️", "toys": ["☕", "🍝", "🍕", "🥩", "🍰"], "combo": {"items": [{"k": "ball", "e": "🔴", "n": "Шар", "src": "☕ Латте"}, {"k": "star", "e": "⭐", "n": "Звезда", "src": "🥤 Раф"}, {"k": "bell", "e": "🔔", "n": "Колокольчик", "src": "☕ Капучино"}, {"k": "flake", "e": "❄️", "n": "Снежинка", "src": "🍝 Паста"}, {"k": "candy", "e": "🍬", "n": "Конфета", "src": "🍕 Пицца"}, {"k": "deer", "e": "🦌", "n": "Олень", "src": "🥩 Стейк"}, {"k": "cone", "e": "🌲", "n": "Шишка", "src": "🍰 Десерт"}], "combos": [{"need": {"ball": 1, "star": 1}, "prize": "Кофе в подарок"}, {"need": {"bell": 1, "flake": 1, "cone": 1}, "prize": "Десерт с витрины: медовик, чизкейк или Наполеон"}, {"need": {"ball": 1, "star": 1, "candy": 1, "deer": 1, "cone": 1}, "prize": "Новогодний торт"}]}, "city": [{"e": "🍳", "t": "Закажите новогодний завтрак"}, {"e": "👫", "t": "Приходите с другом", "bonus": "Второй кофе в подарок"}, {"e": "🍝", "t": "Попробуйте пасту дня"}, {"e": "🏙️", "t": "Загляните в другую Gasteria"}, {"e": "📸", "t": "Сфотографируйте ёлку в зале"}, {"e": "🍰", "t": "Возьмите десерт с витрины"}], "cityPrize": "Новогодний подарок от Gasteria."};</script>
 <script>
 (function(){
 const $=id=>document.getElementById(id);
@@ -422,7 +430,7 @@ function modal({em='🎁',title,text='',code='',btn='Готово'}){
 }
 
 /* ---------- shared texts ---------- */
-const TERMS=['Размещение игры на время акции (до 2 месяцев) входит в стоимость, продление от 15 000 ₸ в месяц.',
+const TERMS=['Игра работает до 31 января 2027. Размещение игры на время акции входит в стоимость.',
   'Сервер и база уникальных кодов в цену не входят, считаем по тиражу и сроку акции.',
   'Оплата: 50% предоплата, 50% после сдачи игры. Работаем по договору и счёту от ТОО «SHŪ».',
   'Права на героев, логотип и брендинг остаются у заказчика. Движок и код игры остаются у SHŪ, заказчик получает право использовать игру на срок акции.',
@@ -431,13 +439,13 @@ const INCL_BASE=['Готовая игра в стиле этого демо, д�
 const extra=(title,html)=>`<div class="extra"><span class="tag">Дополнительная идея</span><h3>${title}</h3>${html}</div>`;
 
 const GAMES=[
- {"id": "combo", "em": "🎄", "title": "Ёлочные игрушки за блюда", "short": "Каждый напиток и блюдо дают игрушку, наборы игрушек дают подарки", "from": 350000, "term": "1,5 недели", "lead": "Латте дарит шар, раф звезду, капучино колокольчик, круассан снежинку, десерт шишку. Соберите набор игрушек и обменяйте его на подарок: круассан, глинтвейн, десерт или новогодний торт.", "how": "Каждый код с покупки добавляет игрушку того блюда, которое купил покупатель. Наборы из 2, 3 или 5 игрушек дают разные подарки. Если какая-то игрушка не нужна, две одинаковые меняются на одну недостающую.","extras":[extra("Редкая золотая игрушка","<p>Иногда вместо обычной игрушки выпадает золотая: она заменяет любую. Повод заказать ещё.</p>"),extra("Ёлка дома","<p>Собранные игрушки висят на виртуальной ёлке покупателя. Ёлкой можно поделиться в сторис.</p>")],"pk":[{"n": "Старт", "d": "Игрушки за блюда, наборы и обмен", "p": 350000, "t": "1,5 недели"}, {"n": "С ёлкой", "d": "Старт + своя ёлка и сторис", "p": 450000, "t": "2 недели", "best": 1}]},
- {"id": "city", "em": "🏙️", "title": "Новогодний город заданий", "short": "Выполняйте задания, и дома в городе зажигают огни", "from": 350000, "term": "1,5 недели", "lead": "Новогодний город Gasteria: каждое задание зажигает огни в доме. Закажите завтрак, приходите с другом, загляните в другую кофейню. Весь город сияет, и вас ждёт подарок.", "how": "Задание засчитывается кодом с чека. Задания можно открывать постепенно, каждый день новое. Задания и подарки задаёт заказчик.","extras":[extra("Задание дня","<p>Каждый день в городе появляется новое задание с бонусом на сегодня.</p>")],"pk":[{"n": "Старт", "d": "Город из 6 заданий и подарок", "p": 350000, "t": "1,5 недели"}, {"n": "Задание дня", "d": "Старт + новое задание каждый день", "p": 450000, "t": "2 недели", "best": 1}]},
- {"id": "advent", "em": "📅", "title": "Адвент-календарь", "short": "Окошко с сюрпризом каждый день до 31 декабря", "from": 250000, "term": "1 неделя", "lead": "С даты старта акции и до 31 декабря каждый день открывается окошко: круассан к кофе, десерт, сюрприз от бариста. Код с покупки открывает бонусное окошко.", "how": "Покупатель сканирует код с покупки и попадает в календарь. Каждый день можно открыть новое окошко. Что будет в окошках, согласуем на созвоне.","extras":[extra("Игрушка в окошке","<p>В некоторых окошках ёлочная игрушка для набора. Две игры работают вместе.</p>")],"pk":[{"n": "Старт", "d": "Окошко каждый день до 31 декабря", "p": 250000, "t": "1 неделя"}, {"n": "С игрушками", "d": "Календарь + игрушки для наборов", "p": 400000, "t": "1,5 недели", "best": 1}]},
- {"id": "battle", "em": "☕", "title": "Битва кофеен Gasteria", "short": "Точки соревнуются, покупатели болеют за свою", "from": 300000, "term": "1,5 недели", "lead": "Туран против Riviera и THE ONE: каждый код с покупки добавляет голос кофейне. Кофейня-победитель устраивает новогодний вечер для своих гостей.", "how": "Табло показывает, кто лидирует. Итоги и призы для победителей задаёт заказчик.","extras":[extra("Битва напитков","<p>Вместо точек соревнуются напитки: латте против рафа и глинтвейна.</p>")],"pk":[{"n": "Старт", "d": "Битва кофеен с табло", "p": 300000, "t": "1,5 недели"}, {"n": "С вечером", "d": "Старт + розыгрыш среди гостей кофейни-победителя", "p": 400000, "t": "2 недели", "best": 1}]}
+ {"id": "combo", "em": "🎄", "title": "Ёлочные игрушки за блюда", "short": "Каждый напиток и блюдо дают игрушку, наборы игрушек дают подарки", "from": 350000, "term": "1,5 недели", "lead": "Латте дарит шар, раф звезду, капучино колокольчик, паста снежинку, пицца конфету, стейк оленя, десерт шишку. Соберите набор игрушек и обменяйте его на подарок: кофе, десерт с витрины или новогодний торт.", "how": "Каждый код с покупки добавляет игрушку того блюда, которое купил покупатель. Наборы из 2, 3 или 5 игрушек дают разные подарки. Если какая-то игрушка не нужна, две одинаковые меняются на одну недостающую.","extras":[extra("Редкая золотая игрушка","<p>Иногда вместо обычной игрушки выпадает золотая: она заменяет любую. Повод заказать ещё.</p>"),extra("Ёлка дома","<p>Собранные игрушки висят на виртуальной ёлке покупателя. Ёлкой можно поделиться в сторис.</p>")],"pk":[{"n": "Старт", "d": "Игрушки за блюда, наборы и обмен", "p": 350000, "t": "1,5 недели"}, {"n": "С ёлкой", "d": "Старт + своя ёлка и сторис", "p": 450000, "t": "2 недели", "best": 1}]},
+ {"id": "city", "em": "🏙️", "title": "Новогодний город заданий", "short": "Выполняйте задания, и дома в городе зажигают огни", "from": 350000, "term": "1,5 недели", "lead": "Новогодний город Gasteria: каждое задание зажигает огни в доме. Закажите завтрак, приходите с другом, загляните в другую кофейню. Весь город сияет, и вас ждёт подарок.", "how": "Задание засчитывается кодом с покупки. Задания можно открывать постепенно, каждый день новое. Задания и подарки задаёт заказчик.","extras":[extra("Задание дня","<p>Каждый день в городе появляется новое задание с бонусом на сегодня.</p>")],"pk":[{"n": "Старт", "d": "Город из 6 заданий и подарок", "p": 350000, "t": "1,5 недели"}, {"n": "Задание дня", "d": "Старт + новое задание каждый день", "p": 450000, "t": "2 недели", "best": 1}]},
+ {"id": "advent", "em": "📅", "title": "Адвент-календарь", "short": "Окошко с сюрпризом каждый день до 31 декабря", "from": 350000, "term": "1 неделя", "lead": "С даты старта акции и до 31 декабря каждый день открывается окошко: кусочек медовика к кофе, чизкейк дня, сюрприз от бариста. Код с покупки открывает бонусное окошко.", "how": "Покупатель сканирует код с покупки и попадает в календарь. Каждый день можно открыть новое окошко. Что будет в окошках, согласуем на созвоне.","extras":[extra("Игрушка в окошке","<p>В некоторых окошках ёлочная игрушка для набора. Две игры работают вместе.</p>")],"pk":[{"n": "Старт", "d": "Окошко каждый день до 31 декабря", "p": 350000, "t": "1 неделя"}, {"n": "С игрушками", "d": "Календарь + игрушки для наборов", "p": 400000, "t": "1,5 недели", "best": 1}]},
+ {"id": "battle", "em": "☕", "title": "Битва кофеен Gasteria", "short": "Точки соревнуются, покупатели болеют за свою", "from": 300000, "term": "1,5 недели", "lead": "Туран против Токпанова: каждый код с покупки добавляет голос кофейне. Кофейня-победитель устраивает новогодний вечер для своих покупателей.", "how": "Табло показывает, кто лидирует. Итоги и призы для победителей задаёт заказчик.","extras":[extra("Битва напитков","<p>Вместо точек соревнуются напитки: латте против рафа и капучино.</p>")],"pk":[{"n": "Старт", "d": "Битва кофеен с табло", "p": 300000, "t": "1,5 недели"}, {"n": "С вечером", "d": "Старт + розыгрыш среди покупателей кофейни-победителя", "p": 400000, "t": "2 недели", "best": 1}]}
 ];
 
-const BATTLE_OPTS=[{"e": "🏛️", "n": "Gasteria Туран", "v": 34}, {"e": "🌊", "n": "Gasteria Riviera", "v": 31}, {"e": "🏙️", "n": "Gasteria THE ONE", "v": 26}];
+const BATTLE_OPTS=[{"e": "🏛️", "n": "Gasteria Туран", "v": 34}, {"e": "🏙️", "n": "Gasteria Токпанова", "v": 31}];
 const BATTLE_NOTE="В демо проценты для примера.";
 
 /* ---------- render overview, tabs, panels ---------- */
@@ -512,7 +520,7 @@ function mountFriend(root){
     if(!reduced)move.animate([{transform:'translateY(0)'},{transform:'translateY(4px) scale(1.06,.92)',offset:.2},{transform:'translateY(-30px) scale(.96,1.05)',offset:.55},{transform:'translateY(0)'}],{duration:620,easing:'ease-out'});
     burst(['💜','✨','💜'],3);if(msg)say(msg,'ok');await sleep(900);setEyes('normal');idle();}
   async function no(msg){setMouth('closed');if(!reduced)move.animate([0,-9,9,-7,7,0].map(d=>({transform:`rotate(${d}deg)`})),{duration:600});blip(300,200,.18);say(msg,'bad');await sleep(650);idle();}
-  const FOODS=[{"e": "🥐", "n": "круассан", "v": 20}, {"e": "☕", "n": "кофе", "v": 15}, {"e": "🍰", "n": "медовик", "v": 25}, {"e": "🥞", "n": "панкейк", "v": 20}];
+  const FOODS=[{"e": "🍕", "n": "пицца", "v": 20}, {"e": "☕", "n": "кофе", "v": 15}, {"e": "🍰", "n": "медовик", "v": 25}, {"e": "🥞", "n": "панкейк", "v": 20}];
   $('tray').innerHTML=FOODS.map((f,i)=>`<button type="button" class="food" data-i="${i}" aria-label="Угостить: ${f.n}">${f.e}</button>`).join('');
   const mc=()=>{const m=mouthEl.getBoundingClientRect();return[m.left+m.width/2,m.top+m.height/2];};
   async function eat(f,clone){busy=true;lean=0;apply();
@@ -571,7 +579,7 @@ function mountSanta(root){
 }
 
 /* =========== 3. Advent =========== */
-const ADV_PRIZES=[["🥐", "Круассан к кофе", "Классический круассан к любому напитку"], ["🍷", "Глинтвейн дня", "Зимний напиток со скидкой"], ["🍰", "Кусочек медовика", "К любому кофе"], ["🍳", "Завтрак со скидкой", "Начните утро красиво"], ["🍞", "Хлеб дня", "Свежий хлеб к заказу"], ["✨", "Сюрприз от бариста", "Спросите у бариста"]];
+const ADV_PRIZES=[["🍯", "Кусочек медовика к кофе", "К любому напитку"], ["🍰", "Чизкейк дня", "Десерт с витрины"], ["🍝", "Паста дня со скидкой", "Только сегодня"], ["✨", "Сюрприз от бариста", "Спросите у бариста"]];
 function mountAdvent(root){
   const days=31;let today=1;const opened=new Set();
   root.innerHTML=`<div class="stage-c"><div class="adv-head"><b id="ad-date"></b><span class="mic-hint" style="flex:none">Открыто: <b id="ad-cnt"></b></span></div><div class="adv-grid" id="ad-grid"></div></div>`;
@@ -613,7 +621,7 @@ function mountTree(root){
 }
 
 /* =========== 5. Scratch =========== */
-const SC_PRIZES=[["☕", "Кофе в подарок"], ["🥐", "Круассан в подарок"], ["🍰", "Десерт с витрины"], ["🍷", "Глинтвейн −20%"], ["🎁", "Сюрприз от Gasteria"]];
+const SC_PRIZES=[["☕", "Кофе в подарок"], ["🍰", "Десерт с витрины"], ["🎁", "Сюрприз от Gasteria"]];
 function mountScratch(root){
   root.innerHTML=`<div class="stage-c" style="padding-top:18px"><div class="ticket" id="tk"><div class="under" id="tk-u"></div><canvas id="tk-c"></canvas></div></div>`;
   const st=status(),bar=scanBar((c,again)=>{if(again){st.className='status bad';st.textContent=`Код ${c} уже использован.`;return;}newCard();st.className='status ok';st.textContent=`Код ${c} принят! Сотрите слой пальцем.`;},'Сканировать код и получить карточку');
@@ -648,7 +656,7 @@ function mountCatch(root){
     if(G.spawn<=0){G.spawn=520;G.items.push({x:30+Math.random()*540,y:-20,v:.17+Math.random()*.08,bad:Math.random()<.3});}
     x.clearRect(0,0,600,380);for(let i=0;i<30;i++){x.fillStyle='rgba(255,255,255,.7)';x.beginPath();x.arc((i*131)%600,((i*71)+el*.03)%380,2,0,7);x.fill();}
     x.font='30px serif';x.textAlign='center';x.textBaseline='middle';
-    for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':(["\ud83e\udd50", "\u2615", "\ud83c\udf70", "\ud83c\udf81"][Math.floor(it.x)%4]),it.x,it.y);if(!it.hit&&it.y>300&&it.y<350&&Math.abs(it.x-G.px)<46){it.hit=true;if(it.bad)G.lives--;else G.score++;}}
+    for(const it of G.items){it.y+=it.v*dt;x.fillText(it.bad?'❄️':(["\ud83c\udf55", "\u2615", "\ud83c\udf70", "\ud83c\udf81"][Math.floor(it.x)%4]),it.x,it.y);if(!it.hit&&it.y>300&&it.y<350&&Math.abs(it.x-G.px)<46){it.hit=true;if(it.bad)G.lives--;else G.score++;}}
     G.items=G.items.filter(it=>!it.hit&&it.y<400);if(BRAND.catcher){x.font='58px serif';x.fillText(BRAND.catcher,G.px,330);}else if(img.complete)x.drawImage(img,G.px-38,280,76,76*img.naturalHeight/img.naturalWidth);
     $('g-score').textContent=`🎁 ${G.score} / 5`;$('g-lives').textContent='❤️'.repeat(Math.max(0,G.lives));$('g-time').textContent='⏱ '+Math.max(0,Math.ceil((15000-el)/1000));
     if(G.score>=5)return end(true);if(G.lives<=0||el>=15000)return end(false);raf=requestAnimationFrame(fr);}
@@ -704,7 +712,7 @@ function mountCombo(root){
 function mountCity(root){
   const T=BG.city;const done=new Set();
   root.innerHTML=`<div class="stage-c" style="padding-top:16px"><div class="stage-top"><span>Огни города: <b id="ct-n"></b></span><b id="ct-l"></b></div>
-    <div class="ct-grid" id="ct-grid"></div></div><p class="mic-hint">Нажмите на дом: в игре задание засчитывается кодом с чека.</p>`;
+    <div class="ct-grid" id="ct-grid"></div></div><p class="mic-hint">Нажмите на дом: в игре задание засчитывается кодом с покупки.</p>`;
   const st=status();root.append(st,playerLine());
   function draw(){$('ct-n').textContent=`${done.size} из ${T.length}`;$('ct-l').textContent=done.size>=T.length?'Город сияет!':`Осталось: ${T.length-done.size}`;
     $('ct-grid').innerHTML=T.map((t,i)=>`<button type="button" class="ct-house ${done.has(i)?'lit':''}" data-i="${i}"><span>${done.has(i)?'🏠':'🏚️'}</span><b>${t.e} ${t.t}</b>${done.has(i)?'<small>✓ выполнено</small>':''}</button>`).join('');}
@@ -726,7 +734,8 @@ function mountCard(root){
       <div class="row">${P.themes.map((t,i)=>`<button type="button" class="cd-theme ${i?'':'on'}" data-t="${i}" style="background:linear-gradient(160deg,${t[0]},${t[1]})" aria-label="Оформление ${i+1}"></button>`).join('')}</div>
     </div>
     <div class="stage-c" style="padding:14px"><canvas id="cd-c" width="600" height="800" class="cd-canvas"></canvas></div>
-    <div class="row"><a class="btn hot" id="cd-save" download="novogodnyaya-otkrytka.png">💾 Сохранить открытку</a>${P.game?`<a class="btn alt" href="#${P.game}">🎮 Мини-игра на открытке</a>`:''}</div>
+    <div class="row"><a class="btn hot" id="cd-save" download="novogodnyaya-otkrytka.png">💾 Сохранить открытку</a>${P.game?`<button class="btn alt" type="button" id="cd-game">🎮 Мини-игра на открытке</button>`:''}</div>
+    <div id="cd-mini"></div>
     <p class="mic-hint">${P.photo?'Фото никуда не отправляется: открытка собирается прямо в телефоне.':'Открытка собирается прямо в телефоне.'}</p>`;
   let theme=0;const cv=$('cd-c'),x=cv.getContext('2d');
   const setWish=()=>{$('cd-wish').value=P.to[+$('cd-to').value].w;};setWish();
@@ -745,7 +754,10 @@ function mountCard(root){
   root.querySelector('.cd-form').addEventListener('input',e=>{if(e.target.id==='cd-to')setWish();draw();});
   root.querySelectorAll('.cd-theme').forEach(b=>b.onclick=()=>{theme=+b.dataset.t;root.querySelectorAll('.cd-theme').forEach(z=>z.classList.toggle('on',z===b));draw();});
   if(P.photo)$('cd-file').onchange=e=>{const f=e.target.files[0];if(!f)return;const img=new Image();img.onload=()=>{photo=img;draw();};img.src=URL.createObjectURL(f);};
+  let stopMini=null;
+  if(P.game)$('cd-game').onclick=()=>{const m=$('cd-mini');if(stopMini){stopMini();stopMini=null;}m.className='demo-box';m.style.marginTop='12px';stopMini=MOUNT[P.game](m)||null;m.scrollIntoView({behavior:'smooth',block:'center'});};
   document.fonts&&document.fonts.ready.then(draw);draw();
+  return ()=>{if(stopMini)stopMini();};
 }
 
 /* --- Puzzle: every code opens one piece of a picture --- */

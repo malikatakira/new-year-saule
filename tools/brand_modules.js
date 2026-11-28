@@ -31,7 +31,7 @@ function mountCombo(root){
 function mountCity(root){
   const T=BG.city;const done=new Set();
   root.innerHTML=`<div class="stage-c" style="padding-top:16px"><div class="stage-top"><span>Огни города: <b id="ct-n"></b></span><b id="ct-l"></b></div>
-    <div class="ct-grid" id="ct-grid"></div></div><p class="mic-hint">Нажмите на дом: в игре задание засчитывается кодом с чека.</p>`;
+    <div class="ct-grid" id="ct-grid"></div></div><p class="mic-hint">Нажмите на дом: в игре задание засчитывается кодом с покупки.</p>`;
   const st=status();root.append(st,playerLine());
   function draw(){$('ct-n').textContent=`${done.size} из ${T.length}`;$('ct-l').textContent=done.size>=T.length?'Город сияет!':`Осталось: ${T.length-done.size}`;
     $('ct-grid').innerHTML=T.map((t,i)=>`<button type="button" class="ct-house ${done.has(i)?'lit':''}" data-i="${i}"><span>${done.has(i)?'🏠':'🏚️'}</span><b>${t.e} ${t.t}</b>${done.has(i)?'<small>✓ выполнено</small>':''}</button>`).join('');}
@@ -53,7 +53,8 @@ function mountCard(root){
       <div class="row">${P.themes.map((t,i)=>`<button type="button" class="cd-theme ${i?'':'on'}" data-t="${i}" style="background:linear-gradient(160deg,${t[0]},${t[1]})" aria-label="Оформление ${i+1}"></button>`).join('')}</div>
     </div>
     <div class="stage-c" style="padding:14px"><canvas id="cd-c" width="600" height="800" class="cd-canvas"></canvas></div>
-    <div class="row"><a class="btn hot" id="cd-save" download="novogodnyaya-otkrytka.png">💾 Сохранить открытку</a>${P.game?`<a class="btn alt" href="#${P.game}">🎮 Мини-игра на открытке</a>`:''}</div>
+    <div class="row"><a class="btn hot" id="cd-save" download="novogodnyaya-otkrytka.png">💾 Сохранить открытку</a>${P.game?`<button class="btn alt" type="button" id="cd-game">🎮 Мини-игра на открытке</button>`:''}</div>
+    <div id="cd-mini"></div>
     <p class="mic-hint">${P.photo?'Фото никуда не отправляется: открытка собирается прямо в телефоне.':'Открытка собирается прямо в телефоне.'}</p>`;
   let theme=0;const cv=$('cd-c'),x=cv.getContext('2d');
   const setWish=()=>{$('cd-wish').value=P.to[+$('cd-to').value].w;};setWish();
@@ -72,7 +73,10 @@ function mountCard(root){
   root.querySelector('.cd-form').addEventListener('input',e=>{if(e.target.id==='cd-to')setWish();draw();});
   root.querySelectorAll('.cd-theme').forEach(b=>b.onclick=()=>{theme=+b.dataset.t;root.querySelectorAll('.cd-theme').forEach(z=>z.classList.toggle('on',z===b));draw();});
   if(P.photo)$('cd-file').onchange=e=>{const f=e.target.files[0];if(!f)return;const img=new Image();img.onload=()=>{photo=img;draw();};img.src=URL.createObjectURL(f);};
+  let stopMini=null;
+  if(P.game)$('cd-game').onclick=()=>{const m=$('cd-mini');if(stopMini){stopMini();stopMini=null;}m.className='demo-box';m.style.marginTop='12px';stopMini=MOUNT[P.game](m)||null;m.scrollIntoView({behavior:'smooth',block:'center'});};
   document.fonts&&document.fonts.ready.then(draw);draw();
+  return ()=>{if(stopMini)stopMini();};
 }
 
 /* --- Puzzle: every code opens one piece of a picture --- */
